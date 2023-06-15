@@ -1,0 +1,17 @@
+.item::before {
+  position: absolute;
+  right: 0;
+  bottom: -5px;
+  left: 0;
+  height: 2px;
+  content: '';
+  transition: transform 0.15s ease;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  background: #7ae000;
+}
+
+.item:hover::before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

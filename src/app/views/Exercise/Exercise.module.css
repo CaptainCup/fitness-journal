@@ -1,0 +1,42 @@
+.exercise {
+  cursor: pointer;
+}
+
+.exercise:hover .title::before {
+  width: 32px;
+  right: -40px;
+}
+
+.exercise:hover .title::after {
+  right: -44px;
+}
+
+.title {
+  position: relative;
+}
+
+.title::after {
+  position: absolute;
+  top: 50%;
+  right: -28px;
+  display: block;
+  width: 10px;
+  height: 10px;
+  content: '';
+  transform: rotate(-45deg) translateY(-50%);
+  border-right: 2px solid #7ae000;
+  border-bottom: 2px solid #7ae000;
+  transition: all 0.15s;
+}
+
+.title::before {
+  position: absolute;
+  transition: all 0.15s;
+  top: 50%;
+  right: -24px;
+  display: block;
+  width: 16px;
+  height: 0px;
+  content: '';
+  border-top: 2px solid #7ae000;
+}
