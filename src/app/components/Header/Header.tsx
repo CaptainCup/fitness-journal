@@ -14,7 +14,7 @@ const menuItems = [
     href: '/exercises',
   },
   {
-    label: 'Тренажеры',
+    label: 'Оборудование',
     href: '/equipments',
   },
   {

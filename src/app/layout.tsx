@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { NextPage } from 'next';
 import localFont from 'next/font/local';
-import { Header } from '@/app/views';
+import { Header } from '@/app/components';
 
 import './globals.css';
 

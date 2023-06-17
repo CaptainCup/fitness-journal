@@ -13,7 +13,7 @@ type BreadcrumbsProps = {
 
 const Breadcrumbs: FC<BreadcrumbsProps> = ({ path }) => {
   return (
-    <ul className="flex">
+    <ul className="flex flex-wrap">
       {path.map(({ label, href }, index) => {
         const isLast = index >= path.length - 1;
         return (

@@ -1,0 +1,29 @@
+.back::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  content: '';
+  transform: rotate(-45deg);
+  border-top: 2px solid #7ae000;
+  border-left: 2px solid #7ae000;
+}
+
+.back::after {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  width: 42px;
+  height: 2px;
+  content: '';
+  transition: 0.15s;
+  background: #7ae000;
+}
+
+.back:hover::after {
+  width: 58px;
+}

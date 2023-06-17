@@ -1,13 +1,13 @@
-.exercise {
+.card {
   cursor: pointer;
 }
 
-.exercise:hover .title::before {
+.card:hover .title::before {
   width: 32px;
   right: -40px;
 }
 
-.exercise:hover .title::after {
+.card:hover .title::after {
   right: -44px;
 }
 

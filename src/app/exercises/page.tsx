@@ -1,19 +1,21 @@
-import { PageTitle, Button, Breadcrumbs } from '@/app/components';
-import { Exercise } from '@/app/views';
+import { PageTitle, Button, Breadcrumbs, Card } from '@/app/components';
 import { NextPage } from 'next';
 
 const exercises = [
   {
+    id: '1',
     img: '',
-    name: 'Сгибание ног сидя',
+    title: 'Сгибание ног сидя',
   },
   {
+    id: '2',
     img: '',
-    name: 'Разгибание ног сидя',
+    title: 'Разгибание ног сидя',
   },
   {
+    id: '3',
     img: '',
-    name: 'Жим лежа',
+    title: 'Жим лежа',
   },
 ];
 
@@ -29,7 +31,7 @@ export const metadata = {
 const Exercises: NextPage = () => {
   return (
     <main>
-      <PageTitle>Упражнения</PageTitle>
+      <PageTitle title="Упражнения" />
       <section className="container mx-auto px-5 sm:px-0">
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
@@ -42,7 +44,11 @@ const Exercises: NextPage = () => {
         </div>
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pb-3">
           {exercises.map((exercise) => (
-            <Exercise key={exercise.name} {...exercise} />
+            <Card
+              key={exercise.id}
+              link={`exercises/${exercise.id}`}
+              {...exercise}
+            />
           ))}
         </div>
       </section>
