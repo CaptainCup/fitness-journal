@@ -17,8 +17,8 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
   const router = useRouter();
 
   return (
-    <section className="bg-black w-full h-60 sm:h-96 mb-5 sm:mb-10">
-      <div className="container mx-auto flex h-full ">
+    <section className="bg-black w-full pt-28 sm:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
+      <div className="container mx-auto flex h-full justify-between flex-col sm:flex-row">
         <div className="pb-5 sm:pb-10 px-5 sm:px-0 flex flex-col justify-end">
           {withBack && (
             <button
@@ -35,7 +35,7 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
         </div>
 
         {image && (
-          <div className="relative w-1/2 h-full">
+          <div className="relative h-full aspect-square sm:ml-10">
             <Image src={image} alt={title} fill />
           </div>
         )}

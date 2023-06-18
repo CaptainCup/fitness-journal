@@ -37,7 +37,7 @@ const Header: FC = () => {
         )}
       >
         <div className="container mx-auto flex items-center  px-5 sm:px-0">
-          <div className="w-5 mr-5 sm:hidden" onClick={handleOpen}>
+          <div className="w-5 mr-5 md:hidden" onClick={handleOpen}>
             <div className="w-full border-b-2 border-white mb-1" />
             <div
               className={classNames(
@@ -54,7 +54,7 @@ const Header: FC = () => {
           </div>
 
           <Image src="/logo-white.png" alt="X-fit" width={115} height={65} />
-          <nav className="hidden sm:block ml-10">
+          <nav className="hidden md:block ml-10">
             <ul className="flex">
               {menuItems.map(({ label, href }) => (
                 <li

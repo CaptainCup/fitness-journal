@@ -35,7 +35,9 @@ const Exercises: NextPage = () => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <p className="whitespace-pre-wrap mb-10">{exercise.description}</p>
+        <p className="whitespace-pre-wrap mb-10 font-serif">
+          {exercise.description}
+        </p>
 
         <div className="mb-10">
           <h4 className="text-xl w-full border-b-4 border-black mb-5">
@@ -45,7 +47,7 @@ const Exercises: NextPage = () => {
             <div className="relative aspect-square">
               <Image alt="Шаг 1" src="/leg-curl-equipment.jpg" fill />
             </div>
-            <div className="col-span-2 flex items-center">
+            <div className="col-span-1 md:col-span-2 flex items-center font-serif">
               <p>
                 Отрегулируйте тренажер таким образом, чтобы он был установлен
                 правильно. Ваши колени должны находиться на одной линии с
@@ -56,7 +58,7 @@ const Exercises: NextPage = () => {
             <div className="relative aspect-square">
               <Image alt="Шаг 1" src="/leg-curl-step-2.webp" fill />
             </div>
-            <div className="col-span-2 flex items-center">
+            <div className="col-span-1 md:col-span-2 flex items-center font-serif">
               <p>
                 Опустите вес тела вниз, согнув ноги в коленях как можно дальше.
               </p>
@@ -65,7 +67,7 @@ const Exercises: NextPage = () => {
             <div className="relative aspect-square">
               <Image alt="Шаг 1" src="/leg-curl-step-3.webp" fill />
             </div>
-            <div className="col-span-2 flex items-center">
+            <div className="col-span-1 md:col-span-2 flex items-center font-serif">
               <p>Медленно верните вес обратно.</p>
             </div>
           </div>
