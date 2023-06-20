@@ -1,5 +1,6 @@
 import { PageTitle, Button, Breadcrumbs, Card } from '@/app/components';
 import { NextPage } from 'next';
+import Link from 'next/link';
 
 const exercises = [
   {
@@ -38,9 +39,11 @@ const Exercises: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <Button className="w-full sm:w-auto">
-            Добавить новое упражнение
-          </Button>
+          <Link href="exercises/create">
+            <Button className="w-full sm:w-auto">
+              Добавить новое упражнение
+            </Button>
+          </Link>
         </div>
         <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pb-3">
           {exercises.map((exercise) => (

@@ -40,3 +40,15 @@
   content: '';
   border-top: 2px solid #7ae000;
 }
+
+.checked::after {
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  content: '';
+  width: 25%;
+  height: 50%;
+  border-right: 8px solid #7ae000;
+  border-bottom: 8px solid #7ae000;
+  transform: rotate(45deg);
+}

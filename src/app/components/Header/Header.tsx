@@ -87,10 +87,12 @@ const Header: FC = () => {
                     <ul>
                       {menuItems.map(({ label, href }) => (
                         <li
-                          className="text-white relative text-3xl mb-5 outline-none"
+                          className="text-white relative text-3xl mb-5"
                           key={label}
                         >
-                          <Link href={href}>{label}</Link>
+                          <Link className="outline-none" href={href}>
+                            {label}
+                          </Link>
                         </li>
                       ))}
                     </ul>

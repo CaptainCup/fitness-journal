@@ -5,19 +5,23 @@ import Link from 'next/link';
 
 import styles from './Card.module.css';
 
-type CardProps = {
+export type CardProps = {
   title: string;
   img?: string;
   link?: string;
+  checked?: boolean;
+  onClick?: () => void;
 };
 
-const Card: FC<CardProps> = ({ title, img, link }) => {
+const Card: FC<CardProps> = ({ title, img, link, checked, onClick }) => {
   const component = (
     <div
       className={classNames(
         link && styles.card,
-        'relative aspect-square border-b-4 border-lime-400'
+        checked && styles.checked,
+        'relative aspect-square border-b-4 border-lime-400 transition-all'
       )}
+      onClick={onClick}
     >
       <Image
         src={img || '/logo-in-black.png'}
@@ -31,7 +35,14 @@ const Card: FC<CardProps> = ({ title, img, link }) => {
         </h3>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-b from-transparent to-black z-0 opacity-40" />
+      <div
+        className={classNames(
+          'absolute bottom-0 left-0 right-0  z-0 opacity-40 transition-all',
+          checked
+            ? 'h-full bg-black'
+            : 'h-20 bg-gradient-to-b from-transparent to-black'
+        )}
+      />
     </div>
   );
 
