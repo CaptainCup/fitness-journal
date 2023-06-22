@@ -29,15 +29,21 @@ const Card: FC<CardProps> = ({ title, img, link, checked, onClick }) => {
         fill
         style={{ objectFit: 'cover' }}
       />
-      <div className="absolute bottom-4 left-4 z-10">
-        <h3 className={classNames(link && styles.title, 'text-white')}>
+      <div className="absolute bottom-2 left-2 right-2 md:left-4 md:bottom-4 md:right-4 z-10">
+        <h3
+          className={classNames(
+            link && 'mb-3',
+            'text-white text-sm sm:text-base select-none'
+          )}
+        >
           {title}
         </h3>
+        {link && <div className={styles.arrow} />}
       </div>
 
       <div
         className={classNames(
-          'absolute bottom-0 left-0 right-0  z-0 opacity-40 transition-all',
+          'absolute bottom-0 left-0 right-0 opacity-40 transition-all',
           checked
             ? 'h-full bg-black'
             : 'h-20 bg-gradient-to-b from-transparent to-black'

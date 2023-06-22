@@ -42,9 +42,9 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload' }) => {
         </div>
       )}
 
-      <div>
+      <div className="w-full">
         <label htmlFor={id}>
-          <Button className="inline-block" component="span">{`${
+          <Button className="inline-block w-full" component="span">{`${
             image ? 'Изменить' : 'Добавить'
           } изображение`}</Button>
         </label>

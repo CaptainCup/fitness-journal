@@ -21,7 +21,7 @@ const ExerciseSteps: FC<ExerciseStepsProps> = ({ title, steps }) => {
             <div className="relative aspect-square">
               <Image alt={`Шаг ${index + 1}`} src={img} fill />
             </div>
-            <div className="col-span-1 md:col-span-2 flex items-center ">
+            <div className="col-span-1 md:col-span-2 xl:col-span-3 flex items-center ">
               <p className="font-serif">{description}</p>
             </div>
           </Fragment>

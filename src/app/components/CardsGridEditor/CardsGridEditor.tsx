@@ -4,6 +4,24 @@ import { FC, memo, useState, useCallback } from 'react';
 import { Button, ModalGrid, Card } from '@/app/components';
 import { CardProps } from '../Card/Card';
 
+const captions = {
+  muscules: {
+    change: 'Изменить группы мышц',
+    add: 'Добавить группу мышц',
+    title: 'Выберите группу мышц',
+  },
+  exercises: {
+    change: 'Изменить упражнения',
+    add: 'Добавить упражнения',
+    title: 'Выберите упражнения',
+  },
+  equipment: {
+    change: 'Изменить оборудование',
+    add: 'Добавить оборудование',
+    title: 'Выберите оборудование',
+  },
+};
+
 type CardsGridEditorProps = {
   title: string;
   type: 'muscules' | 'exercises' | 'equipment';
@@ -30,21 +48,21 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
       <div>
         <h4 className="text-xl w-full border-b-4 border-black mb-5">{title}</h4>
 
-        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
           {cards?.map((card) => (
             <Card key={card.title} {...card} />
           ))}
 
-          <div className="sm:col-span-2 md:col-span-3 flex items-center">
+          <div className="col-span-2 sm:col-span-3 md:col-span-4 xl:col-span-6 flex items-center">
             <Button className="w-full" onClick={handleModalOpen}>
-              {cards.length ? 'Изменить группы мышц' : 'Добавить группу мышц'}
+              {cards.length ? captions[type].change : captions[type].add}
             </Button>
           </div>
         </div>
       </div>
 
       <ModalGrid
-        title="Выберите группу мышц"
+        title={captions[type].title}
         type={type}
         open={modalOpen}
         onCancel={handleModalOpen}

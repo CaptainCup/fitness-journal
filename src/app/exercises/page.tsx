@@ -1,24 +1,7 @@
-import { PageTitle, Button, Breadcrumbs, Card } from '@/app/components';
+import { PageTitle, Button, Breadcrumbs, CardsGrid } from '@/app/components';
 import { NextPage } from 'next';
+import exercises from '@/app/mock/exercises';
 import Link from 'next/link';
-
-const exercises = [
-  {
-    id: '1',
-    img: '',
-    title: 'Сгибание ног сидя',
-  },
-  {
-    id: '2',
-    img: '',
-    title: 'Разгибание ног сидя',
-  },
-  {
-    id: '3',
-    img: '',
-    title: 'Жим лежа',
-  },
-];
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -39,20 +22,22 @@ const Exercises: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <Link href="exercises/create">
-            <Button className="w-full sm:w-auto">
-              Добавить новое упражнение
-            </Button>
-          </Link>
+          <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            <Link href="exercises/create">
+              <Button className="w-full">Добавить новое упражнение</Button>
+            </Link>
+            <Button className="w-full">Фильтр</Button>
+            <Button className="w-full">Поиск</Button>
+          </div>
         </div>
-        <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 pb-3">
-          {exercises.map((exercise) => (
-            <Card
-              key={exercise.id}
-              link={`exercises/${exercise.id}`}
-              {...exercise}
-            />
-          ))}
+
+        <div className="mb-5 sm:mb-10">
+          <CardsGrid
+            cards={exercises.map((exercise) => ({
+              ...exercise,
+              link: `exercises/${exercise.title}`,
+            }))}
+          />
         </div>
       </section>
     </main>

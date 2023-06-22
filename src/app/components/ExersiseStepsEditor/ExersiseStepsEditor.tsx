@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, memo, useCallback, useState } from 'react';
-import { Button, ImageUpload, Textarea } from '@/app/components';
+import { Button, ImageUpload, Textarea, Title } from '@/app/components';
 
 type ExersiseStepProps = {
   step: number;
@@ -11,15 +11,15 @@ type ExersiseStepProps = {
 const ExersiseStep: FC<ExersiseStepProps> = ({ step, onDelete }) => {
   return (
     <>
-      <div>
+      <div className="w-full">
         <ImageUpload id={`Step ${step}`} />
       </div>
 
-      <div className="col-span-1 md:col-span-2 flex items-center">
+      <div className="md:col-span-2 flex items-center">
         <Textarea placeholder="Описание шага" />
       </div>
 
-      <div>
+      <div className="sm:col-span-2 md:col-span-1">
         <Button type="danger" className="w-full" onClick={onDelete}>
           Удалить шаг
         </Button>
@@ -28,7 +28,11 @@ const ExersiseStep: FC<ExersiseStepProps> = ({ step, onDelete }) => {
   );
 };
 
-const ExersiseStepsEditor: FC = () => {
+export type ExersiseStepsEditorProps = {
+  title?: string;
+};
+
+const ExersiseStepsEditor: FC<ExersiseStepsEditorProps> = ({ title }) => {
   const [steps, setSteps] = useState<number[]>([]);
 
   const addStep = useCallback(() => {
@@ -41,10 +45,8 @@ const ExersiseStepsEditor: FC = () => {
 
   return (
     <div>
-      <h4 className="text-xl w-full border-b-4 border-black mb-5">
-        Порядок выполнения
-      </h4>
-      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 xl:grid-cols-4 gap-y-5 items-center">
+      {title && <Title>{title}</Title>}
+      <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 items-center">
         {steps.map((step) => (
           <ExersiseStep
             key={step}
@@ -53,7 +55,7 @@ const ExersiseStepsEditor: FC = () => {
           />
         ))}
 
-        <div className="col-span-2 md:col-span-4 flex items-center">
+        <div className="sm:col-span-2 md:col-span-4 flex items-center">
           <Button className="w-full" onClick={addStep}>
             Добавить шаг
           </Button>

@@ -1,3 +1,4 @@
+import { NextPage } from 'next';
 import {
   PageTitle,
   Breadcrumbs,
@@ -8,7 +9,6 @@ import {
   CardsGridEditor,
   Button,
 } from '@/app/components';
-import { NextPage } from 'next';
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -46,7 +46,7 @@ const ExerciseCreate: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <ExersiseStepsEditor />
+          <ExersiseStepsEditor title="Порядок выполнения" />
         </div>
 
         <div className="mb-5 sm:mb-10">

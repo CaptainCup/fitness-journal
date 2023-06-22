@@ -11,3 +11,5 @@ export { default as Textarea } from './Textarea';
 export { default as ExersiseStepsEditor } from './ExersiseStepsEditor';
 export { default as CardsGridEditor } from './CardsGridEditor';
 export { default as ModalGrid } from './ModalGrid';
+export { default as TrainingCard } from './TrainingCard';
+export { default as Title } from './Title';

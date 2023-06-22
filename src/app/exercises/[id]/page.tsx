@@ -44,7 +44,7 @@ const exercise = {
     {
       title: 'Leg Curl Techogym',
       img: '/leg-curl-equipment.jpg',
-      link: 'equipments/1',
+      link: '/equipment/1',
     },
   ],
 
@@ -76,26 +76,26 @@ const Exercise: NextPage = () => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <p className="whitespace-pre-wrap mb-10 font-serif">
+        <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">
           {exercise.description}
         </p>
 
-        <div className="mb-10">
+        <div className="mb-5 sm:mb-10">
           <ExerciseSteps title="Порядок выполнения" steps={exercise.steps} />
         </div>
 
-        <div className="mb-10">
+        <div className="mb-5 sm:mb-10">
           <CardsGrid title="Задействованные мышцы" cards={exercise.muscules} />
         </div>
 
-        <div className="mb-10">
+        <div className="mb-5 sm:mb-10">
           <CardsGrid
             title="Используемое оборудование"
             cards={exercise.equipment}
           />
         </div>
 
-        <div className="mb-10">
+        <div className="mb-5 sm:mb-10">
           <CardsGrid title="Похожие упражнения" cards={exercise.exercises} />
         </div>
       </section>

@@ -7,6 +7,9 @@ import muscules from '@/app/mock/muscules';
 import exercises from '@/app/mock/exercises';
 import equipment from '@/app/mock/equipment';
 import { CardProps } from '../Card/Card';
+import classNames from 'classnames';
+
+import styles from './ModalGrid.module.css';
 
 const data = {
   muscules,
@@ -60,7 +63,7 @@ const ModalGrid: FC<ModalGridProps> = ({
         </Transition.Child>
 
         <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className=" flex min-h-full items-center justify-center p-5 text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -70,12 +73,25 @@ const ModalGrid: FC<ModalGridProps> = ({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-3xl transform overflow-hidden rounded-2xl bg-white p-5 align-middle shadow-xl transition-all">
-                <Dialog.Title as="h4" className="text-lg text-center mb-5">
+              <Dialog.Panel className="relative w-full max-w-3xl transform overflow-hidden bg-white p-5 align-middle shadow-xl transition-all">
+                <button
+                  className={classNames(
+                    styles.close,
+                    'absolute top-2 right-2 w-8 h-8  bg-lime-400'
+                  )}
+                  onClick={onCancel}
+                />
+
+                <Dialog.Title as="h4" className="text-lg text-center mb-5 px-5">
                   {title}
                 </Dialog.Title>
 
-                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mb-5">
+                <div
+                  className={classNames(
+                    styles.grid,
+                    'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5'
+                  )}
+                >
                   {data[type].map((card) => (
                     <Card
                       key={card.title}
