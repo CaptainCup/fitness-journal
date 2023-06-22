@@ -8,14 +8,14 @@ type TitleProps = {
 
 const Title: FC<TitleProps> = ({ className, children }) => {
   return (
-    <h3
+    <h2
       className={classNames(
         'text-xl w-full border-b-4 border-black mb-5',
         className
       )}
     >
       {children}
-    </h3>
+    </h2>
   );
 };
 

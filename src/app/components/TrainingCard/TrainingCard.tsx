@@ -2,7 +2,7 @@
 
 import { FC, Fragment, memo, useState } from 'react';
 import exercises from '@/app/mock/exercises';
-import { Card } from '@/app/components';
+import { Card, Title } from '@/app/components';
 
 const repeats = [
   [1, 10, 20],
@@ -13,20 +13,20 @@ const repeats = [
 
 const TrainingCard: FC = () => {
   const [allExercises, setAllExercises] = useState(false);
-  const [selectedCard, setSelectedCard] = useState();
+  const [selectedCard, setSelectedCard] = useState<any>();
 
   const exercisesArray = allExercises ? exercises : exercises.slice(0, 3);
 
   const showAllExercises = () => setAllExercises(true);
 
-  const selectCard = (card) =>
-    setSelectedCard((draft) => (card.title === draft?.title ? null : card));
+  const selectCard = (card: any) =>
+    setSelectedCard((draft: any) =>
+      card.title === draft?.title ? null : card
+    );
 
   return (
     <div>
-      <h2 className="text-xl w-full border-b-4 border-black mb-2 lg:mb-5">
-        Среда 22.06.23
-      </h2>
+      <Title>Среда 22.06.23</Title>
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-5">
         {exercisesArray.map((card) => (
           <Fragment key={card.title}>

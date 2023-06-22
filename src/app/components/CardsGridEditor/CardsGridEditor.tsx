@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, memo, useState, useCallback } from 'react';
-import { Button, ModalGrid, Card } from '@/app/components';
+import { Button, ModalGrid, Card, Title } from '@/app/components';
 import { CardProps } from '../Card/Card';
 
 const captions = {
@@ -46,7 +46,7 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
   return (
     <>
       <div>
-        <h4 className="text-xl w-full border-b-4 border-black mb-5">{title}</h4>
+        <Title>{title}</Title>
 
         <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
           {cards?.map((card) => (

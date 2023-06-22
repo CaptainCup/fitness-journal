@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, memo, useCallback, useState } from 'react';
-import { Button, ImageUpload, Textarea, Title } from '@/app/components';
+import { Button, ImageUpload, TextArea, Title } from '@/app/components';
 
 type ExersiseStepProps = {
   step: number;
@@ -16,7 +16,7 @@ const ExersiseStep: FC<ExersiseStepProps> = ({ step, onDelete }) => {
       </div>
 
       <div className="md:col-span-2 flex items-center">
-        <Textarea placeholder="Описание шага" />
+        <TextArea placeholder="Описание шага" />
       </div>
 
       <div className="sm:col-span-2 md:col-span-1">
