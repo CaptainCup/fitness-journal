@@ -5,7 +5,7 @@ import {
   ExersiseStepsEditor,
   ImageUpload,
   TextInput,
-  TextArea,
+  Textarea,
   Button,
   Title,
 } from '@/app/components';
@@ -40,7 +40,7 @@ const EquipmentCreate: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <TextArea placeholder="Описание оборудования" />
+          <Textarea placeholder="Описание оборудования" />
         </div>
 
         <div className="mb-5 sm:mb-10">

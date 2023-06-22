@@ -7,7 +7,7 @@ export { default as ExerciseSteps } from './ExerciseSteps';
 export { default as CardsGrid } from './CardsGrid';
 export { default as ImageUpload } from './ImageUpload';
 export { default as TextInput } from './TextInput';
-export { default as TextArea } from './TextArea';
+export { default as Textarea } from './Textarea';
 export { default as ExersiseStepsEditor } from './ExersiseStepsEditor';
 export { default as CardsGridEditor } from './CardsGridEditor';
 export { default as ModalGrid } from './ModalGrid';

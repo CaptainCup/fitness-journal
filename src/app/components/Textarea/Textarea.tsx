@@ -2,11 +2,11 @@
 
 import { FC, memo, useRef, useState } from 'react';
 
-type TextAreaProps = {
+type TextareaProps = {
   placeholder?: string;
 };
 
-const TextArea: FC<TextAreaProps> = ({ placeholder = 'Введите текст' }) => {
+const Textarea: FC<TextareaProps> = ({ placeholder = 'Введите текст' }) => {
   const [height, setHeight] = useState<string>();
   const textareaRef = useRef<any>(null);
 
@@ -27,4 +27,4 @@ const TextArea: FC<TextAreaProps> = ({ placeholder = 'Введите текст'
   );
 };
 
-export default memo(TextArea);
+export default memo(Textarea);
