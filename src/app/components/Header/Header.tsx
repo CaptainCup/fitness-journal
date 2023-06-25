@@ -3,6 +3,7 @@
 import React, { FC, memo, useCallback, useState, Fragment } from 'react';
 import classNames from 'classnames';
 import { Dialog, Transition } from '@headlessui/react';
+import { Container } from '@/app/components';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,12 +11,12 @@ import styles from './Header.module.css';
 
 const menuItems = [
   {
-    label: 'Упражнения',
-    href: '/exercises',
-  },
-  {
     label: 'Оборудование',
     href: '/equipment',
+  },
+  {
+    label: 'Упражнения',
+    href: '/exercises',
   },
   {
     label: 'Тренировки',
@@ -36,46 +37,48 @@ const Header: FC = () => {
     <>
       <header
         className={classNames(
-          'z-10 fixed h-14 md:h-28  bg-black top-0 w-full transition-all',
+          'z-10 fixed  bg-black top-0 w-full transition-all',
           !isOpen && 'bg-opacity-50'
         )}
       >
-        <div className="container mx-auto flex items-center px-5 h-full sm:px-0">
-          <div className="w-5 mr-5 md:hidden" onClick={handleOpen}>
-            <div className="w-full border-b-2 border-white mb-1" />
-            <div
-              className={classNames(
-                'w-full border-b-2 border-white mb-1 transition-all',
-                isOpen && 'translate-x-1'
-              )}
-            />
-            <div
-              className={classNames(
-                'w-full border-b-2 border-white transition-all',
-                isOpen && 'translate-x-2'
-              )}
-            />
-          </div>
+        <Container>
+          <div className=" flex items-center justify-start md:justify-between h-14 md:h-28">
+            <div className="w-5 mr-5 md:hidden" onClick={handleOpen}>
+              <div className="w-full border-b-2 border-white mb-1" />
+              <div
+                className={classNames(
+                  'w-full border-b-2 border-white mb-1 transition-all',
+                  isOpen && 'translate-x-1'
+                )}
+              />
+              <div
+                className={classNames(
+                  'w-full border-b-2 border-white transition-all',
+                  isOpen && 'translate-x-2'
+                )}
+              />
+            </div>
 
-          <div className="relative h-10 w-24 md:h-12 md:w-32">
-            <Link href="/">
-              <Image src="/logo-white.png" alt="X-fit" fill />
-            </Link>
-          </div>
+            <div className="relative h-10 w-24 lg:h-12 lg:w-32">
+              <Link href="/">
+                <Image src="/logo-white.png" alt="X-fit" fill />
+              </Link>
+            </div>
 
-          <nav className="hidden md:block ml-10">
-            <ul className="flex">
-              {menuItems.map(({ label, href }) => (
-                <li
-                  className={`${styles.item} text-white px-4 relative`}
-                  key={label}
-                >
-                  <Link href={href}>{label}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
+            <nav className="hidden md:block">
+              <ul className="flex">
+                {menuItems.map(({ label, href }) => (
+                  <li
+                    className={`${styles.item} text-white px-4 relative`}
+                    key={label}
+                  >
+                    <Link href={href}>{label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </Container>
       </header>
 
       <Transition appear show={isOpen} as={Fragment}>

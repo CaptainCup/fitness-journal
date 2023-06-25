@@ -1,6 +1,6 @@
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { PageTitle, Button, Title } from '@/app/components';
+import { PageTitle, Button, Title, Container } from '@/app/components';
 
 export const metadata = {
   title: 'Тренировки',
@@ -10,7 +10,7 @@ const Trainings: NextPage = () => {
   return (
     <main>
       <PageTitle title="Добро пожаловать в X-Fit!" />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Title>Оборудование</Title>
           <p className="mb-5">
@@ -42,7 +42,7 @@ const Trainings: NextPage = () => {
             <Button>Перейти к тренировкам</Button>
           </Link>
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

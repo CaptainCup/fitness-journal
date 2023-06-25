@@ -14,3 +14,6 @@ export { default as ModalGrid } from './ModalGrid';
 export { default as TrainingCard } from './TrainingCard';
 export { default as Title } from './Title';
 export { default as TrainingCardEditor } from './TrainingCardEditor';
+export { default as Footer } from './Footer';
+export { default as SocialLink } from './SocialLink';
+export { default as Container } from './Container';

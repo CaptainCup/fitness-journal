@@ -8,6 +8,7 @@ import {
   Textarea,
   Button,
   Title,
+  Container,
 } from '@/app/components';
 
 const breadcrumbsPath = [
@@ -24,7 +25,7 @@ const EquipmentCreate: NextPage = () => {
   return (
     <main>
       <PageTitle title="Новое оборудование" withBack />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
@@ -50,7 +51,7 @@ const EquipmentCreate: NextPage = () => {
         <div className="mb-5 sm:mb-10 flex justify-center">
           <Button>Добавить оборудование</Button>
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

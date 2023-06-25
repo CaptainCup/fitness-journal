@@ -8,6 +8,8 @@ import {
   Textarea,
   CardsGridEditor,
   Button,
+  Title,
+  Container,
 } from '@/app/components';
 
 const breadcrumbsPath = [
@@ -24,14 +26,12 @@ const ExerciseCreate: NextPage = () => {
   return (
     <main>
       <PageTitle title="Новое упражнение" withBack />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <h4 className="text-xl w-full border-b-4 border-black mb-5">
-          Описание упражнения
-        </h4>
+        <Title>Описание упражнения</Title>
 
         <div className="mb-5 sm:mb-10">
           <ImageUpload id="exercise-image" />
@@ -64,7 +64,7 @@ const ExerciseCreate: NextPage = () => {
         <div className="mb-5 sm:mb-10 flex justify-center">
           <Button>Добавить упражнение</Button>
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

@@ -5,6 +5,7 @@ import {
   Button,
   Breadcrumbs,
   TrainingCardEditor,
+  Container,
 } from '@/app/components';
 
 const breadcrumbsPath = [
@@ -21,7 +22,7 @@ const Trainings: NextPage = () => {
   return (
     <main>
       <PageTitle title="Тренировка 23.06.23" />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
@@ -35,7 +36,7 @@ const Trainings: NextPage = () => {
             <Button>Закончить тренировку</Button>
           </Link>
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

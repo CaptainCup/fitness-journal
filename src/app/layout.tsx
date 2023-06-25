@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { NextPage } from 'next';
 import localFont from 'next/font/local';
-import { Header } from '@/app/components';
+import { Footer, Header } from '@/app/components';
 
 import './globals.css';
 
@@ -19,9 +19,10 @@ type RootLayout = {
 const RootLayout: NextPage<RootLayout> = ({ children }) => {
   return (
     <html lang="ru" className={font.className}>
-      <body>
+      <body className="min-h-screen flex flex-col justify-between">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

@@ -1,10 +1,11 @@
+import { NextPage } from 'next';
 import {
   PageTitle,
   Breadcrumbs,
   ExerciseSteps,
   CardsGrid,
+  Container,
 } from '@/app/components';
-import { NextPage } from 'next';
 
 const exercise = {
   id: '1',
@@ -71,7 +72,7 @@ const Exercise: NextPage = () => {
   return (
     <main>
       <PageTitle title={exercise.name} image={exercise.image} withBack />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
@@ -98,7 +99,7 @@ const Exercise: NextPage = () => {
         <div className="mb-5 sm:mb-10">
           <CardsGrid title="Похожие упражнения" cards={exercise.exercises} />
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

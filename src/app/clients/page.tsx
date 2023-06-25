@@ -1,7 +1,13 @@
-import { PageTitle, Button, Breadcrumbs, CardsGrid } from '@/app/components';
 import { NextPage } from 'next';
-import clients from '@/app/mock/clients';
 import Link from 'next/link';
+import clients from '@/app/mock/clients';
+import {
+  PageTitle,
+  Button,
+  Breadcrumbs,
+  CardsGrid,
+  Container,
+} from '@/app/components';
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -16,7 +22,7 @@ const Equipment: NextPage = () => {
   return (
     <main>
       <PageTitle title="Клиенты" />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
@@ -37,7 +43,7 @@ const Equipment: NextPage = () => {
             }))}
           />
         </div>
-      </section>
+      </Container>
     </main>
   );
 };

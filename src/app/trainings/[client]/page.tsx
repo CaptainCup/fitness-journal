@@ -1,6 +1,12 @@
-import { PageTitle, Button, Breadcrumbs, TrainingCard } from '@/app/components';
 import { NextPage } from 'next';
 import Link from 'next/link';
+import {
+  PageTitle,
+  Button,
+  Breadcrumbs,
+  TrainingCard,
+  Container,
+} from '@/app/components';
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -16,7 +22,7 @@ const Trainings: NextPage = () => {
   return (
     <main>
       <PageTitle title="Тренировки А. Шварценеггера" withBack />
-      <section className="container mx-auto px-5 sm:px-0">
+      <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
@@ -42,7 +48,7 @@ const Trainings: NextPage = () => {
         <div className="mb-5 sm:mb-10">
           <TrainingCard />
         </div>
-      </section>
+      </Container>
     </main>
   );
 };
