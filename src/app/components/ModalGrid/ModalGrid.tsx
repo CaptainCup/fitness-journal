@@ -1,6 +1,6 @@
 'use client';
 
-import { Fragment, memo, FC, useState, useCallback } from 'react';
+import { Fragment, memo, FC, useState, useCallback, useEffect } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Button, Card, TextInput } from '@/app/components';
 import muscules from '@/app/mock/muscules';
@@ -24,6 +24,7 @@ type ModalGridProps = {
   withSearch?: boolean;
   onCancel: () => void;
   onConfirm: (value: CardProps[]) => void;
+  filterData?: (value: CardProps) => boolean;
 };
 
 const ModalGrid: FC<ModalGridProps> = ({
@@ -33,6 +34,7 @@ const ModalGrid: FC<ModalGridProps> = ({
   withSearch,
   onCancel,
   onConfirm,
+  filterData = () => true,
 }) => {
   const [checked, setChecked] = useState<CardProps[]>([]);
   const [search, setSearch] = useState<string>('');
@@ -53,6 +55,13 @@ const ModalGrid: FC<ModalGridProps> = ({
     onConfirm(checked);
     onCancel();
   }, [checked, onConfirm, onCancel]);
+
+  useEffect(() => {
+    if (!open) {
+      setChecked([]);
+      setSearch('');
+    }
+  }, [open]);
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -111,6 +120,7 @@ const ModalGrid: FC<ModalGridProps> = ({
                   )}
                 >
                   {data[type]
+                    .filter(filterData)
                     .filter(({ title }) =>
                       title.toLocaleLowerCase().includes(search)
                     )
