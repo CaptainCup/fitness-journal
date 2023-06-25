@@ -1,27 +1,27 @@
 const equipment = [
   {
     title: 'Leg Curl Techogym',
-    img: '/leg-curl-equipment.jpg',
+    img: '/images/leg-curl-equipment.jpg',
   },
   {
     title: 'BOSU',
-    img: '/bosu-equipment.jpg',
+    img: '/images/bosu-equipment.jpg',
   },
   {
     title: 'Гантели',
-    img: '/dumbbells-equipment.webp',
+    img: '/images/dumbbells-equipment.webp',
   },
   {
     title: 'Эллиптический тренажер',
-    img: '/elliptical-equipment.jpg',
+    img: '/images/elliptical-equipment.jpg',
   },
   {
     title: 'Гак машина',
-    img: '/hack-equipment.jpg',
+    img: '/images/hack-equipment.jpg',
   },
   {
     title: 'Двойная регулируемая тяга',
-    img: '/drt-equipment.jpg',
+    img: '/images/drt-equipment.jpg',
   },
 ];
 

@@ -19,17 +19,17 @@ const exercise = {
 
   steps: [
     {
-      img: '/leg-curl-equipment.jpg',
+      img: '/images/leg-curl-equipment.jpg',
       description:
         'Отрегулируйте тренажер таким образом, чтобы он был установлен правильно. Ваши колени должны находиться на одной линии с суставом тренажера.',
     },
     {
-      img: '/leg-curl-step-2.webp',
+      img: '/images/leg-curl-step-2.webp',
       description:
         'Опустите вес тела вниз, согнув ноги в коленях как можно дальше.',
     },
     {
-      img: '/leg-curl-step-3.webp',
+      img: '/images/leg-curl-step-3.webp',
       description: 'Медленно верните вес обратно.',
     },
   ],
@@ -37,14 +37,14 @@ const exercise = {
   muscules: [
     {
       title: 'Бедро',
-      img: '/muscules-hip.webp',
+      img: '/images/muscules-hip.webp',
     },
   ],
 
   equipment: [
     {
       title: 'Leg Curl Techogym',
-      img: '/leg-curl-equipment.jpg',
+      img: '/images/leg-curl-equipment.jpg',
       link: '/equipment/1',
     },
   ],
@@ -52,7 +52,7 @@ const exercise = {
   exercises: [
     {
       title: 'Сгибание ног лежа',
-      img: '/lying-leg-curl-exercise.jpg',
+      img: '/images/lying-leg-curl-exercise.jpg',
       link: '/exercises/2',
     },
   ],

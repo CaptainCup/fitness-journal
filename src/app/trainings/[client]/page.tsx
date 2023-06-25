@@ -28,7 +28,7 @@ const Trainings: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <Link href="equipment/create">
+          <Link href="create">
             <Button className="w-full sm:w-auto">Начать тренировку</Button>
           </Link>
         </div>

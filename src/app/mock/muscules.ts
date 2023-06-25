@@ -1,27 +1,27 @@
 const muscules = [
   {
     title: 'Бедро',
-    img: '/muscules-hip.webp',
+    img: '/images/muscules-hip.webp',
   },
   {
     title: 'Грудь',
-    img: '/muscules-chest.webp',
+    img: '/images/muscules-chest.webp',
   },
   {
     title: 'Спина',
-    img: '/muscules-back.webp',
+    img: '/images/muscules-back.webp',
   },
   {
     title: 'Бицепс',
-    img: '/muscules-biceps.webp',
+    img: '/images/muscules-biceps.webp',
   },
   {
     title: 'Трицепс',
-    img: '/muscules-triceps.webp',
+    img: '/images/muscules-triceps.webp',
   },
   {
     title: 'Пресс',
-    img: '/muscules-abs.webp',
+    img: '/images/muscules-abs.webp',
   },
 ];
 

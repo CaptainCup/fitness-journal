@@ -1,27 +1,27 @@
 const exercises = [
   {
     title: 'Сгибание ног сидя',
-    img: '/leg-curl-exercise.jpg',
+    img: '/images/leg-curl-exercise.jpg',
   },
   {
     title: 'Сгибание ног лежа',
-    img: '/lying-leg-curl-exercise.jpg',
+    img: '/images/lying-leg-curl-exercise.jpg',
   },
   {
     title: 'Становая тяга',
-    img: '/deadlift-exercise.jpg',
+    img: '/images/deadlift-exercise.jpg',
   },
   {
     title: 'Жим гантелей лежа',
-    img: '/incline-dumbbell-press-exercise.jpg',
+    img: '/images/incline-dumbbell-press-exercise.jpg',
   },
   {
     title: 'Разгибание на трицепс',
-    img: '/triceps-pushdown-exercise.jpg',
+    img: '/images/triceps-pushdown-exercise.jpg',
   },
   {
     title: 'Подъем ног',
-    img: '/hanging-leg-raise-exercise.jpg',
+    img: '/images/hanging-leg-raise-exercise.jpg',
   },
 ];
 

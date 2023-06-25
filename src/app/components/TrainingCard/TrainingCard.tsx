@@ -15,7 +15,7 @@ const TrainingCard: FC = () => {
   const [allExercises, setAllExercises] = useState(false);
   const [selectedCard, setSelectedCard] = useState<any>();
 
-  const exercisesArray = allExercises ? exercises : exercises.slice(0, 5);
+  const exercisesArray = allExercises ? exercises : exercises.slice(0, 3);
 
   const showAllExercises = () => setAllExercises(true);
 

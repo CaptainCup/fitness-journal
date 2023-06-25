@@ -5,7 +5,7 @@ import { SocialLink, Container } from '@/app/components';
 
 const Footer: FC = () => {
   return (
-    <footer className="bg-black py-10">
+    <footer className="bg-black py-10 mt-auto">
       <Container>
         <div className="text-white uppercase grid grid-cols-1 sm:grid-cols-2 gap-y-5">
           <div>
