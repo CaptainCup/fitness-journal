@@ -61,7 +61,7 @@ const Header: FC = () => {
 
             <div className="relative h-10 w-24 lg:h-12 lg:w-32">
               <Link href="/">
-                <Image src="/logo-white.png" alt="X-fit" fill />
+                <Image src="/images/logo-white.png" alt="X-fit" fill />
               </Link>
             </div>
 

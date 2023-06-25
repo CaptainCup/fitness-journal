@@ -10,17 +10,17 @@ import {
 const equipment = {
   id: '1',
   name: 'Leg Curl Techogym',
-  image: '/leg-curl-equipment.jpg',
+  image: '/images/leg-curl-equipment.jpg',
   description: `Прорабатывайте с оптимальной эффективностью мышцы задней и передней поверхности бедра на одном тренажере. Расширяет комплекс упражнений при использовании меньшего количества оборудования.`,
 
   steps: [
     {
-      img: '/leg-curl-equipment-step-1.jpg',
+      img: '/images/leg-curl-equipment-step-1.jpg',
       description:
         'Благодаря тому, что регулирующие устройства окрашены в ярко-желтый цвет, даже неопытные пользователи легко найдут их и смогут самостоятельно настроить тренажер.',
     },
     {
-      img: '/leg-curl-equipment-step-2.jpg',
+      img: '/images/leg-curl-equipment-step-2.jpg',
       description:
         'Эта функция позволяет пользователю установить сверху стека дополнительную пластину массой в половину обычной. В результате появляется возможность постепенного увеличения нагрузки.',
     },
@@ -29,7 +29,7 @@ const equipment = {
   exercises: [
     {
       title: 'Сгибание ног сидя',
-      img: '/leg-curl-exercise.jpg',
+      img: '/images/leg-curl-exercise.jpg',
       link: '/exercises/2',
     },
   ],
