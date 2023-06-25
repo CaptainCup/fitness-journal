@@ -66,7 +66,9 @@ const CardsGrid: FC<CardsGridProps> = ({
 
       <div className="grid gap-2 lg:gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
         {cards
-          .filter(({ title }) => title.toLocaleLowerCase().includes(search))
+          .filter(({ title }) =>
+            title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+          )
           .map((card) => (
             <Card key={card.title} {...card} />
           ))}
