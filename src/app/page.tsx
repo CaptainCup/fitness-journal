@@ -42,6 +42,14 @@ const Trainings: NextPage = () => {
             <Button>Перейти к тренировкам</Button>
           </Link>
         </div>
+
+        <div className="mb-5 sm:mb-10">
+          <Title>Клиенты</Title>
+          <p className="mb-5">Отслеживайте результаты ваших клиентов.</p>
+          <Link href="/clients">
+            <Button>Перейти к клиентам</Button>
+          </Link>
+        </div>
       </Container>
     </main>
   );

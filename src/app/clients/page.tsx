@@ -1,5 +1,9 @@
+'use client';
+
+import { useState, useCallback } from 'react';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import clients from '@/app/mock/clients';
 import {
   PageTitle,
@@ -7,6 +11,7 @@ import {
   Breadcrumbs,
   CardsGrid,
   Container,
+  TextInput,
 } from '@/app/components';
 
 const breadcrumbsPath = [
@@ -18,7 +23,13 @@ export const metadata = {
   title: 'Клиенты',
 };
 
-const Equipment: NextPage = () => {
+const Clients: NextPage = () => {
+  const [search, setSearch] = useState<string>('');
+  const router = useRouter();
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
   return (
     <main>
       <PageTitle title="Клиенты" />
@@ -28,19 +39,38 @@ const Equipment: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <Link href="equipment/create">
-            <Button className="w-full sm:w-auto">
-              Добавить нового клиента
+          <div className="flex">
+            <TextInput
+              placeholder="Поиск"
+              className="w-full flex mr-5"
+              delay={1500}
+              onChange={handleSearch}
+              clear
+            />
+
+            <Button onClick={() => router.push('/clients/create')}>
+              <Image
+                src="/icons/plus.svg"
+                width={40}
+                height={40}
+                alt="Добавить"
+                className="block md:hidden"
+              />
+              <p className="hidden md:inline whitespace-nowrap">
+                Добавить клиента
+              </p>
             </Button>
-          </Link>
+          </div>
         </div>
 
         <div className="mb-5 sm:mb-10">
           <CardsGrid
-            cards={clients.map((client) => ({
-              ...client,
-              link: `trainings/${client.title}`,
-            }))}
+            cards={clients
+              .filter(({ title }) => title.toLocaleLowerCase().includes(search))
+              .map((client) => ({
+                ...client,
+                link: `trainings/${client.title}`,
+              }))}
           />
         </div>
       </Container>
@@ -48,4 +78,4 @@ const Equipment: NextPage = () => {
   );
 };
 
-export default Equipment;
+export default Clients;

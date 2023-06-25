@@ -62,6 +62,7 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
       </div>
 
       <ModalGrid
+        withSearch
         title={captions[type].title}
         type={type}
         open={modalOpen}

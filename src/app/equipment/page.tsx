@@ -1,5 +1,9 @@
+'use client';
+
+import { useState, useCallback } from 'react';
 import { NextPage } from 'next';
-import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import equipment from '@/app/mock/equipment';
 import {
   PageTitle,
@@ -7,6 +11,7 @@ import {
   Breadcrumbs,
   CardsGrid,
   Container,
+  TextInput,
 } from '@/app/components';
 
 const breadcrumbsPath = [
@@ -19,6 +24,13 @@ export const metadata = {
 };
 
 const Equipment: NextPage = () => {
+  const [search, setSearch] = useState<string>('');
+  const router = useRouter();
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
+
   return (
     <main>
       <PageTitle title="Оборудование" />
@@ -28,19 +40,38 @@ const Equipment: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <Link href="equipment/create">
-            <Button className="w-full sm:w-auto">
-              Добавить новое оборудование
+          <div className="flex">
+            <TextInput
+              placeholder="Поиск"
+              className="w-full flex mr-5"
+              delay={1500}
+              onChange={handleSearch}
+              clear
+            />
+
+            <Button onClick={() => router.push('/equipment/create')}>
+              <Image
+                src="/icons/plus.svg"
+                width={40}
+                height={40}
+                alt="Добавить"
+                className="block md:hidden"
+              />
+              <p className="hidden md:inline whitespace-nowrap">
+                Добавить оборудование
+              </p>
             </Button>
-          </Link>
+          </div>
         </div>
 
         <div className="mb-5 sm:mb-10">
           <CardsGrid
-            cards={equipment.map((equipmentItem) => ({
-              ...equipmentItem,
-              link: `equipment/${equipmentItem.title}`,
-            }))}
+            cards={equipment
+              .filter(({ title }) => title.toLocaleLowerCase().includes(search))
+              .map((equipmentItem) => ({
+                ...equipmentItem,
+                link: `equipment/${equipmentItem.title}`,
+              }))}
           />
         </div>
       </Container>

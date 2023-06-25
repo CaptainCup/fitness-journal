@@ -1,0 +1,24 @@
+.loader {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, #7ae000);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 4px), #000 0);
+  animation: s3 1s infinite linear;
+  translate: 0 -50%;
+}
+@keyframes s3 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.clear {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  translate: 0 -50%;
+}

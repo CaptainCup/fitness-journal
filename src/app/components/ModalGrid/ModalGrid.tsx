@@ -2,7 +2,7 @@
 
 import { Fragment, memo, FC, useState, useCallback } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { Button, Card } from '@/app/components';
+import { Button, Card, TextInput } from '@/app/components';
 import muscules from '@/app/mock/muscules';
 import exercises from '@/app/mock/exercises';
 import equipment from '@/app/mock/equipment';
@@ -21,6 +21,7 @@ type ModalGridProps = {
   open: boolean;
   title: string;
   type: 'muscules' | 'exercises' | 'equipment';
+  withSearch?: boolean;
   onCancel: () => void;
   onConfirm: (value: CardProps[]) => void;
 };
@@ -29,10 +30,16 @@ const ModalGrid: FC<ModalGridProps> = ({
   open,
   title,
   type = 'muscules',
+  withSearch,
   onCancel,
   onConfirm,
 }) => {
   const [checked, setChecked] = useState<CardProps[]>([]);
+  const [search, setSearch] = useState<string>('');
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value);
+  }, []);
 
   const handleCardClick = useCallback((card: CardProps) => {
     setChecked((draft) =>
@@ -86,22 +93,37 @@ const ModalGrid: FC<ModalGridProps> = ({
                   {title}
                 </Dialog.Title>
 
+                {withSearch && (
+                  <div className="mb-5 md: md-10">
+                    <TextInput
+                      delay={1500}
+                      placeholder="Поиск"
+                      onChange={handleSearch}
+                      clear
+                    />
+                  </div>
+                )}
+
                 <div
                   className={classNames(
                     styles.grid,
                     'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5'
                   )}
                 >
-                  {data[type].map((card) => (
-                    <Card
-                      key={card.title}
-                      {...card}
-                      checked={checked.some(
-                        (checkedCard) => checkedCard.title === card.title
-                      )}
-                      onClick={() => handleCardClick(card)}
-                    />
-                  ))}
+                  {data[type]
+                    .filter(({ title }) =>
+                      title.toLocaleLowerCase().includes(search)
+                    )
+                    .map((card) => (
+                      <Card
+                        key={card.title}
+                        {...card}
+                        checked={checked.some(
+                          (checkedCard) => checkedCard.title === card.title
+                        )}
+                        onClick={() => handleCardClick(card)}
+                      />
+                    ))}
                 </div>
 
                 <div className="w-full flex justify-center">

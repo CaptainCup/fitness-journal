@@ -10,8 +10,8 @@ import {
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
-  { label: 'Клиенты', href: '/clents' },
-  { label: 'Тренировки', href: '/clents' },
+  { label: 'Клиенты', href: '/clients' },
+  { label: 'Тренировки', href: '/clients' },
 ];
 
 export const metadata = {

@@ -97,6 +97,7 @@ const TrainingCardEditor: FC = () => {
       </div>
 
       <ModalGrid
+        withSearch
         title="Выберите упражнение"
         type="exercises"
         open={modalOpen}
