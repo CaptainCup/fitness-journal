@@ -5,7 +5,9 @@ import {
   ExerciseSteps,
   CardsGrid,
   Container,
+  Button,
 } from '@/app/components';
+import Link from 'next/link';
 
 const exercise = {
   id: '1',
@@ -75,6 +77,12 @@ const Exercise: NextPage = () => {
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
+        </div>
+
+        <div className="mb-5 sm:mb-10">
+          <Link href="/trainings/create">
+            <Button>Начать тренировку с этого упражнения</Button>
+          </Link>
         </div>
 
         <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">

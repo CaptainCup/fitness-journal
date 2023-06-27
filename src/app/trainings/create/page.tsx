@@ -21,7 +21,7 @@ export const metadata = {
 const Trainings: NextPage = () => {
   return (
     <main>
-      <PageTitle title="Тренировка 23.06.23" />
+      <PageTitle title="Тренировка 23.06.23" withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />

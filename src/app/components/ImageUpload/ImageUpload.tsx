@@ -4,11 +4,12 @@ import { FC, memo, useState, ChangeEvent } from 'react';
 import { Button } from '@/app/components';
 import Image from 'next/image';
 
-type ImageUploadProps = {
+export type ImageUploadProps = {
   id?: string;
+  square?: boolean;
 };
 
-const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload' }) => {
+const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload', square }) => {
   const [image, setImage] = useState<string>();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +23,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload' }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <input
         id={id}
         accept="image/*"
@@ -32,12 +33,12 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload' }) => {
       />
 
       {image && (
-        <div className="mb-5">
+        <div className="mb-5 w-80 h-80 relative">
           <Image
-            width={300}
-            height={300}
+            fill
             alt="Изображение не загрузилось"
             src={image}
+            style={{ objectFit: square ? 'contain' : 'cover' }}
           />
         </div>
       )}
