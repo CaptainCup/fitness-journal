@@ -8,7 +8,7 @@
   transition: transform 0.15s ease;
   transform: scaleX(0);
   transform-origin: bottom right;
-  background: #7ae000;
+  background: #a3e635;
 }
 
 .item:hover::before {

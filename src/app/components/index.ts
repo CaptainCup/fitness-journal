@@ -17,3 +17,5 @@ export { default as TrainingCardEditor } from './TrainingCardEditor';
 export { default as Footer } from './Footer';
 export { default as SocialLink } from './SocialLink';
 export { default as Container } from './Container';
+export { default as Modal } from './Modal';
+export { default as ModalAuth } from './ModalAuth';

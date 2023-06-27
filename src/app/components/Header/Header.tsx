@@ -3,7 +3,7 @@
 import React, { FC, memo, useCallback, useState, Fragment } from 'react';
 import classNames from 'classnames';
 import { Dialog, Transition } from '@headlessui/react';
-import { Container } from '@/app/components';
+import { Container, ModalAuth } from '@/app/components';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -30,8 +30,14 @@ const menuItems = [
 
 const Header: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [modalAuthOpen, setModalAuthOpen] = useState(false);
 
   const handleOpen = useCallback(() => setIsOpen((draft) => !draft), []);
+
+  const toggleModalAuth = useCallback(
+    () => setModalAuthOpen((draft) => !draft),
+    []
+  );
 
   return (
     <>
@@ -78,9 +84,12 @@ const Header: FC = () => {
               </ul>
             </nav>
 
-            <button className="text-white flex items-center ml-auto lg:ml-0">
+            <button
+              className="text-white flex items-center ml-auto lg:ml-0"
+              onClick={toggleModalAuth}
+            >
               <p className="hidden lg:inline">Вход</p>
-              <div className="relative w-10 h-10 lg:ml-5 translate-y-1">
+              <div className="relative w-10 h-10 lg:ml-5 lg:translate-y-1">
                 <Image src="/icons/enter.svg" alt="->" fill />
               </div>
             </button>
@@ -123,6 +132,8 @@ const Header: FC = () => {
           </div>
         </Dialog>
       </Transition>
+
+      <ModalAuth open={modalAuthOpen} onCancel={toggleModalAuth} />
     </>
   );
 };

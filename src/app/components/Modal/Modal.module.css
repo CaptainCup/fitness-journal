@@ -1,0 +1,24 @@
+.grid {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
+.close::before,
+.close::after {
+  content: '';
+  display: block;
+  width: 70%;
+  border-bottom: 4px solid black;
+  position: absolute;
+  top: 50%;
+}
+
+.close::before {
+  left: 10%;
+  transform: rotate(45deg) translateY(-50%);
+}
+
+.close::after {
+  right: 10%;
+  transform: rotate(-45deg) translateY(-50%);
+}

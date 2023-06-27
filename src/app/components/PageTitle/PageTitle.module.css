@@ -8,8 +8,8 @@
   margin-top: -4px;
   content: '';
   transform: rotate(-45deg);
-  border-top: 2px solid #7ae000;
-  border-left: 2px solid #7ae000;
+  border-top: 2px solid #a3e635;
+  border-left: 2px solid #a3e635;
 }
 
 .back::after {
@@ -21,7 +21,7 @@
   height: 2px;
   content: '';
   transition: 0.15s;
-  background: #7ae000;
+  background: #a3e635;
 }
 
 .back:hover::after {

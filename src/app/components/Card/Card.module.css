@@ -15,7 +15,7 @@
   width: 16px;
   height: 0px;
   content: '';
-  border-top: 2px solid #7ae000;
+  border-top: 2px solid #a3e635;
   transition: all 0.15s;
   margin: 6px 0;
 }
@@ -29,8 +29,8 @@
   height: 10px;
   content: '';
   transform: rotate(-45deg) translateY(-50%);
-  border-right: 2px solid #7ae000;
-  border-bottom: 2px solid #7ae000;
+  border-right: 2px solid #a3e635;
+  border-bottom: 2px solid #a3e635;
   transition: all 0.15s;
 }
 
@@ -43,7 +43,7 @@
   width: 16px;
   height: 0px;
   content: '';
-  border-top: 2px solid #7ae000;
+  border-top: 2px solid #a3e635;
 } */
 
 .checked::after {
@@ -53,7 +53,7 @@
   content: '';
   width: 25%;
   height: 50%;
-  border-right: 8px solid #7ae000;
-  border-bottom: 8px solid #7ae000;
+  border-right: 8px solid #a3e635;
+  border-bottom: 8px solid #a3e635;
   transform: rotate(45deg);
 }

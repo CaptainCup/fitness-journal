@@ -21,7 +21,11 @@ export const metadata = {
 const Trainings: NextPage = () => {
   return (
     <main>
-      <PageTitle title="Тренировки А. Шварценеггера" withBack />
+      <PageTitle
+        title="Тренировки А. Шварценеггера"
+        image="/images/client-1.jpg"
+        withBack
+      />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
