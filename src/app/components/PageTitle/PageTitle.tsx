@@ -18,7 +18,7 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
   const router = useRouter();
 
   return (
-    <section className="bg-black w-full pt-28 sm:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
+    <section className="bg-black w-full pt-28 sm:h-64 lg:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
       <Container className="h-full">
         <div className="flex h-full justify-between flex-col sm:flex-row">
           <div className="pb-5 sm:pb-10 flex flex-col justify-end">

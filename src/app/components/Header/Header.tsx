@@ -42,8 +42,8 @@ const Header: FC = () => {
         )}
       >
         <Container>
-          <div className=" flex items-center justify-start md:justify-between h-14 md:h-28">
-            <div className="w-5 mr-5 md:hidden" onClick={handleOpen}>
+          <div className="flex items-center justify-start lg:justify-between h-14 lg:h-28">
+            <div className="w-5 mr-5 lg:hidden" onClick={handleOpen}>
               <div className="w-full border-b-2 border-white mb-1" />
               <div
                 className={classNames(
@@ -59,13 +59,13 @@ const Header: FC = () => {
               />
             </div>
 
-            <div className="relative h-10 w-24 lg:h-12 lg:w-32">
+            <div className="relative h-10 w-24 lg:h-12 lg:w-32 lg:-translate-y-1">
               <Link href="/">
                 <Image src="/images/logo-white.png" alt="X-fit" fill />
               </Link>
             </div>
 
-            <nav className="hidden md:block">
+            <nav className="hidden lg:block">
               <ul className="flex">
                 {menuItems.map(({ label, href }) => (
                   <li
@@ -77,6 +77,13 @@ const Header: FC = () => {
                 ))}
               </ul>
             </nav>
+
+            <button className="text-white flex items-center ml-auto lg:ml-0">
+              <p className="hidden lg:inline">Вход</p>
+              <div className="relative w-10 h-10 lg:ml-5 translate-y-1">
+                <Image src="/icons/enter.svg" alt="->" fill />
+              </div>
+            </button>
           </div>
         </Container>
       </header>

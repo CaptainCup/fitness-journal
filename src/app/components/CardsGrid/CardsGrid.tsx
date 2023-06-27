@@ -33,7 +33,7 @@ const CardsGrid: FC<CardsGridProps> = ({
   return (
     <div>
       <div className="mb-5 sm:mb-10">
-        <div className="flex -mr-2 lg:-mr-5">
+        <div className="flex">
           {withSearch && (
             <TextInput
               placeholder="Поиск"
@@ -45,10 +45,7 @@ const CardsGrid: FC<CardsGridProps> = ({
           )}
 
           {addLink && (
-            <Button
-              className="min-w- flex mr-2 lg:mr-5"
-              onClick={() => router.push(addLink)}
-            >
+            <Button onClick={() => router.push(addLink)}>
               <Image
                 src="/icons/plus.svg"
                 width={40}
