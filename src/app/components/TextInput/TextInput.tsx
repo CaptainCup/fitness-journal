@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo, useState, ChangeEvent } from 'react'
+import { FC, memo, useState, ChangeEvent, useEffect } from 'react'
 import classNames from 'classnames'
 import Image from 'next/image'
 
@@ -12,6 +12,7 @@ export type TextInputProps = {
   className?: string
   clear?: boolean
   name?: string
+  value?: string
   onChange?: (value: string) => void
 }
 
@@ -21,29 +22,30 @@ const TextInput: FC<TextInputProps> = ({
   clear,
   className,
   name,
+  value,
   onChange = () => null,
 }) => {
-  const [value, setValue] = useState<string>('')
+  const [textInputValue, setTextInputValue] = useState<string>('')
   const [showLoader, setShowLoader] = useState(false)
   const [timer, setTimer] = useState<NodeJS.Timeout>()
 
   const handleClear = () => {
-    setValue('')
+    setTextInputValue('')
     onChange('')
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setValue(value)
+    const newValue = e.target.value
+    setTextInputValue(newValue)
 
     if (delay) {
       setShowLoader(true)
       if (timer) {
         clearTimeout(timer)
       }
-      if (value) {
+      if (newValue) {
         const handleChangeWithDelay = setTimeout(() => {
-          onChange(value)
+          onChange(newValue)
           setShowLoader(false)
         }, delay)
         setTimer(handleChangeWithDelay)
@@ -52,9 +54,15 @@ const TextInput: FC<TextInputProps> = ({
         setShowLoader(false)
       }
     } else {
-      onChange(value)
+      onChange(newValue)
     }
   }
+
+  useEffect(() => {
+    if (value) {
+      setTextInputValue(value)
+    }
+  }, [value])
 
   return (
     <div className={classNames(className, 'relative')}>
@@ -63,12 +71,12 @@ const TextInput: FC<TextInputProps> = ({
         placeholder={placeholder}
         onChange={handleChange}
         className="w-full border-b-2 border-black pb-2 outline-none pr-6"
-        value={value}
+        value={textInputValue}
         name={name}
       />
 
       {showLoader && <div className={styles.loader} />}
-      {clear && !showLoader && value && (
+      {clear && !showLoader && textInputValue && (
         <button onClick={handleClear} className={styles.clear}>
           <Image width={20} height={20} src="/icons/x-mark.svg" alt="X" />
         </button>

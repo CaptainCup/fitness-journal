@@ -1,26 +1,50 @@
-'use client';
+'use client'
 
-import { FC, memo, useState, ChangeEvent } from 'react';
-import { Button } from '@/app/components';
-import Image from 'next/image';
+import { FC, memo, useState, ChangeEvent, useEffect } from 'react'
+import Image from 'next/image'
+import { Button } from '@/app/components'
+import { FilesService } from '@/app/services'
+
+const filesService = new FilesService()
+
+const baseURL = 'http://localhost:4000/'
 
 export type ImageUploadProps = {
-  id?: string;
-  square?: boolean;
-};
+  id?: string
+  square?: boolean
+  value?: string
+  onChange?: (value: string) => void
+}
 
-const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload', square }) => {
-  const [image, setImage] = useState<string>();
+const ImageUpload: FC<ImageUploadProps> = ({
+  id = 'image-upload',
+  square,
+  value,
+  onChange = () => null,
+}) => {
+  const [image, setImage] = useState<string>()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const loadImg = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const file = e.target.files[0];
+      const file = e.target.files[0]
 
-      if (file) {
-        setImage(URL.createObjectURL(file));
-      }
+      await filesService
+        .upload(file)
+        .then((res: string) => {
+          setImage(URL.createObjectURL(file))
+          onChange(res)
+        })
+        .catch(() => {
+          console.log('Ошибка при загрузке картинки')
+        })
     }
-  };
+  }
+
+  useEffect(() => {
+    if (value) {
+      setImage(`${baseURL}${value}`)
+    }
+  }, [value])
 
   return (
     <div className="flex flex-col items-center">
@@ -28,7 +52,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload', square }) => {
         id={id}
         accept="image/*"
         type="file"
-        onChange={handleChange}
+        onChange={loadImg}
         className="hidden"
       />
 
@@ -36,6 +60,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload', square }) => {
         <div className="mb-5 w-80 h-80 relative">
           <Image
             fill
+            unoptimized
             alt="Изображение не загрузилось"
             src={image}
             style={{ objectFit: square ? 'contain' : 'cover' }}
@@ -51,7 +76,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ id = 'image-upload', square }) => {
         </label>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default memo(ImageUpload);
+export default memo(ImageUpload)
