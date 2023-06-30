@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Card, Title } from '@/app/components'
 import { Button, TextInput } from '@/app/components'
+import { EquipmentService } from '@/app/services'
 import { CardProps } from '../Card/Card'
+
+const equipmentApi = new EquipmentService()
 
 export type CardsGridProps = {
   title?: string
   cards: CardProps[]
-  cardAction?: 'link' | 'check' | 'none'
   addLink?: string
   addCaption?: string
   withSearch?: boolean
@@ -67,7 +69,25 @@ const CardsGrid: FC<CardsGridProps> = ({
             title.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
           )
           .map(card => (
-            <Card key={card.title} {...card} />
+            <Card
+              key={card.title}
+              menu={[
+                {
+                  label: 'Изменить',
+                  onClick: () => {
+                    router.push(`${card.link}/edit`)
+                  },
+                },
+                {
+                  label: 'Удалить',
+                  danger: true,
+                  onClick: () => {
+                    equipmentApi.deleteEquipment(card._id)
+                  },
+                },
+              ]}
+              {...card}
+            />
           ))}
       </div>
     </div>

@@ -33,6 +33,7 @@ const EquipmentPage: NextPage = async () => {
             addLink="/equipment/create"
             addCaption="Добавить оборудование"
             cards={serverData.map(({ _id, name, image }) => ({
+              _id,
               title: name,
               img: image,
               link: `equipment/${_id}`,

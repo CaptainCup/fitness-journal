@@ -2,6 +2,7 @@
 
 import { FC, memo } from 'react'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation'
 import {
   ExersiseStepsEditor,
   ImageUpload,
@@ -11,29 +12,42 @@ import {
   TextInput,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services'
+import { EquipmentItem } from '@/app/services/EquipmentService'
 
 const equipmentApi = new EquipmentService()
 
-const EquipmentForm: FC = ({}) => {
+export type EquipmentFormProps = {
+  initialData?: EquipmentItem
+}
+
+const EquipmentForm: FC<EquipmentFormProps> = ({
+  initialData = {
+    _id: '',
+    image: '',
+    name: '',
+    description: '',
+    configuration: [],
+  },
+}) => {
+  const router = useRouter()
+
+  const { _id, image, name, description, configuration } = initialData
+
   const formik = useFormik({
     initialValues: {
-      image: 'api/files/hello-1688076402515.png',
-      name: 'initial name',
-      description: 'initial description',
-      configuration: [
-        {
-          image: 'api/files/hello-1688076402515.png',
-          text: 'initial name step 1',
-        },
-        {
-          image: 'api/files/this.png',
-          text: 'initial name step 2',
-        },
-      ],
+      image,
+      name,
+      description,
+      configuration,
     },
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2))
-      equipmentApi.create(values)
+      if (_id) {
+        equipmentApi.update(_id, values)
+      } else {
+        equipmentApi.create(values)
+      }
+
+      router.push('/equipment')
     },
   })
 
@@ -75,7 +89,9 @@ const EquipmentForm: FC = ({}) => {
         </div>
 
         <div className="mb-5 sm:mb-10 flex justify-center">
-          <Button type="submit">Добавить оборудование</Button>
+          <Button type="submit">{`${
+            _id ? 'Обновить' : 'Добавить'
+          } оборудование`}</Button>
         </div>
       </form>
     </div>
