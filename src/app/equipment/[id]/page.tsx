@@ -1,11 +1,11 @@
-import { NextPage } from 'next';
 import {
   PageTitle,
   Breadcrumbs,
   ExerciseSteps,
   CardsGrid,
   Container,
-} from '@/app/components';
+} from '@/app/components'
+import { EquipmentService } from '@/app/services'
 
 const equipment = {
   id: '1',
@@ -33,37 +33,43 @@ const equipment = {
       link: '/exercises/2',
     },
   ],
-};
+}
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
   { label: 'Упражнения', href: '/exercises' },
   { label: equipment.name, href: '/exercises/1' },
-];
+]
 
 export const metadata = {
   title: equipment.name,
-};
+}
 
-const Exercise: NextPage = () => {
+const Exercise = async ({ params: { id } }: { params: { id: string } }) => {
+  const equipmentApi = new EquipmentService()
+
+  const serverData = await equipmentApi.getById(id).then(res => res)
+
+  const { name, image, description, configuration } = serverData
+
   return (
     <main>
-      <PageTitle title={equipment.name} image={equipment.image} withBack />
+      <PageTitle title={name} image={image} withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <p className="whitespace-pre-wrap mb-10 font-serif">
-          {equipment.description}
-        </p>
+        <p className="whitespace-pre-wrap mb-10 font-serif">{description}</p>
 
-        <div className="mb-10">
-          <ExerciseSteps
-            title="Настройка оборудования"
-            steps={equipment.steps}
-          />
-        </div>
+        {!!configuration?.length && (
+          <div className="mb-10">
+            <ExerciseSteps
+              title="Настройка оборудования"
+              steps={configuration}
+            />
+          </div>
+        )}
 
         <div className="mb-10">
           <CardsGrid
@@ -73,7 +79,7 @@ const Exercise: NextPage = () => {
         </div>
       </Container>
     </main>
-  );
-};
+  )
+}
 
-export default Exercise;
+export default Exercise

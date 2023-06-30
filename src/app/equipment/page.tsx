@@ -1,5 +1,4 @@
-import { GetServerSideProps, GetServerSidePropsContext, NextPage } from 'next'
-import equipment from '@/app/mock/equipment'
+import { NextPage } from 'next'
 import { PageTitle, Breadcrumbs, CardsGrid, Container } from '@/app/components'
 import { EquipmentService } from '@/app/services'
 
@@ -12,9 +11,14 @@ export const metadata = {
   title: 'Оборудование',
 }
 
-export type EquipmentPageProps = { serverData: any }
+const EquipmentPage: NextPage = async () => {
+  const equipmentApi = new EquipmentService()
 
-const EquipmentPage: NextPage<EquipmentPageProps> = ({ serverData }) => {
+  const serverData = await equipmentApi
+    .getList()
+    .then(res => res)
+    .catch(() => [])
+
   return (
     <main>
       <PageTitle title="Оборудование" />
@@ -28,28 +32,16 @@ const EquipmentPage: NextPage<EquipmentPageProps> = ({ serverData }) => {
             withSearch
             addLink="/equipment/create"
             addCaption="Добавить оборудование"
-            cards={equipment.map(equipmentItem => ({
-              ...equipmentItem,
-              link: `equipment/${equipmentItem.title}`,
+            cards={serverData.map(({ _id, name, image }) => ({
+              title: name,
+              img: image,
+              link: `equipment/${_id}`,
             }))}
           />
         </div>
       </Container>
     </main>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (
-  ctx: GetServerSidePropsContext,
-) => {
-  const equipmentApi = new EquipmentService(ctx)
-
-  const serverData = await equipmentApi
-    .getList()
-    .then(res => res)
-    .catch(() => [])
-
-  return { props: { serverData } }
 }
 
 export default EquipmentPage

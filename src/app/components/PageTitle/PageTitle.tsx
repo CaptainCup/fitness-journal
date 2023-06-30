@@ -1,21 +1,20 @@
-'use client';
+'use client'
 
-import React, { FC, memo } from 'react';
-import classNames from 'classnames';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { Container } from '@/app/components';
+import React, { FC, memo } from 'react'
+import classNames from 'classnames'
+import { useRouter } from 'next/navigation'
+import { Container, Image } from '@/app/components'
 
-import styles from './PageTitle.module.css';
+import styles from './PageTitle.module.css'
 
 type PageTitleProps = {
-  title: string;
-  image?: string;
-  withBack?: boolean;
-};
+  title: string
+  image?: string
+  withBack?: boolean
+}
 
 const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   return (
     <section className="bg-black w-full pt-28 sm:h-64 lg:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
@@ -27,7 +26,7 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
                 onClick={router.back}
                 className={classNames(
                   'text-lime-400 w-fit mb-5 pl-16 hover:pl-20 transition-all relative',
-                  styles.back
+                  styles.back,
                 )}
               >
                 Назад
@@ -38,13 +37,13 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
 
           {image && (
             <div className="relative h-full aspect-square -mx-5 sm:ml-10">
-              <Image src={image} alt={title} fill />
+              <Image unoptimized src={image} alt={title} fill />
             </div>
           )}
         </div>
       </Container>
     </section>
-  );
-};
+  )
+}
 
-export default memo(PageTitle);
+export default memo(PageTitle)

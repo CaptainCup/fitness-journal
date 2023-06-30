@@ -1,20 +1,20 @@
-'use client';
+'use client'
 
-import { useState, useCallback, FC, memo } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { Card, Title } from '@/app/components';
-import { Button, TextInput } from '@/app/components';
-import { CardProps } from '../Card/Card';
+import { useState, useCallback, FC, memo } from 'react'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { Card, Title } from '@/app/components'
+import { Button, TextInput } from '@/app/components'
+import { CardProps } from '../Card/Card'
 
 export type CardsGridProps = {
-  title?: string;
-  cards: CardProps[];
-  cardAction?: 'link' | 'check' | 'none';
-  addLink?: string;
-  addCaption?: string;
-  withSearch?: boolean;
-};
+  title?: string
+  cards: CardProps[]
+  cardAction?: 'link' | 'check' | 'none'
+  addLink?: string
+  addCaption?: string
+  withSearch?: boolean
+}
 
 const CardsGrid: FC<CardsGridProps> = ({
   title,
@@ -23,12 +23,12 @@ const CardsGrid: FC<CardsGridProps> = ({
   addCaption = 'Добавить',
   withSearch,
 }) => {
-  const [search, setSearch] = useState<string>('');
-  const router = useRouter();
+  const [search, setSearch] = useState<string>('')
+  const router = useRouter()
 
   const handleSearch = useCallback((value: string) => {
-    setSearch(value);
-  }, []);
+    setSearch(value)
+  }, [])
 
   return (
     <div>
@@ -64,14 +64,14 @@ const CardsGrid: FC<CardsGridProps> = ({
       <div className="grid gap-2 lg:gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
         {cards
           .filter(({ title }) =>
-            title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+            title.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
           )
-          .map((card) => (
+          .map(card => (
             <Card key={card.title} {...card} />
           ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default memo(CardsGrid);
+export default memo(CardsGrid)
