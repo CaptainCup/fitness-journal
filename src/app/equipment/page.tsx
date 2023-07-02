@@ -1,6 +1,10 @@
 import { NextPage } from 'next'
-import { PageTitle, Breadcrumbs, CardsGrid, Container } from '@/app/components'
-import { EquipmentService } from '@/app/services'
+import {
+  PageTitle,
+  Breadcrumbs,
+  Container,
+  InfiniteListView,
+} from '@/app/components'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -12,13 +16,6 @@ export const metadata = {
 }
 
 const EquipmentPage: NextPage = async () => {
-  const equipmentApi = new EquipmentService()
-
-  const serverData = await equipmentApi
-    .getList()
-    .then(res => res)
-    .catch(() => [])
-
   return (
     <main>
       <PageTitle title="Оборудование" />
@@ -28,16 +25,10 @@ const EquipmentPage: NextPage = async () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <CardsGrid
+          <InfiniteListView
             withSearch
             addLink="/equipment/create"
             addCaption="Добавить оборудование"
-            cards={serverData.map(({ _id, name, image }) => ({
-              _id,
-              title: name,
-              img: image,
-              link: `equipment/${_id}`,
-            }))}
           />
         </div>
       </Container>

@@ -15,7 +15,6 @@ type MenuItem = {
 }
 
 export type CardProps = {
-  _id: string
   title: string
   img?: string
   link?: string

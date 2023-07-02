@@ -1,31 +1,31 @@
-'use client';
+'use client'
 
-import { Fragment, memo, FC, useState, useCallback, useEffect } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { Button, Card, TextInput } from '@/app/components';
-import muscules from '@/app/mock/muscules';
-import exercises from '@/app/mock/exercises';
-import equipment from '@/app/mock/equipment';
-import { CardProps } from '../Card/Card';
-import classNames from 'classnames';
+import { Fragment, memo, FC, useState, useCallback, useEffect } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import { Button, Card, TextInput, InfiniteList } from '@/app/components'
+import muscules from '@/app/mock/muscules'
+import exercises from '@/app/mock/exercises'
+import equipment from '@/app/mock/equipment'
+import { CardProps } from '../Card/Card'
+import classNames from 'classnames'
 
-import styles from './ModalGrid.module.css';
+import styles from './ModalGrid.module.css'
 
 const data = {
   muscules,
   exercises,
   equipment,
-};
+}
 
-type ModalGridProps = {
-  open: boolean;
-  title: string;
-  type: 'muscules' | 'exercises' | 'equipment';
-  withSearch?: boolean;
-  onCancel: () => void;
-  onConfirm: (value: CardProps[]) => void;
-  filterData?: (value: CardProps) => boolean;
-};
+export type ModalGridProps = {
+  open: boolean
+  title: string
+  type: 'muscules' | 'exercises' | 'equipment'
+  withSearch?: boolean
+  onCancel: () => void
+  onConfirm: (value: CardProps[]) => void
+  filterData?: (value: CardProps) => boolean
+}
 
 const ModalGrid: FC<ModalGridProps> = ({
   open,
@@ -36,32 +36,32 @@ const ModalGrid: FC<ModalGridProps> = ({
   onConfirm,
   filterData = () => true,
 }) => {
-  const [checked, setChecked] = useState<CardProps[]>([]);
-  const [search, setSearch] = useState<string>('');
+  const [checked, setChecked] = useState<CardProps[]>([])
+  const [search, setSearch] = useState<string>('')
 
   const handleSearch = useCallback((value: string) => {
-    setSearch(value);
-  }, []);
+    setSearch(value)
+  }, [])
 
   const handleCardClick = useCallback((card: CardProps) => {
-    setChecked((draft) =>
-      draft.some((draftCard) => draftCard.title === card.title)
-        ? draft.filter((value) => value !== card)
-        : [...draft, card]
-    );
-  }, []);
+    setChecked(draft =>
+      draft.some(draftCard => draftCard.title === card.title)
+        ? draft.filter(value => value !== card)
+        : [...draft, card],
+    )
+  }, [])
 
   const handleConfirm = useCallback(() => {
-    onConfirm(checked);
-    onCancel();
-  }, [checked, onConfirm, onCancel]);
+    onConfirm(checked)
+    onCancel()
+  }, [checked, onConfirm, onCancel])
 
   useEffect(() => {
     if (!open) {
-      setChecked([]);
-      setSearch('');
+      setChecked([])
+      setSearch('')
     }
-  }, [open]);
+  }, [open])
 
   return (
     <Transition appear show={open} as={Fragment}>
@@ -93,7 +93,7 @@ const ModalGrid: FC<ModalGridProps> = ({
                 <button
                   className={classNames(
                     styles.close,
-                    'absolute top-2 right-2 w-8 h-8  bg-lime-400'
+                    'absolute top-2 right-2 w-8 h-8  bg-lime-400',
                   )}
                   onClick={onCancel}
                 />
@@ -116,25 +116,34 @@ const ModalGrid: FC<ModalGridProps> = ({
                 <div
                   className={classNames(
                     styles.grid,
-                    'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5'
+                    'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
                   )}
                 >
                   {data[type]
                     .filter(filterData)
                     .filter(({ title }) =>
-                      title.toLocaleLowerCase().includes(search)
+                      title.toLocaleLowerCase().includes(search),
                     )
-                    .map((card) => (
+                    .map(card => (
                       <Card
                         key={card.title}
                         {...card}
                         checked={checked.some(
-                          (checkedCard) => checkedCard.title === card.title
+                          checkedCard => checkedCard.title === card.title,
                         )}
                         onClick={() => handleCardClick(card)}
                       />
                     ))}
                 </div>
+
+                {/* <div className={styles.grid}>
+                  <InfiniteList
+                    pageLimit={8}
+                    endpoint="equipment"
+                    listClassName="grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5"
+                    useWindow={false}
+                  />
+                </div> */}
 
                 <div className="w-full flex justify-center">
                   <Button onClick={handleConfirm}>Подтвердить</Button>
@@ -145,7 +154,7 @@ const ModalGrid: FC<ModalGridProps> = ({
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}
 
-export default memo(ModalGrid);
+export default memo(ModalGrid)

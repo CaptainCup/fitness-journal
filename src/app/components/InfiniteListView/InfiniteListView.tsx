@@ -3,23 +3,18 @@
 import { useState, useCallback, FC, memo } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Card, Title } from '@/app/components'
+import { InfiniteList, Title } from '@/app/components'
 import { Button, TextInput } from '@/app/components'
-import { EquipmentService } from '@/app/services'
-
-const equipmentApi = new EquipmentService()
 
 export type CardsGridProps = {
   title?: string
-  cards: any[]
   addLink?: string
   addCaption?: string
   withSearch?: boolean
 }
 
-const CardsGrid: FC<CardsGridProps> = ({
+const InfiniteListView: FC<CardsGridProps> = ({
   title,
-  cards,
   addLink,
   addCaption = 'Добавить',
   withSearch,
@@ -62,35 +57,16 @@ const CardsGrid: FC<CardsGridProps> = ({
 
       {title && <Title>{title}</Title>}
 
-      <div className="grid gap-2 lg:gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6">
-        {cards
-          .filter(({ title }) =>
-            title.toLocaleLowerCase().includes(search.toLocaleLowerCase()),
-          )
-          .map(card => (
-            <Card
-              key={card.title}
-              menu={[
-                {
-                  label: 'Изменить',
-                  onClick: () => {
-                    router.push(`${card.link}/edit`)
-                  },
-                },
-                {
-                  label: 'Удалить',
-                  danger: true,
-                  onClick: () => {
-                    equipmentApi.deleteEquipment(card._id)
-                  },
-                },
-              ]}
-              {...card}
-            />
-          ))}
+      <div className="mb-5 sm:mb-10">
+        <InfiniteList
+          pageLimit={8}
+          params={{ search }}
+          endpoint="equipment"
+          listClassName="grid gap-2 lg:gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6"
+        />
       </div>
     </div>
   )
 }
 
-export default memo(CardsGrid)
+export default memo(InfiniteListView)
