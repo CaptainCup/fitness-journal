@@ -1,22 +1,24 @@
-import { FC, ReactNode, memo } from 'react';
-import classNames from 'classnames';
+import { FC, ReactNode, memo } from 'react'
+import classNames from 'classnames'
 
 type TitleProps = {
-  children: ReactNode;
-  className?: string;
-};
+  children: ReactNode
+  className?: string
+  extra?: ReactNode
+}
 
-const Title: FC<TitleProps> = ({ className, children }) => {
+const Title: FC<TitleProps> = ({ className, children, extra }) => {
   return (
-    <h2
+    <div
       className={classNames(
-        'text-xl w-full border-b-4 border-black mb-5',
-        className
+        'flex justify-between items-center w-full border-b-4 border-black mb-5 py-2',
+        className,
       )}
     >
-      {children}
-    </h2>
-  );
-};
+      <h2 className="text-xl">{children}</h2>
+      {extra}
+    </div>
+  )
+}
 
-export default memo(Title);
+export default memo(Title)

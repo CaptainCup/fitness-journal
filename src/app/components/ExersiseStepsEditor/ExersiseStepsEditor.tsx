@@ -1,6 +1,7 @@
 'use client'
 
 import { FC, memo, useEffect, useState } from 'react'
+import Image from 'next/image'
 import { Button, ImageUpload, Textarea, Title } from '@/app/components'
 
 type Step = {
@@ -97,7 +98,21 @@ const ExersiseStepsEditor: FC<ExersiseStepsEditorProps> = ({
 
   return (
     <div>
-      {title && <Title>{title}</Title>}
+      <Title
+        extra={
+          <Button className="py-1 px-2">
+            <Image
+              src="/icons/plus.svg"
+              width={20}
+              height={20}
+              alt="Добавить"
+              onClick={addStep}
+            />
+          </Button>
+        }
+      >
+        {title}
+      </Title>
       <div className="grid gap-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-5 items-center">
         {steps.map((step, index) => (
           <ExersiseStep
@@ -108,12 +123,6 @@ const ExersiseStepsEditor: FC<ExersiseStepsEditorProps> = ({
             onDelete={() => deleteStep(index)}
           />
         ))}
-
-        <div className="sm:col-span-2 md:col-span-5 flex items-center">
-          <Button type="button" className="w-full" onClick={addStep}>
-            Добавить шаг
-          </Button>
-        </div>
       </div>
     </div>
   )

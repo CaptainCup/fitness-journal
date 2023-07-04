@@ -1,20 +1,20 @@
-import { ReactNode } from 'react';
-import { NextPage } from 'next';
-import localFont from 'next/font/local';
-import { Footer, Header } from '@/app/components';
+import { ReactNode } from 'react'
+import { NextPage } from 'next'
+import localFont from 'next/font/local'
+import { Footer, Header } from '@/app/components'
 
-import './globals.css';
+import './globals.css'
 
-const font = localFont({ src: './DrukTextWide-Medium.woff' });
+const font = localFont({ src: './DrukTextWide-Medium.woff' })
 
 export const metadata = {
   title: 'Fitness Journal',
   description: 'An application for tracking the results of your workouts',
-};
+}
 
 type RootLayout = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 const RootLayout: NextPage<RootLayout> = ({ children }) => {
   return (
@@ -25,7 +25,7 @@ const RootLayout: NextPage<RootLayout> = ({ children }) => {
         <Footer />
       </body>
     </html>
-  );
-};
+  )
+}
 
-export default RootLayout;
+export default RootLayout

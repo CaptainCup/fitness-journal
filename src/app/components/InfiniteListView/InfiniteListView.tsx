@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useCallback, FC, memo } from 'react'
+import { useState, useCallback, FC, memo, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { InfiniteList, Title } from '@/app/components'
+import { InfiniteList, Title, Card } from '@/app/components'
 import { Button, TextInput } from '@/app/components'
 
 export type CardsGridProps = {
@@ -11,6 +11,8 @@ export type CardsGridProps = {
   addLink?: string
   addCaption?: string
   withSearch?: boolean
+  endpoint: string
+  renderItem: (data: any, index: number) => ReactNode
 }
 
 const InfiniteListView: FC<CardsGridProps> = ({
@@ -18,6 +20,8 @@ const InfiniteListView: FC<CardsGridProps> = ({
   addLink,
   addCaption = 'Добавить',
   withSearch,
+  endpoint,
+  renderItem,
 }) => {
   const [search, setSearch] = useState<string>('')
   const router = useRouter()
@@ -61,8 +65,8 @@ const InfiniteListView: FC<CardsGridProps> = ({
         <InfiniteList
           pageLimit={8}
           params={{ search }}
-          endpoint="equipment"
-          listClassName="grid gap-2 lg:gap-5 grid-cols-2 md:grid-cols-4 xl:grid-cols-6"
+          endpoint={endpoint}
+          renderItem={renderItem}
         />
       </div>
     </div>

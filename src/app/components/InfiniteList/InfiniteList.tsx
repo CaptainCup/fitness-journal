@@ -10,10 +10,10 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { KeyedMutator } from 'swr'
+import classNames from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 import { BaseHttpService } from '@/app/services'
-import { Card } from '@/app/components'
 
 import styles from './InfiniteList.module.css'
 
@@ -111,6 +111,7 @@ export type InfiniteListProps = {
   options?: SWRInfiniteConfiguration
   listClassName?: string
   useWindow?: boolean
+  renderItem: (data: any, index: number) => ReactNode
 }
 
 const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
@@ -122,6 +123,7 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       options,
       listClassName,
       useWindow = true,
+      renderItem,
     },
     ref,
   ) => {
@@ -151,7 +153,7 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
     const hasMore = useMemo(() => {
       const pages = Math.ceil(count / pageLimit)
       return pages > size
-    }, [count, size])
+    }, [count, size, pageLimit])
 
     useImperativeHandle(ref, () => ({
       mutate,
@@ -166,28 +168,30 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       <InfiniteScroll
         initialLoad={false}
         pageStart={size}
-        className={listClassName}
+        className={classNames(
+          listClassName,
+          'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
+        )}
         hasMore={hasMore}
         useWindow={useWindow}
         loadMore={() => !loading && setSize(size + 1)}
         loader={
           <Fragment key="loading">
             {loading && (
-              <div className="w-full h-full flex justify-center items-center">
+              <div className="w-full h-full flex justify-center items-center col-span-2 sm:col-span-3 md:col-span-4">
                 <div className={styles.loader} />
               </div>
             )}
           </Fragment>
         }
       >
-        {data?.flat().map((item, index) => (
-          <Card
-            key={`${item?.name}-${index}`}
-            title={item.name}
-            img={item.image}
-            {...item}
-          />
-        ))}
+        {data?.flat().length ? (
+          data?.flat().map(renderItem)
+        ) : (
+          <p className="col-span-2 sm:col-span-3 md:col-span-4">
+            Ничего не найдено
+          </p>
+        )}
       </InfiniteScroll>
     )
   },

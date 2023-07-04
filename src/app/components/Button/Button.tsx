@@ -5,7 +5,7 @@ import classNames from 'classnames'
 
 const componentTypes = {
   button: (props: ButtonHTMLAttributes<HTMLButtonElement>) => (
-    <button {...props} />
+    <button type="button" {...props} />
   ),
   span: (props: HTMLProps<HTMLDivElement>) => <span {...props} />,
 }
@@ -16,7 +16,7 @@ const buttonTypes = {
     'border-red-500 bg-red-500 text-white hover:bg-white hover:text-red-500',
 }
 
-type ButtonProps = {
+export type ButtonProps = {
   onClick?: () => void
   children?: ReactNode
   component?: 'button' | 'span'

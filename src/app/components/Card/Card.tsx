@@ -31,14 +31,9 @@ const Card: FC<CardProps> = ({ title, img, link, checked, menu, onClick }) => {
         checked && styles.checked,
         'relative aspect-square border-b-4 border-lime-400 transition-all',
       )}
+      onClick={onClick}
     >
-      <Image
-        onClick={onClick}
-        src={img}
-        alt={title}
-        fill
-        style={{ objectFit: 'cover' }}
-      />
+      <Image src={img} alt={title} fill style={{ objectFit: 'cover' }} />
 
       {menu && (
         <Popover className="relative">

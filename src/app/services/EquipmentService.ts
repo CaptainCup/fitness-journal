@@ -18,8 +18,7 @@ export default class EquipmentService extends BaseHttpService {
   }
 
   async create(data = {}, options = {}): Promise<EquipmentItem> {
-    const equipment = await this.post('/equipment', data, options)
-    return equipment
+    return this.post('/equipment', data, options)
   }
 
   async update(id: string, data = {}): Promise<EquipmentItem> {
