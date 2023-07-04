@@ -12,7 +12,10 @@ import {
   TextInput,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services'
-import { EquipmentItem } from '@/app/services/EquipmentService'
+import {
+  EquipmentItem,
+  EquipmentItemCreate,
+} from '@/app/services/EquipmentService'
 
 const equipmentApi = new EquipmentService()
 
@@ -41,10 +44,24 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
       configuration,
     },
     onSubmit: values => {
+      const res = { ...values } as EquipmentItemCreate
+
+      if (!values.description) {
+        delete res.description
+      }
+
+      if (!values.image) {
+        delete res.image
+      }
+
+      if (!values.configuration?.length) {
+        delete res.configuration
+      }
+
       if (_id) {
-        equipmentApi.update(_id, values)
+        equipmentApi.update(_id, res)
       } else {
-        equipmentApi.create(values)
+        equipmentApi.create(res)
       }
 
       router.push('/equipment')

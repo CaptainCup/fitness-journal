@@ -3,7 +3,7 @@
 import { memo, FC } from 'react'
 import { InfiniteListView, Card } from '@/app/components'
 
-const EquipmentView: FC = () => {
+const EquipmentListView: FC = () => {
   return (
     <InfiniteListView
       withSearch
@@ -23,4 +23,4 @@ const EquipmentView: FC = () => {
   )
 }
 
-export default memo(EquipmentView)
+export default memo(EquipmentListView)

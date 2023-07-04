@@ -13,7 +13,6 @@ export type ExerciseItem = {
 }
 
 export type ExerciseItemCreate = {
-  _id: string
   name: string
   image?: string
   description?: string

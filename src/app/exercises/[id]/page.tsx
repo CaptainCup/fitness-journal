@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import { Metadata } from 'next'
 import {
   PageTitle,
   Breadcrumbs,
@@ -6,74 +6,51 @@ import {
   CardsGrid,
   Container,
   Button,
-} from '@/app/components';
-import Link from 'next/link';
+} from '@/app/components'
+import Link from 'next/link'
+import { ExerciseService } from '@/app/services'
 
-const exercise = {
-  id: '1',
-  name: 'Сгибание ног сидя',
-  image: '/images/leg-curl-exercise.jpg',
-  description: `Сгибание ног в положении сидя - одно из лучших упражнений на подколенные сухожилия, которое вы можете выполнять, и оно прекрасно дополняет упражнения на разгибание бедер.
+const exerciseApi = new ExerciseService()
 
-Исследования показали, что сгибание ног в положении сидя отлично подходит для активности и роста мышц подколенного сухожилия. Одной из причин его эффективности является то, что сгибание ног в положении сидя выполняется с согнутым бедром, что приводит к увеличению длины подколенных сухожилий. И тренировка с большой длиной мышц, по-видимому, эффективна для роста мышц.
-  
-В то время как такие упражнения, как становая тяга на негнущихся ногах, в основном воздействуют на верхние отделы подколенных сухожилий, сгибание ног также воздействует на нижние отделы подколенных сухожилий. Сочетание обоих типов упражнений в тренировках ног, вероятно, является хорошей идеей для оптимальной тренировки подколенных сухожилий.`,
+const getData = async (id: string) => {
+  const serverData = await exerciseApi.getById(id).then(res => res)
 
-  steps: [
-    {
-      img: '/images/leg-curl-equipment.jpg',
-      description:
-        'Отрегулируйте тренажер таким образом, чтобы он был установлен правильно. Ваши колени должны находиться на одной линии с суставом тренажера.',
+  return serverData
+}
+
+type Props = {
+  params: { id: string }
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const id = params.id
+
+  const serverData = await getData(id)
+
+  const { name, image } = serverData
+
+  return {
+    title: name,
+    openGraph: {
+      images: image,
     },
-    {
-      img: '/images/leg-curl-step-2.webp',
-      description:
-        'Опустите вес тела вниз, согнув ноги в коленях как можно дальше.',
-    },
-    {
-      img: '/images/leg-curl-step-3.webp',
-      description: 'Медленно верните вес обратно.',
-    },
-  ],
+  }
+}
 
-  muscules: [
-    {
-      title: 'Бедро',
-      img: '/images/muscules-hip.webp',
-    },
-  ],
+const Exercise = async ({ params: { id } }: { params: { id: string } }) => {
+  const serverData = await getData(id)
 
-  equipment: [
-    {
-      title: 'Leg Curl Techogym',
-      img: '/images/leg-curl-equipment.jpg',
-      link: '/equipment/1',
-    },
-  ],
+  const { name, image, description, execution, equipment, similar } = serverData
 
-  exercises: [
-    {
-      title: 'Сгибание ног лежа',
-      img: '/images/lying-leg-curl-exercise.jpg',
-      link: '/exercises/2',
-    },
-  ],
-};
+  const breadcrumbsPath = [
+    { label: 'Главная', href: '/' },
+    { label: 'Упражнения', href: '/exercises' },
+    { label: name, href: `/exercises/${id}` },
+  ]
 
-const breadcrumbsPath = [
-  { label: 'Главная', href: '/' },
-  { label: 'Упражнения', href: '/exercises' },
-  { label: exercise.name, href: '/exercises/1' },
-];
-
-export const metadata = {
-  title: exercise.name,
-};
-
-const Exercise: NextPage = () => {
   return (
     <main>
-      <PageTitle title={exercise.name} image={exercise.image} withBack />
+      <PageTitle title={name} image={image} withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
@@ -86,30 +63,47 @@ const Exercise: NextPage = () => {
         </div>
 
         <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">
-          {exercise.description}
+          {description}
         </p>
 
-        <div className="mb-5 sm:mb-10">
-          <ExerciseSteps title="Порядок выполнения" steps={exercise.steps} />
-        </div>
+        {!!execution?.length && (
+          <div className="mb-5 sm:mb-10">
+            <ExerciseSteps title="Порядок выполнения" steps={execution} />
+          </div>
+        )}
 
-        <div className="mb-5 sm:mb-10">
+        {/* <div className="mb-5 sm:mb-10">
           <CardsGrid title="Задействованные мышцы" cards={exercise.muscules} />
-        </div>
+        </div> */}
 
-        <div className="mb-5 sm:mb-10">
-          <CardsGrid
-            title="Используемое оборудование"
-            cards={exercise.equipment}
-          />
-        </div>
+        {!!equipment?.length && (
+          <div className="mb-5 sm:mb-10">
+            <CardsGrid
+              title="Используемое оборудование"
+              cards={equipment.map(({ _id, name, image }) => ({
+                title: name,
+                img: image,
+                link: `/equipment/${_id}`,
+              }))}
+            />
+          </div>
+        )}
 
-        <div className="mb-5 sm:mb-10">
-          <CardsGrid title="Похожие упражнения" cards={exercise.exercises} />
-        </div>
+        {!!similar?.length && (
+          <div className="mb-5 sm:mb-10">
+            <CardsGrid
+              title="Похожие упражнения"
+              cards={similar.map(({ _id, name, image }) => ({
+                title: name,
+                img: image,
+                link: `/exercises/${_id}`,
+              }))}
+            />
+          </div>
+        )}
       </Container>
     </main>
-  );
-};
+  )
+}
 
-export default Exercise;
+export default Exercise

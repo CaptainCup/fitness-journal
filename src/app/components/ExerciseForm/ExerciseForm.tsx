@@ -61,8 +61,6 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
       similar,
     },
     onSubmit: values => {
-      console.log('values: ', values)
-
       const res = { ...values } as ExerciseItemCreate
 
       if (values.measurements.some((measurement: string) => !measurement)) {
@@ -73,13 +71,27 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
 
       if (values.equipment?.length) {
         res.equipment = values.equipment.map(({ _id }: { _id: string }) => _id)
+      } else {
+        delete res.equipment
       }
 
       if (values.similar?.length) {
         res.similar = values.similar.map(({ _id }: { _id: string }) => _id)
+      } else {
+        delete res.similar
       }
 
-      console.log('values updated: ', res)
+      if (!values.description) {
+        delete res.description
+      }
+
+      if (!values.image) {
+        delete res.image
+      }
+
+      if (!values.execution?.length) {
+        delete res.execution
+      }
 
       if (_id) {
         exerciseApi.update(_id, res)
@@ -87,7 +99,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
         exerciseApi.create(res)
       }
 
-      // router.push('/exercises')
+      router.push('/exercises')
     },
   })
 

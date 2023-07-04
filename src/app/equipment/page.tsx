@@ -3,7 +3,7 @@ import {
   PageTitle,
   Breadcrumbs,
   Container,
-  EquipmentView,
+  EquipmentListView,
 } from '@/app/components'
 
 const breadcrumbsPath = [
@@ -25,7 +25,7 @@ const EquipmentPage: NextPage = async () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <EquipmentView />
+          <EquipmentListView />
         </div>
       </Container>
     </main>

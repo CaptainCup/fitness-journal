@@ -2,15 +2,15 @@ import { Metadata } from 'next'
 import {
   PageTitle,
   Breadcrumbs,
-  EquipmentForm,
   Container,
+  ExerciseForm,
 } from '@/app/components'
-import { EquipmentService } from '@/app/services'
+import { ExerciseService } from '@/app/services'
 
-const equipmentApi = new EquipmentService()
+const exerciseApi = new ExerciseService()
 
 const getData = async (id: string) => {
-  const serverData = await equipmentApi.getById(id).then(res => res)
+  const serverData = await exerciseApi.getById(id).then(res => res)
 
   return serverData
 }
@@ -34,15 +34,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const EquipmentEdit = async ({ params: { id } }: Props) => {
+const ExerciseEdit = async ({ params: { id } }: Props) => {
   const serverData = await getData(id)
 
   const { name } = serverData
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
-    { label: 'Оборудование', href: '/equipment' },
-    { label: name, href: `/equipment/${id}` },
+    { label: 'Оборудование', href: '/exercises' },
+    { label: name, href: `/exercises/${id}` },
   ]
 
   return (
@@ -53,10 +53,10 @@ const EquipmentEdit = async ({ params: { id } }: Props) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <EquipmentForm initialData={serverData} />
+        <ExerciseForm initialData={serverData} />
       </Container>
     </main>
   )
 }
 
-export default EquipmentEdit
+export default ExerciseEdit

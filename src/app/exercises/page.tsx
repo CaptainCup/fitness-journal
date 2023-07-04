@@ -1,15 +1,19 @@
-import { NextPage } from 'next';
-import exercises from '@/app/mock/exercises';
-import { PageTitle, Breadcrumbs, CardsGrid, Container } from '@/app/components';
+import { NextPage } from 'next'
+import {
+  PageTitle,
+  Breadcrumbs,
+  ExercisesListView,
+  Container,
+} from '@/app/components'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
   { label: 'Упражнения', href: '/exercises' },
-];
+]
 
 export const metadata = {
   title: 'Упражнения',
-};
+}
 
 const Exercises: NextPage = () => {
   return (
@@ -21,19 +25,11 @@ const Exercises: NextPage = () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <CardsGrid
-            withSearch
-            addLink="/exercises/create"
-            addCaption="Добавить упражнение"
-            cards={exercises.map((exercise) => ({
-              ...exercise,
-              link: `exercises/${exercise.title}`,
-            }))}
-          />
+          <ExercisesListView />
         </div>
       </Container>
     </main>
-  );
-};
+  )
+}
 
-export default Exercises;
+export default Exercises

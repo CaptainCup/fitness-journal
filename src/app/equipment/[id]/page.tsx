@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
   const serverData = await getData(id)
 
-  const { name, image, description, configuration } = serverData
+  const { name, image, description, configuration, exercises } = serverData
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
@@ -67,7 +67,7 @@ const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
         )}
 
         {!!configuration?.length && (
-          <div className="mb-10">
+          <div className="mb-5 sm:mb-10">
             <ExerciseSteps
               title="Настройка оборудования"
               steps={configuration}
@@ -75,12 +75,18 @@ const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
           </div>
         )}
 
-        {/* <div className="mb-10">
-          <CardsGrid
-            title="Используется в упражнениях"
-            cards={equipment.exercises}
-          />
-        </div> */}
+        {!!exercises?.length && (
+          <div className="mb-5 sm:mb-10">
+            <CardsGrid
+              title="Используется в упражнениях"
+              cards={exercises.map(({ _id, name, image }) => ({
+                title: name,
+                img: image,
+                link: `/exercises/${_id}`,
+              }))}
+            />
+          </div>
+        )}
       </Container>
     </main>
   )

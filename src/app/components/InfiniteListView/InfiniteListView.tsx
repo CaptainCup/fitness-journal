@@ -3,10 +3,10 @@
 import { useState, useCallback, FC, memo, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { InfiniteList, Title, Card } from '@/app/components'
+import { InfiniteList, Title } from '@/app/components'
 import { Button, TextInput } from '@/app/components'
 
-export type CardsGridProps = {
+export type InfiniteListViewProps = {
   title?: string
   addLink?: string
   addCaption?: string
@@ -15,7 +15,7 @@ export type CardsGridProps = {
   renderItem: (data: any, index: number) => ReactNode
 }
 
-const InfiniteListView: FC<CardsGridProps> = ({
+const InfiniteListView: FC<InfiniteListViewProps> = ({
   title,
   addLink,
   addCaption = 'Добавить',
