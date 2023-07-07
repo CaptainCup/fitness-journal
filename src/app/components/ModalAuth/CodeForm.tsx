@@ -4,6 +4,7 @@ import React, { FC, memo } from 'react'
 import { useFormik } from 'formik'
 import { Button, TextInput } from '@/app/components'
 import { AuthService, UserService } from '@/app/services'
+import { useUser } from '@/app/hooks'
 
 const authApi = new AuthService()
 const userApi = new UserService()
@@ -15,6 +16,8 @@ type CodeFormProps = {
 }
 
 const CodeForm: FC<CodeFormProps> = ({ phone, onBack, onSuccess }) => {
+  const { mutate } = useUser()
+
   const formik = useFormik({
     initialValues: {
       code: '',
@@ -26,7 +29,7 @@ const CodeForm: FC<CodeFormProps> = ({ phone, onBack, onSuccess }) => {
         try {
           await authApi.signIn({ phone, code })
           const user = await userApi.getCurrent()
-          console.log('user: ', user)
+          mutate(user)
           onSuccess()
         } catch (e: any) {
           console.log(e)

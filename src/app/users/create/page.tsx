@@ -14,7 +14,7 @@ export const metadata = {
 const UserCreate: NextPage = () => {
   return (
     <main>
-      <PageTitle title="Новый клиент" withBack />
+      <PageTitle title="Новый пользователь" withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />

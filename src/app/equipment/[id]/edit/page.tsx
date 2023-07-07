@@ -43,6 +43,7 @@ const EquipmentEdit = async ({ params: { id } }: Props) => {
     { label: 'Главная', href: '/' },
     { label: 'Оборудование', href: '/equipment' },
     { label: name, href: `/equipment/${id}` },
+    { label: 'Редактировать', href: `/equipment/${id}/edit` },
   ]
 
   return (

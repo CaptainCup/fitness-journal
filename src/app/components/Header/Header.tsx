@@ -1,13 +1,17 @@
 'use client'
 
-import React, { FC, memo, useCallback, useState, Fragment } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import classNames from 'classnames'
-import { Dialog, Transition } from '@headlessui/react'
-import { Container, ModalAuth } from '@/app/components'
 import Image from 'next/image'
 import Link from 'next/link'
-
+import { useRouter } from 'next/navigation'
+import { AuthService } from '@/app/services'
+import { Container, ModalAuth } from '@/app/components'
+import { useUser } from '@/app/hooks'
 import styles from './Header.module.css'
+import HeaderMenu from './HeaderMenu'
+
+const authApi = new AuthService()
 
 const menuItems = [
   {
@@ -29,15 +33,38 @@ const menuItems = [
 ]
 
 const Header: FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<'menu' | 'user' | boolean>(false)
   const [modalAuthOpen, setModalAuthOpen] = useState(false)
+  const { user, mutate } = useUser()
+  const router = useRouter()
 
-  const handleOpen = useCallback(() => setIsOpen(draft => !draft), [])
+  const handleClose = useCallback(() => {
+    setIsOpen(false)
+  }, [])
 
   const toggleModalAuth = useCallback(
     () => setModalAuthOpen(draft => !draft),
     [],
   )
+
+  const userMenuItems = [
+    {
+      label: 'Профиль',
+      onClick: () => {
+        handleClose()
+        router.push(`/users/${user?._id}/edit`)
+      },
+    },
+    {
+      label: 'Выйти',
+      onClick: () => {
+        handleClose()
+        authApi.signOut()
+        mutate(null)
+        router.push('/')
+      },
+    },
+  ]
 
   return (
     <>
@@ -49,18 +76,21 @@ const Header: FC = () => {
       >
         <Container>
           <div className="flex items-center justify-start lg:justify-between h-14 lg:h-28">
-            <div className="w-5 mr-5 lg:hidden" onClick={handleOpen}>
+            <div
+              className="w-5 mr-5 lg:hidden"
+              onClick={() => setIsOpen('menu')}
+            >
               <div className="w-full border-b-2 border-white mb-1" />
               <div
                 className={classNames(
                   'w-full border-b-2 border-white mb-1 transition-all',
-                  isOpen && 'translate-x-1',
+                  isOpen === 'menu' && 'translate-x-1',
                 )}
               />
               <div
                 className={classNames(
                   'w-full border-b-2 border-white transition-all',
-                  isOpen && 'translate-x-2',
+                  isOpen === 'menu' && 'translate-x-2',
                 )}
               />
             </div>
@@ -84,54 +114,67 @@ const Header: FC = () => {
               </ul>
             </nav>
 
-            <button
-              className="text-white flex items-center ml-auto lg:ml-0"
-              onClick={toggleModalAuth}
-            >
-              <p className="hidden lg:inline">Вход</p>
-              <div className="relative w-10 h-10 lg:ml-5 lg:translate-y-1">
-                <Image src="/icons/enter.svg" alt="->" fill />
-              </div>
-            </button>
+            {user?._id ? (
+              <button
+                className="text-white ml-auto"
+                onClick={() => setIsOpen('user')}
+              >
+                {`${user?.firstName ? `${user?.firstName[0]}. ` : ''}${
+                  user?.lastName
+                }`}
+              </button>
+            ) : (
+              <button
+                className="text-white flex items-center ml-auto lg:ml-0"
+                onClick={toggleModalAuth}
+              >
+                <p className="hidden lg:inline">Вход</p>
+                <div className="relative w-10 h-10 lg:ml-5 lg:translate-y-1">
+                  <Image src="/icons/enter.svg" alt="->" fill />
+                </div>
+              </button>
+            )}
           </div>
         </Container>
       </header>
 
-      <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={handleOpen}>
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full justify-center pt-14">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <Dialog.Panel className="w-full h-fit bg-black border-b-4 border-lime-400 px-5 py-5">
-                  <nav>
-                    <ul>
-                      {menuItems.map(({ label, href }) => (
-                        <li
-                          className="text-white relative text-3xl mb-5"
-                          onClick={handleOpen}
-                          key={label}
-                        >
-                          <Link className="outline-none" href={href}>
-                            {label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </nav>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+      <HeaderMenu open={isOpen === 'menu'} onClose={handleClose}>
+        <Container>
+          <nav>
+            <ul>
+              {menuItems.map(({ label, href }) => (
+                <li
+                  className="text-white relative text-3xl mb-5"
+                  onClick={handleClose}
+                  key={label}
+                >
+                  <Link className="outline-none" href={href}>
+                    {label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </Container>
+      </HeaderMenu>
+
+      <HeaderMenu open={isOpen === 'user'} onClose={handleClose}>
+        <Container>
+          <nav>
+            <ul>
+              {userMenuItems.map(({ label, onClick }) => (
+                <li
+                  className="text-white relative text-3xl mb-5 text-right"
+                  onClick={onClick}
+                  key={label}
+                >
+                  {label}
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </Container>
+      </HeaderMenu>
 
       <ModalAuth open={modalAuthOpen} onCancel={toggleModalAuth} />
     </>

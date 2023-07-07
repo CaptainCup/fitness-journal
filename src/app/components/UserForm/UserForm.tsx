@@ -105,7 +105,7 @@ const UserForm: FC<UserFormProps> = ({
       </div>
 
       <div className="mb-5 sm:mb-10 flex justify-center">
-        <Button type="submit">Добавить пользователя</Button>
+        <Button type="submit">Изменить пользователя</Button>
       </div>
     </form>
   )
