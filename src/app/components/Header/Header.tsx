@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import React, { FC, memo, useCallback, useState, Fragment } from 'react';
-import classNames from 'classnames';
-import { Dialog, Transition } from '@headlessui/react';
-import { Container, ModalAuth } from '@/app/components';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { FC, memo, useCallback, useState, Fragment } from 'react'
+import classNames from 'classnames'
+import { Dialog, Transition } from '@headlessui/react'
+import { Container, ModalAuth } from '@/app/components'
+import Image from 'next/image'
+import Link from 'next/link'
 
-import styles from './Header.module.css';
+import styles from './Header.module.css'
 
 const menuItems = [
   {
@@ -23,28 +23,28 @@ const menuItems = [
     href: '/trainings',
   },
   {
-    label: 'Клиенты',
-    href: '/clients',
+    label: 'Клуб',
+    href: '/users',
   },
-];
+]
 
 const Header: FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [modalAuthOpen, setModalAuthOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [modalAuthOpen, setModalAuthOpen] = useState(false)
 
-  const handleOpen = useCallback(() => setIsOpen((draft) => !draft), []);
+  const handleOpen = useCallback(() => setIsOpen(draft => !draft), [])
 
   const toggleModalAuth = useCallback(
-    () => setModalAuthOpen((draft) => !draft),
-    []
-  );
+    () => setModalAuthOpen(draft => !draft),
+    [],
+  )
 
   return (
     <>
       <header
         className={classNames(
           'z-10 fixed  bg-black top-0 w-full transition-all',
-          !isOpen && 'bg-opacity-50'
+          !isOpen && 'bg-opacity-50',
         )}
       >
         <Container>
@@ -54,13 +54,13 @@ const Header: FC = () => {
               <div
                 className={classNames(
                   'w-full border-b-2 border-white mb-1 transition-all',
-                  isOpen && 'translate-x-1'
+                  isOpen && 'translate-x-1',
                 )}
               />
               <div
                 className={classNames(
                   'w-full border-b-2 border-white transition-all',
-                  isOpen && 'translate-x-2'
+                  isOpen && 'translate-x-2',
                 )}
               />
             </div>
@@ -135,7 +135,7 @@ const Header: FC = () => {
 
       <ModalAuth open={modalAuthOpen} onCancel={toggleModalAuth} />
     </>
-  );
-};
+  )
+}
 
-export default memo(Header);
+export default memo(Header)

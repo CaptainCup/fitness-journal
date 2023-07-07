@@ -1,19 +1,26 @@
-'use client';
+'use client'
 
-import { Fragment, memo, FC, ReactNode } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import classNames from 'classnames';
+import { Fragment, memo, FC, ReactNode } from 'react'
+import { Dialog, Transition } from '@headlessui/react'
+import classNames from 'classnames'
 
-import styles from './Modal.module.css';
+import styles from './Modal.module.css'
 
 type ModalProps = {
-  open: boolean;
-  title?: string;
-  children: ReactNode;
-  onCancel: () => void;
-};
+  open: boolean
+  title?: string
+  children: ReactNode
+  className?: string
+  onCancel: () => void
+}
 
-const Modal: FC<ModalProps> = ({ open, title, children, onCancel }) => {
+const Modal: FC<ModalProps> = ({
+  open,
+  title,
+  children,
+  className,
+  onCancel,
+}) => {
   return (
     <Transition appear show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onCancel}>
@@ -40,11 +47,16 @@ const Modal: FC<ModalProps> = ({ open, title, children, onCancel }) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="relative w-full max-w-3xl transform overflow-hidden bg-white p-5 align-middle shadow-xl transition-all">
+              <Dialog.Panel
+                className={classNames(
+                  'relative overflow-hidden bg-white p-5 align-middle',
+                  className,
+                )}
+              >
                 <button
                   className={classNames(
                     styles.close,
-                    'absolute top-2 right-2 w-8 h-8  bg-lime-400'
+                    'absolute top-2 right-2 w-8 h-8  bg-lime-400',
                   )}
                   onClick={onCancel}
                 />
@@ -65,7 +77,7 @@ const Modal: FC<ModalProps> = ({ open, title, children, onCancel }) => {
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}
 
-export default memo(Modal);
+export default memo(Modal)

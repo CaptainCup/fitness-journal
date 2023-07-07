@@ -1,12 +1,11 @@
-import { GetServerSidePropsContext, NextPageContext } from 'next'
 import { createAxiosInstance } from '@/app/utils'
 import { AxiosInstance } from 'axios'
 
 export default class BaseHttpService {
   private http: AxiosInstance
 
-  constructor(ctx?: NextPageContext | GetServerSidePropsContext) {
-    this.http = createAxiosInstance(ctx)
+  constructor() {
+    this.http = createAxiosInstance()
   }
 
   get = async (endpoint: string, options = {}): Promise<any> => {

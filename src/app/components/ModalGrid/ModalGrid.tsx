@@ -23,7 +23,12 @@ const ModalGrid: FC<ModalGridProps> = ({
   onCancel,
 }) => {
   return (
-    <Modal open={open} title={title} onCancel={onCancel}>
+    <Modal
+      open={open}
+      title={title}
+      onCancel={onCancel}
+      className="w-full max-w-3xl"
+    >
       <div className={styles.grid}>
         <InfiniteListView
           withSearch
