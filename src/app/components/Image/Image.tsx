@@ -16,7 +16,14 @@ const Image: FC<ImageProps> = ({ src, ...props }) => {
     return src
   }, [src])
 
-  return <NextImage {...props} unoptimized src={imageSrc} />
+  return (
+    <NextImage
+      {...props}
+      unoptimized
+      src={imageSrc}
+      style={{ objectFit: 'cover' }}
+    />
+  )
 }
 
 export default memo(Image)

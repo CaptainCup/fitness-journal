@@ -12,6 +12,8 @@ export type InfiniteListViewProps = {
   addCaption?: string
   withSearch?: boolean
   endpoint: string
+  listClassName?: string
+  params?: any
   renderItem: (data: any, index: number) => ReactNode
 }
 
@@ -21,6 +23,8 @@ const InfiniteListView: FC<InfiniteListViewProps> = ({
   addCaption = 'Добавить',
   withSearch,
   endpoint,
+  listClassName,
+  params,
   renderItem,
 }) => {
   const [search, setSearch] = useState<string>('')
@@ -64,8 +68,9 @@ const InfiniteListView: FC<InfiniteListViewProps> = ({
       <div className="mb-5 sm:mb-10">
         <InfiniteList
           pageLimit={8}
-          params={{ search }}
+          params={{ search, ...params }}
           endpoint={endpoint}
+          listClassName={listClassName}
           renderItem={renderItem}
         />
       </div>

@@ -43,6 +43,7 @@ const UserEdit = async ({ params: { id } }: Props) => {
     },
     { label: 'Редактировать', href: `/users/${id}/edit` },
   ]
+
   return (
     <main>
       <PageTitle title="Редактировать пользователя" withBack />

@@ -10,7 +10,6 @@ import React, {
 } from 'react'
 import axios from 'axios'
 import { KeyedMutator } from 'swr'
-import classNames from 'classnames'
 import InfiniteScroll from 'react-infinite-scroller'
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
 import { BaseHttpService } from '@/app/services'
@@ -121,7 +120,7 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       params,
       pageLimit = 10,
       options,
-      listClassName,
+      listClassName = 'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
       useWindow = true,
       renderItem,
     },
@@ -168,10 +167,7 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       <InfiniteScroll
         initialLoad={false}
         pageStart={size}
-        className={classNames(
-          listClassName,
-          'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
-        )}
+        className={listClassName}
         hasMore={hasMore}
         useWindow={useWindow}
         loadMore={() => !loading && setSize(size + 1)}

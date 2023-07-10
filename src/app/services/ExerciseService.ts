@@ -6,7 +6,7 @@ export type ExerciseItem = {
   name: string
   image?: string
   description?: string
-  measurements: string[]
+  measurements: Measurement[]
   execution?: { image: string; text: string }[]
   equipment?: EquipmentItem[]
   similar?: ExerciseItem[]
@@ -16,10 +16,22 @@ export type ExerciseItemCreate = {
   name: string
   image?: string
   description?: string
-  measurements: string[]
+  measurements: Measurement[]
   execution?: { image: string; text: string }[]
   equipment?: string[]
   similar?: string[]
+}
+
+export enum Measurement {
+  weight = 'MEASUREMENT_WEIGHT',
+  time = 'MEASUREMENT_TIME',
+  repeats = 'MEASUREMENT_REPEATS',
+}
+
+export const MeasurementLabel = {
+  [Measurement.weight]: 'кг.',
+  [Measurement.time]: 'сек.',
+  [Measurement.repeats]: 'раз.',
 }
 
 export default class ExerciseService extends BaseHttpService {

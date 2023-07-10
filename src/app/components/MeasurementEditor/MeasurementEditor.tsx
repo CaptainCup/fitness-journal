@@ -1,20 +1,16 @@
 'use client'
 
 import { FC, memo, useCallback, useState, useEffect } from 'react'
+import classNames from 'classnames'
 import Image from 'next/image'
 import { Title, Button, Select } from '@/app/components'
-import classNames from 'classnames'
-
-export enum Measurement {
-  weight = 'MEASUREMENT_WEIGHT',
-  time = 'MEASUREMENT_TIME',
-  repeats = 'MEASUREMENT_REPEATS',
-}
+import { MeasurementLabel } from '@/app/services/ExerciseService'
 
 const options = [
-  { label: 'кг.', value: Measurement.weight },
-  { label: 'сек.', value: Measurement.time },
-  { label: 'раз', value: Measurement.repeats },
+  ...Object.entries(MeasurementLabel).map(([value, label]) => ({
+    label,
+    value,
+  })),
   { label: 'Удалить', value: 'delete' },
 ]
 

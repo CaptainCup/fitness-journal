@@ -9,9 +9,9 @@ export type ModalGridProps = {
   open: boolean
   title: string
   endpoint: 'muscules' | 'exercises' | 'equipment'
-  checked: any[]
+  checked?: any[]
   onCancel: () => void
-  handleCardClick: (value: any) => void
+  handleCardClick?: (value: any) => void
 }
 
 const ModalGrid: FC<ModalGridProps> = ({
@@ -19,7 +19,7 @@ const ModalGrid: FC<ModalGridProps> = ({
   title,
   endpoint = 'muscules',
   checked,
-  handleCardClick,
+  handleCardClick = () => null,
   onCancel,
 }) => {
   return (
@@ -36,7 +36,7 @@ const ModalGrid: FC<ModalGridProps> = ({
           renderItem={(item, index) => (
             <Card
               onClick={() => handleCardClick(item)}
-              checked={checked.some(
+              checked={checked?.some(
                 checkedCard => checkedCard.name === item.name,
               )}
               key={`${item?.name}-${index}`}

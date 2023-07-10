@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, memo, useCallback, useMemo, useState } from 'react'
 import classNames from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,7 +13,7 @@ import HeaderMenu from './HeaderMenu'
 
 const authApi = new AuthService()
 
-const menuItems = [
+const defaultMenuItems = [
   {
     label: 'Оборудование',
     href: '/equipment',
@@ -21,10 +21,6 @@ const menuItems = [
   {
     label: 'Упражнения',
     href: '/exercises',
-  },
-  {
-    label: 'Тренировки',
-    href: '/trainings',
   },
   {
     label: 'Клуб',
@@ -37,6 +33,19 @@ const Header: FC = () => {
   const [modalAuthOpen, setModalAuthOpen] = useState(false)
   const { user, mutate } = useUser()
   const router = useRouter()
+
+  const menuItems = useMemo(() => {
+    const res = [...defaultMenuItems]
+
+    if (user?._id) {
+      res.push({
+        label: 'Тренировки',
+        href: `/trainings/${user?._id}`,
+      })
+    }
+
+    return res
+  }, [user?._id])
 
   const handleClose = useCallback(() => {
     setIsOpen(false)
@@ -116,7 +125,7 @@ const Header: FC = () => {
 
             {user?._id ? (
               <button
-                className="text-white ml-auto"
+                className="text-white ml-auto lg:ml-0"
                 onClick={() => setIsOpen('user')}
               >
                 {`${user?.firstName ? `${user?.firstName[0]}. ` : ''}${

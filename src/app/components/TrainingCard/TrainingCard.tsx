@@ -1,93 +1,122 @@
-'use client';
+'use client'
 
-import { FC, Fragment, memo, useMemo, useState } from 'react';
-import exercises from '@/app/mock/exercises';
-import { Card, Title } from '@/app/components';
-import { useMediaQuery } from 'react-responsive';
+import { FC, Fragment, memo, useMemo, useState } from 'react'
+import { useMediaQuery } from 'react-responsive'
+import classNames from 'classnames'
+import { Card, Title } from '@/app/components'
+import { MeasurementLabel } from '@/app/services/ExerciseService'
+import { ExercisesRecord } from '@/app/services/TrainingService'
 
-const repeats = [
-  [1, 10, 20],
-  [2, 15, 15],
-  [3, 20, 10],
-  [4, 15, 15],
-];
+export type TrainingCardProps = {
+  date: string
+  exercises: ExercisesRecord[]
+}
 
-const TrainingCard: FC = () => {
-  const [allExercises, setAllExercises] = useState(false);
-  const [selectedCard, setSelectedCard] = useState<any>();
+const TrainingCard: FC<TrainingCardProps> = ({ date, exercises }) => {
+  const [allExercises, setAllExercises] = useState(false)
+  const [selectedCard, setSelectedCard] = useState<any>()
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
-  const isMobile = useMediaQuery({ query: '(max-width: 640px)' });
+  const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' })
+  const isMobile = useMediaQuery({ query: '(max-width: 640px)' })
 
-  const maxExercises = useMemo(() => (isDesktop ? 5 : 3), [isDesktop]);
+  const maxExercises = useMemo(() => (isDesktop ? 5 : 3), [isDesktop])
+
   const exercisesPerRow = useMemo(() => {
     switch (true) {
       case isDesktop: {
-        return 6;
+        return 6
       }
       case isMobile: {
-        return 2;
+        return 2
       }
       default: {
-        return 4;
+        return 4
       }
     }
-  }, [isDesktop, isMobile]);
+  }, [isDesktop, isMobile])
 
   const restExercises = useMemo(() => {
-    return maxExercises > exercises.length
-      ? 0
-      : exercises.length - maxExercises;
-  }, [maxExercises]);
+    return maxExercises > exercises.length ? 0 : exercises.length - maxExercises
+  }, [maxExercises, exercises.length])
 
   const exercisesArray = allExercises
-    ? exercises
-    : exercises.slice(0, maxExercises);
+    ? exercises.map(({ exercise }) => exercise)
+    : exercises.map(({ exercise }) => exercise).slice(0, maxExercises)
 
   const showStatsAfterCardIndex = useMemo(() => {
     const selectedCardIndex = exercisesArray.findIndex(
-      ({ title }) => title === selectedCard?.title
-    );
+      ({ _id }) => _id === selectedCard,
+    )
     const res =
-      Math.ceil((selectedCardIndex + 1) / exercisesPerRow) * exercisesPerRow -
-      1;
-    return res;
-  }, [selectedCard, exercisesArray, exercisesPerRow]);
+      Math.ceil((selectedCardIndex + 1) / exercisesPerRow) * exercisesPerRow - 1
+    return res
+  }, [selectedCard, exercisesArray, exercisesPerRow])
 
   const showStatsAfterButton = useMemo(
     () => showStatsAfterCardIndex > exercisesArray.length - 1,
-    [showStatsAfterCardIndex, exercisesArray]
-  );
+    [showStatsAfterCardIndex, exercisesArray],
+  )
 
-  const showAllExercises = () => setAllExercises(true);
+  const showAllExercises = () => setAllExercises(true)
 
-  const selectCard = (card: any) =>
-    setSelectedCard((draft: any) =>
-      card.title === draft?.title ? null : card
-    );
+  const selectCard = (id: string) =>
+    setSelectedCard((draft: any) => (id === draft ? null : id))
+
+  const currentStats = exercises.find(
+    ({ exercise }) => selectedCard === exercise._id,
+  )
 
   const stats = (
-    <div className="col-span-2 sm:col-span-4 lg:col-span-6 grid grid-cols-2 gap-5 my-5">
-      {repeats.map(([number, weight, count]) => (
-        <Fragment key={number}>
-          <p className="text-right text-lime-400">{weight} кг </p>
-          <p className="text-left">{count} раз</p>
+    <div
+      className={classNames(
+        'col-span-2 lg:col-span-6 grid my-5 w-fit mx-auto gap-2',
+        `grid-cols-${currentStats?.exercise.measurements.length}`,
+      )}
+    >
+      {currentStats?.approaches.map((approache, approacheIndex: number) => (
+        <Fragment key={approacheIndex}>
+          {approache.map((measurement, measurementIndex) => (
+            <div key={measurementIndex} className="flex">
+              <p
+                className={classNames(
+                  'mr-2',
+                  measurementIndex % 2 === 1
+                    ? 'text-lime-400 border-lime-400'
+                    : 'text-black border-black',
+                )}
+              >
+                {measurement}
+              </p>
+              <p
+                className={classNames(
+                  measurementIndex % 2 === 1 ? 'text-lime-400' : 'text-black',
+                )}
+              >
+                {
+                  MeasurementLabel[
+                    currentStats.exercise.measurements[measurementIndex]
+                  ]
+                }
+              </p>
+            </div>
+          ))}
         </Fragment>
       ))}
     </div>
-  );
+  )
 
   return (
     <div>
-      <Title>Среда 22.06.23</Title>
+      <Title>{new Date(date).toLocaleDateString()}</Title>
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-5">
-        {exercisesArray.map((card, index) => (
-          <Fragment key={card.title}>
+        {exercisesArray.map((exercise, index) => (
+          <Fragment key={exercise._id}>
             <Card
-              key={card.title}
-              onClick={() => selectCard(card)}
-              checked={selectedCard?.title === card.title}
-              {...card}
+              title={exercise.name}
+              img={exercise.image}
+              onClick={() => selectCard(exercise._id)}
+              checked={selectedCard === exercise._id}
+              {...exercise}
             />
             {index === showStatsAfterCardIndex && stats}
           </Fragment>
@@ -105,7 +134,7 @@ const TrainingCard: FC = () => {
         {showStatsAfterButton && stats}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default memo(TrainingCard);
+export default memo(TrainingCard)

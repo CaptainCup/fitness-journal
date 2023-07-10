@@ -17,6 +17,7 @@ import { ExerciseService } from '@/app/services'
 import {
   ExerciseItem,
   ExerciseItemCreate,
+  Measurement,
 } from '@/app/services/ExerciseService'
 
 const exerciseApi = new ExerciseService()
@@ -63,9 +64,11 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
     onSubmit: values => {
       const res = { ...values } as ExerciseItemCreate
 
-      if (values.measurements.some((measurement: string) => !measurement)) {
+      if (
+        values.measurements.some((measurement: Measurement) => !measurement)
+      ) {
         res.measurements = values.measurements.filter(
-          (measurement: string) => measurement,
+          (measurement: Measurement) => measurement,
         )
       }
 
