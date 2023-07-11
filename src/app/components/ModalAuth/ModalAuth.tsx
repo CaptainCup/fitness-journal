@@ -25,6 +25,7 @@ const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
   const steps = {
     phone: (
       <PhoneForm
+        phone={phone}
         onSuccess={phone => {
           setPhone(phone)
           setStep('code')
@@ -33,6 +34,7 @@ const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
     ),
     code: (
       <CodeForm
+        code={code}
         phone={phone}
         onBack={() => setStep('phone')}
         onSuccess={code => {

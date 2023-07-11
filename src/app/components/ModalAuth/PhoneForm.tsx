@@ -10,14 +10,15 @@ import { SmsTokenService } from '@/app/services'
 
 const smsTokenApi = new SmsTokenService()
 
-type PhoneFormProps = {
+export type PhoneFormProps = {
+  phone: string
   onSuccess: (phone: string) => void
 }
 
-const PhoneForm: FC<PhoneFormProps> = ({ onSuccess }) => {
+const PhoneForm: FC<PhoneFormProps> = ({ phone, onSuccess }) => {
   const formik = useFormik({
     initialValues: {
-      phone: '',
+      phone,
     },
     onSubmit: async values => {
       const { phone } = values

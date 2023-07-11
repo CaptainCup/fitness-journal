@@ -9,18 +9,19 @@ import { useUser } from '@/app/hooks'
 const authApi = new AuthService()
 const userApi = new UserService()
 
-type CodeFormProps = {
+export type CodeFormProps = {
+  code: string
   phone: string
   onBack: () => void
   onSuccess: (code?: string) => void
 }
 
-const CodeForm: FC<CodeFormProps> = ({ phone, onBack, onSuccess }) => {
+const CodeForm: FC<CodeFormProps> = ({ code, phone, onBack, onSuccess }) => {
   const { mutate } = useUser()
 
   const formik = useFormik({
     initialValues: {
-      code: '',
+      code,
     },
     onSubmit: async values => {
       const { code } = values

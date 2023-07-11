@@ -9,7 +9,7 @@ import { useUser } from '@/app/hooks'
 const authApi = new AuthService()
 const userApi = new UserService()
 
-type ProfileFormProps = {
+export type ProfileFormProps = {
   phone: string
   code: string
   onBack: () => void
