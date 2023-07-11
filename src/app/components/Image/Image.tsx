@@ -10,7 +10,7 @@ const Image: FC<ImageProps> = ({ src, ...props }) => {
       return '/images/logo-in-black.png'
     }
     if (src.startsWith('api')) {
-      return `${baseURL}${src}`
+      return `${baseURL}/${src}`
     }
     return src
   }, [src])

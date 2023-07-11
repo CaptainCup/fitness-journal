@@ -41,7 +41,7 @@ const ImageUpload: FC<ImageUploadProps> = ({
 
   useEffect(() => {
     if (value) {
-      setImage(`${baseURL}${value}`)
+      setImage(`${baseURL}/${value}`)
     }
   }, [value])
 
