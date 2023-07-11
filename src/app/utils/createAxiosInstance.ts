@@ -8,7 +8,7 @@ const createAxiosInstance = (): AxiosInstance => {
   let originalRequest: any
 
   const instance = axios.create({
-    baseURL,
+    baseURL: `${baseURL}/api`,
     timeout: 15000,
   })
 
