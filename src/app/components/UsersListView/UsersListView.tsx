@@ -16,8 +16,8 @@ const UsersListView: FC = () => {
           title={`${item?.firstName ? `${item?.firstName[0]}. ` : ''}${
             item?.lastName
           }`}
-          img={item.avatar}
-          link={`/trainings/${item._id}`}
+          img={item?.avatar}
+          link={`/trainings/${item?._id}`}
           {...item}
         />
       )}

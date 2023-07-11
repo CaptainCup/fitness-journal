@@ -1,12 +1,11 @@
 import axios, { AxiosInstance } from 'axios'
 import { TokenStorageService } from '@/app/services'
+import { baseURL } from '@/app/utils'
 
 const createAxiosInstance = (): AxiosInstance => {
   const tokenStorage = new TokenStorageService()
 
   let originalRequest: any
-
-  const baseURL = 'http://localhost:4000/api'
 
   const instance = axios.create({
     baseURL,

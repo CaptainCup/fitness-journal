@@ -13,9 +13,9 @@ const EquipmentListView: FC = () => {
       renderItem={item => (
         <Card
           key={item?._id}
-          title={item.name}
-          img={item.image}
-          link={`equipment/${item._id}`}
+          title={item?.name}
+          img={item?.image}
+          link={`equipment/${item?._id}`}
           {...item}
         />
       )}

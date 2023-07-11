@@ -4,10 +4,9 @@ import { FC, memo, useState, ChangeEvent, useEffect } from 'react'
 import Image from 'next/image'
 import { Button } from '@/app/components'
 import { FilesService } from '@/app/services'
+import { baseURL } from '@/app/utils'
 
 const filesService = new FilesService()
-
-const baseURL = 'http://localhost:4000/'
 
 export type ImageUploadProps = {
   id?: string

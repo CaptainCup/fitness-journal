@@ -13,9 +13,9 @@ const ExercisesListView: FC = () => {
       renderItem={item => (
         <Card
           key={item?._id}
-          title={item.name}
-          img={item.image}
-          link={`exercises/${item._id}`}
+          title={item?.name}
+          img={item?.image}
+          link={`exercises/${item?._id}`}
           {...item}
         />
       )}
