@@ -22,10 +22,7 @@ const Popover: FC<PopoverProps> = ({ menu, buttonClassName, customButton }) => {
       {() => (
         <>
           <HeadlessuiPopover.Button
-            className={classNames(
-              'absolute p-4 top-0 right-0',
-              buttonClassName,
-            )}
+            className={buttonClassName || 'absolute p-4 top-0 right-0'}
           >
             {customButton || (
               <>

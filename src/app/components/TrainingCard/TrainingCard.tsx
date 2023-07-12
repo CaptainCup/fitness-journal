@@ -130,7 +130,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
         extra={
           <Popover
             menu={menu}
-            buttonClassName="-top-3 -right-3 flex"
+            buttonClassName="-top-3 -right-3 flex py-2 outline-none"
             customButton={
               <>
                 <div className="w-1 h-1 bg-black mr-1" />

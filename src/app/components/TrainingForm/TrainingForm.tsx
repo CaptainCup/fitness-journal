@@ -16,7 +16,7 @@ export type TrainingFormProps = {
 
 const TrainingForm: FC<TrainingFormProps> = ({
   user,
-  initialData = { exercises: [], date: null, _id: '' },
+  initialData = { exercises: [], date: new Date(), _id: '' },
 }) => {
   const router = useRouter()
 
@@ -38,7 +38,7 @@ const TrainingForm: FC<TrainingFormProps> = ({
 
       const res = {
         exercises: transformedExercises,
-        date: date || new Date(),
+        date,
         user,
       }
 
