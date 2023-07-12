@@ -50,32 +50,29 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
 
   const toggleModal = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleCardClick = useCallback(
-    (value: ExerciseItem) => {
-      const exerciseIndex = exercises.findIndex(
-        ({ exercise }) => exercise._id === value._id,
-      )
+  const handleCardClick = (value: ExerciseItem) => {
+    const exerciseIndex = exercises.findIndex(
+      ({ exercise }) => exercise._id === value._id,
+    )
 
-      const updatedExercises =
-        exerciseIndex === -1
-          ? [
-              ...exercises,
-              {
-                exercise: value,
-                approaches: [value.measurements.map(() => '')],
-              },
-            ]
-          : [
-              ...exercises.slice(0, exerciseIndex),
-              ...exercises.slice(exerciseIndex + 1),
-            ]
+    const updatedExercises =
+      exerciseIndex === -1
+        ? [
+            ...exercises,
+            {
+              exercise: value,
+              approaches: [value.measurements.map(() => '')],
+            },
+          ]
+        : [
+            ...exercises.slice(0, exerciseIndex),
+            ...exercises.slice(exerciseIndex + 1),
+          ]
 
-      setExercises(updatedExercises)
-      onChange(updatedExercises)
-      setSelectedCard(value._id)
-    },
-    [exercises, onChange],
-  )
+    setExercises(updatedExercises)
+    onChange(updatedExercises)
+    setSelectedCard(value._id)
+  }
 
   const handleApproachesChange = (
     index: number,
@@ -178,12 +175,13 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
   )
 
   useEffect(() => {
-    if (value) {
+    if (value?.length) {
       const transfomedValue = value.map(({ exercise, approaches }) => ({
         exercise,
         approaches: [
           ...approaches,
-          ...(approaches[approaches.length - 1].every(value => value)
+          ...(approaches[approaches.length - 1]?.every(value => value) ||
+          approaches.length === 0
             ? [exercise.measurements.map(() => '')]
             : []),
         ],

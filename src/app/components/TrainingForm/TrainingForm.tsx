@@ -56,7 +56,7 @@ const TrainingForm: FC<TrainingFormProps> = ({
     <form onSubmit={formik.handleSubmit}>
       <div className="mb-5 sm:mb-10">
         <TrainingCardEditor
-          value={exercises}
+          value={formik.values.exercises}
           onChange={value => formik.setFieldValue('exercises', value)}
         />
       </div>
