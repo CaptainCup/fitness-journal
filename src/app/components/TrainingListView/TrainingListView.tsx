@@ -17,7 +17,7 @@ const TrainingListView: FC<TrainingListViewProps> = ({ user }) => {
       listClassName="grid grid-cols-1 gap-y-10"
       renderItem={item => (
         <div key={item?._id}>
-          <TrainingCard {...item} />
+          <TrainingCard {...item} user={user} />
         </div>
       )}
     />

@@ -5,10 +5,8 @@ import {
   ExerciseSteps,
   CardsGrid,
   Container,
-  Button,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services'
-import Link from 'next/link'
 
 const equipmentApi = new EquipmentService()
 
@@ -54,12 +52,6 @@ const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
-        </div>
-
-        <div className="mb-5 sm:mb-10 flex flex-col sm:flex-row">
-          <Link href={`/equipment/${id}/edit`} className="mr-10">
-            <Button>Изменить оборудование</Button>
-          </Link>
         </div>
 
         {description && (

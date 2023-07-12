@@ -1,6 +1,14 @@
 'use client'
 
-import { FC, Fragment, memo, useCallback, useState, useMemo } from 'react'
+import {
+  FC,
+  Fragment,
+  memo,
+  useCallback,
+  useState,
+  useMemo,
+  useEffect,
+} from 'react'
 import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
 import { Card, ModalGrid } from '@/app/components'
@@ -8,10 +16,12 @@ import { ExerciseItem, MeasurementLabel } from '@/app/services/ExerciseService'
 import { ExercisesRecord } from '@/app/services/TrainingService'
 
 export type TrainingCardEditorProps = {
+  value?: ExercisesRecord[]
   onChange?: (value: ExercisesRecord[]) => void
 }
 
 const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
+  value,
   onChange = () => null,
 }) => {
   const [selectedCard, setSelectedCard] = useState<string>()
@@ -127,7 +137,7 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
   )
 
   const stats = (
-    <div className="col-span-2 lg:col-span-6 flex flex-col my-5">
+    <div className="col-span-2 sm:col-span-4 lg:col-span-6 flex flex-col my-5">
       {currentStats?.approaches.map((approache, approacheIndex: number) => (
         <div className="flex" key={approacheIndex}>
           {approache.map((measurement, measurementIndex) => (
@@ -166,6 +176,22 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
       ))}
     </div>
   )
+
+  useEffect(() => {
+    if (value) {
+      const transfomedValue = value.map(({ exercise, approaches }) => ({
+        exercise,
+        approaches: [
+          ...approaches,
+          ...(approaches[approaches.length - 1].every(value => value)
+            ? [exercise.measurements.map(() => '')]
+            : []),
+        ],
+      }))
+
+      setExercises(transfomedValue)
+    }
+  }, [value])
 
   return (
     <>

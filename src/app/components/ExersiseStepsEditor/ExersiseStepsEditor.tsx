@@ -100,13 +100,12 @@ const ExersiseStepsEditor: FC<ExersiseStepsEditorProps> = ({
     <div>
       <Title
         extra={
-          <Button className="py-1 px-2">
+          <Button className="py-1 px-2" onClick={addStep}>
             <Image
               src="/icons/plus.svg"
               width={20}
               height={20}
               alt="Добавить"
-              onClick={addStep}
             />
           </Button>
         }

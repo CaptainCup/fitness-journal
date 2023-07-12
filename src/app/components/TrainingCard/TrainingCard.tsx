@@ -3,21 +3,31 @@
 import { FC, Fragment, memo, useMemo, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
-import { Card, Title } from '@/app/components'
+import { useRouter } from 'next/navigation'
+import { Card, Popover, Title } from '@/app/components'
 import { MeasurementLabel } from '@/app/services/ExerciseService'
 import { ExercisesRecord } from '@/app/services/TrainingService'
 
 export type TrainingCardProps = {
+  _id: string
   date: string
   exercises: ExercisesRecord[]
+  user: string
 }
 
-const TrainingCard: FC<TrainingCardProps> = ({ date, exercises }) => {
+const TrainingCard: FC<TrainingCardProps> = ({
+  _id,
+  date,
+  exercises,
+  user,
+}) => {
   const [allExercises, setAllExercises] = useState(false)
   const [selectedCard, setSelectedCard] = useState<any>()
 
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' })
   const isMobile = useMediaQuery({ query: '(max-width: 640px)' })
+
+  const router = useRouter()
 
   const maxExercises = useMemo(() => (isDesktop ? 5 : 3), [isDesktop])
 
@@ -69,7 +79,7 @@ const TrainingCard: FC<TrainingCardProps> = ({ date, exercises }) => {
   const stats = (
     <div
       className={classNames(
-        'col-span-2 lg:col-span-6 grid my-5 w-fit mx-auto gap-2',
+        'col-span-2 sm:col-span-4 lg:col-span-6 grid my-5 w-fit mx-auto gap-2',
         `grid-cols-${currentStats?.exercise.measurements.length}`,
       )}
     >
@@ -105,9 +115,35 @@ const TrainingCard: FC<TrainingCardProps> = ({ date, exercises }) => {
     </div>
   )
 
+  const menu = [
+    {
+      label: 'Продолжить',
+      onClick: () => {
+        router.push(`/trainings/${user}/${_id}/edit`)
+      },
+    },
+  ]
+
   return (
     <div>
-      <Title>{new Date(date).toLocaleDateString()}</Title>
+      <Title
+        extra={
+          <Popover
+            menu={menu}
+            buttonClassName="-top-3 -right-3 flex"
+            customButton={
+              <>
+                <div className="w-1 h-1 bg-black mr-1" />
+                <div className="w-1 h-1 bg-black mr-1" />
+                <div className="w-1 h-1 bg-black" />
+              </>
+            }
+          />
+        }
+      >
+        {new Date(date).toLocaleDateString()}
+      </Title>
+
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-5">
         {exercisesArray.map((exercise, index) => (
           <Fragment key={exercise._id}>

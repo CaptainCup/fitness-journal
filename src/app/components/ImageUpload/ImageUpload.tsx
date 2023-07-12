@@ -1,10 +1,11 @@
 'use client'
 
-import { FC, memo, useState, ChangeEvent, useEffect } from 'react'
+import { FC, memo, useState, ChangeEvent, useEffect, useRef } from 'react'
 import Image from 'next/image'
-import { Button } from '@/app/components'
+import { Popover } from '@/app/components'
 import { FilesService } from '@/app/services'
 import { baseURL } from '@/app/utils'
+import classNames from 'classnames'
 
 const filesService = new FilesService()
 
@@ -22,6 +23,7 @@ const ImageUpload: FC<ImageUploadProps> = ({
   onChange = () => null,
 }) => {
   const [image, setImage] = useState<string>()
+  const buttonRef = useRef<any>()
 
   const loadImg = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -38,6 +40,23 @@ const ImageUpload: FC<ImageUploadProps> = ({
         })
     }
   }
+
+  const menu = [
+    {
+      label: 'Изменить',
+      onClick: () => {
+        buttonRef.current.click()
+      },
+    },
+    {
+      label: 'Удалить',
+      onClick: () => {
+        setImage('')
+        onChange('')
+      },
+      danger: true,
+    },
+  ]
 
   useEffect(() => {
     if (value) {
@@ -56,7 +75,7 @@ const ImageUpload: FC<ImageUploadProps> = ({
       />
 
       {image && (
-        <div className="mb-5 w-80 h-80 relative">
+        <div className="w-80 h-80 relative">
           <Image
             fill
             unoptimized
@@ -64,14 +83,16 @@ const ImageUpload: FC<ImageUploadProps> = ({
             src={image}
             style={{ objectFit: square ? 'contain' : 'cover' }}
           />
+          <Popover menu={menu} />
         </div>
       )}
 
-      <div className="w-full">
+      <div className={classNames('w-full', image && 'hidden')}>
         <label htmlFor={id}>
-          <Button className="inline-block w-full" component="span">{`${
-            image ? 'Изменить' : 'Добавить'
-          } изображение`}</Button>
+          <span
+            ref={buttonRef}
+            className="inline-block w-full border-lime-400 bg-lime-400 hover:bg-white hover:text-black py-3 px-4 transition-all border-2 text-center"
+          >{`${image ? 'Изменить' : 'Добавить'} изображение`}</span>
         </label>
       </div>
     </div>

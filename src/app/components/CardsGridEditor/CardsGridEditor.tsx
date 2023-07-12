@@ -66,13 +66,12 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
       <div>
         <Title
           extra={
-            <Button className="py-1 px-2">
+            <Button className="py-1 px-2" onClick={handleModalToggle}>
               <Image
                 src="/icons/plus.svg"
                 width={20}
                 height={20}
                 alt="Добавить"
-                onClick={handleModalToggle}
               />
             </Button>
           }

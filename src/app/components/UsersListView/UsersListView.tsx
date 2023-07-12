@@ -1,9 +1,12 @@
 'use client'
 
 import { memo, FC } from 'react'
+import { useRouter } from 'next/navigation'
 import { InfiniteListView, Card } from '@/app/components'
 
 const UsersListView: FC = () => {
+  const router = useRouter()
+
   return (
     <InfiniteListView
       withSearch
@@ -18,6 +21,14 @@ const UsersListView: FC = () => {
           }`}
           img={item?.avatar}
           link={`/trainings/${item?._id}`}
+          menu={[
+            {
+              label: 'Редактировать',
+              onClick: () => {
+                router.push(`users/${item?._id}/edit`)
+              },
+            },
+          ]}
           {...item}
         />
       )}
