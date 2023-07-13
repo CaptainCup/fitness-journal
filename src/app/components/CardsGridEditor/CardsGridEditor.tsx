@@ -41,13 +41,19 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
 
   const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleCardClick = useCallback(
-    (card: any) => {
-      const updatedCards = cards.some(
-        (draftCard: any) => draftCard._id === card._id,
-      )
-        ? cards.filter((value: any) => value._id !== card._id)
-        : [...cards, card]
+  const handleModalSuccess = useCallback(
+    (newCards: any) => {
+      const updatedCards = [...cards, ...newCards]
+
+      setCards(updatedCards)
+      onChange(updatedCards)
+    },
+    [cards, onChange],
+  )
+
+  const handleDeleteExercise = useCallback(
+    (index: number) => {
+      const updatedCards = [...cards.slice(0, index), ...cards.slice(index + 1)]
 
       setCards(updatedCards)
       onChange(updatedCards)
@@ -80,12 +86,18 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
         </Title>
 
         <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
-          {cards?.map((card: any) => (
+          {cards?.map((card: any, index: number) => (
             <Card
               key={card?.name}
               title={card.name}
               img={card.image}
-              menu={[{ label: 'Убрать', onClick: () => handleCardClick(card) }]}
+              menu={[
+                {
+                  label: 'Убрать',
+                  danger: true,
+                  onClick: () => handleDeleteExercise(index),
+                },
+              ]}
               {...card}
             />
           ))}
@@ -96,9 +108,9 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
         title={captions[type].title}
         endpoint={type}
         open={modalOpen}
-        checked={cards}
+        params={{ exclude: cards.map(({ _id }: { _id: string }) => _id) }}
         onCancel={handleModalToggle}
-        handleCardClick={handleCardClick}
+        onSuccess={handleModalSuccess}
       />
     </>
   )

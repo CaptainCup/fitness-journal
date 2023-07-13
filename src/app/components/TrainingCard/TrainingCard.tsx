@@ -122,6 +122,13 @@ const TrainingCard: FC<TrainingCardProps> = ({
         router.push(`/trainings/${user}/${_id}/edit`)
       },
     },
+    {
+      label: 'Удалить',
+      danger: true,
+      onClick: () => {
+        router.push(`/trainings/${user}/${_id}/edit`)
+      },
+    },
   ]
 
   return (

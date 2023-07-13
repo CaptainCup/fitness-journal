@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, FC } from 'react'
+import { memo, FC, useState, useCallback, useEffect } from 'react'
 import { Button, Card, InfiniteListView, Modal } from '@/app/components'
 
 import styles from './ModalGrid.module.css'
@@ -9,19 +9,49 @@ export type ModalGridProps = {
   open: boolean
   title: string
   endpoint: 'muscules' | 'exercises' | 'equipment'
-  checked?: any[]
+  params?: any
+  onSuccess: (items: any) => void
   onCancel: () => void
-  handleCardClick?: (value: any) => void
 }
 
 const ModalGrid: FC<ModalGridProps> = ({
   open,
   title,
   endpoint = 'muscules',
-  checked,
-  handleCardClick = () => null,
+  params,
+  onSuccess,
   onCancel,
 }) => {
+  const [checked, setChecked] = useState<any[]>([])
+
+  const handleCardClick = useCallback(
+    (item: any) => {
+      const checkedIndex = checked.findIndex(({ _id }) => _id === item._id)
+
+      const updatedChecked =
+        checkedIndex === -1
+          ? [...checked, item]
+          : [
+              ...checked.slice(0, checkedIndex),
+              ...checked.slice(checkedIndex + 1),
+            ]
+
+      setChecked(updatedChecked)
+    },
+    [checked],
+  )
+
+  const onOk = useCallback(() => {
+    onSuccess(checked)
+    onCancel()
+  }, [checked, onSuccess, onCancel])
+
+  useEffect(() => {
+    if (open) {
+      setChecked([])
+    }
+  }, [open])
+
   return (
     <Modal
       open={open}
@@ -33,13 +63,14 @@ const ModalGrid: FC<ModalGridProps> = ({
         <InfiniteListView
           withSearch
           endpoint={endpoint}
-          renderItem={(item, index) => (
+          params={params}
+          renderItem={item => (
             <Card
+              key={item._id}
               onClick={() => handleCardClick(item)}
               checked={checked?.some(
-                checkedCard => checkedCard.name === item.name,
+                checkedCard => checkedCard._id === item._id,
               )}
-              key={`${item?.name}-${index}`}
               title={item.name}
               img={item.image}
               {...item}
@@ -48,7 +79,7 @@ const ModalGrid: FC<ModalGridProps> = ({
         />
       </div>
       <div className="w-full flex justify-center">
-        <Button onClick={onCancel}>Подтвердить</Button>
+        <Button onClick={onOk}>Подтвердить</Button>
       </div>
     </Modal>
   )

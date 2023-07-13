@@ -48,75 +48,81 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
     }
   }, [isDesktop, isMobile])
 
-  const selectCard = (card: string) =>
-    setSelectedCard(draft => (card === draft ? '' : card))
+  const selectCard = useCallback(
+    (card: string) => setSelectedCard(draft => (card === draft ? '' : card)),
+    [],
+  )
 
   const toggleModal = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleCardClick = (value: ExerciseItem) => {
-    const exerciseIndex = exercises.findIndex(
-      ({ exercise }) => exercise._id === value._id,
-    )
+  const handleModalSuccess = useCallback(
+    (newExercises: ExerciseItem[]) => {
+      const updatedExercises = [
+        ...exercises,
+        ...newExercises.map(exercise => ({
+          exercise,
+          approaches: [exercise.measurements.map(() => '')],
+        })),
+      ]
 
-    const updatedExercises =
-      exerciseIndex === -1
-        ? [
-            ...exercises,
-            {
-              exercise: value,
-              approaches: [value.measurements.map(() => '')],
-            },
-          ]
-        : [
-            ...exercises.slice(0, exerciseIndex),
-            ...exercises.slice(exerciseIndex + 1),
-          ]
+      setExercises(updatedExercises)
+      onChange(updatedExercises)
+    },
+    [exercises, onChange],
+  )
 
-    setExercises(updatedExercises)
-    onChange(updatedExercises)
-    setSelectedCard(value._id)
-  }
-
-  const handleApproachesChange = (
-    index: number,
-    place: number,
-    value: string,
-  ) => {
-    const currentExerciseIndex = exercises.findIndex(
-      ({ exercise }) => selectedCard === exercise._id,
-    )
-
-    const updatedValue = [
-      ...exercises[currentExerciseIndex].approaches[index].slice(0, place),
-      value,
-      ...exercises[currentExerciseIndex].approaches[index].slice(place + 1),
-    ]
-
-    const updatedApproaches = [
-      ...exercises[currentExerciseIndex].approaches.slice(0, index),
-      updatedValue,
-      ...exercises[currentExerciseIndex].approaches.slice(index + 1),
-    ]
-
-    if (
-      updatedApproaches[updatedApproaches.length - 1].every(
-        (value: string) => value,
+  const handleApproachesChange = useCallback(
+    (index: number, place: number, value: string) => {
+      const currentExerciseIndex = exercises.findIndex(
+        ({ exercise }) => selectedCard === exercise._id,
       )
-    ) {
-      updatedApproaches.push(
-        exercises[currentExerciseIndex].exercise.measurements.map(() => ''),
-      )
-    }
 
-    const updatedExercises = [
-      ...exercises.slice(0, currentExerciseIndex),
-      { ...exercises[currentExerciseIndex], approaches: updatedApproaches },
-      ...exercises.slice(currentExerciseIndex + 1),
-    ]
+      const updatedValue = [
+        ...exercises[currentExerciseIndex].approaches[index].slice(0, place),
+        value,
+        ...exercises[currentExerciseIndex].approaches[index].slice(place + 1),
+      ]
 
-    setExercises(updatedExercises)
-    onChange(updatedExercises)
-  }
+      const updatedApproaches = [
+        ...exercises[currentExerciseIndex].approaches.slice(0, index),
+        updatedValue,
+        ...exercises[currentExerciseIndex].approaches.slice(index + 1),
+      ]
+
+      if (
+        updatedApproaches[updatedApproaches.length - 1].every(
+          (value: string) => value,
+        )
+      ) {
+        updatedApproaches.push(
+          exercises[currentExerciseIndex].exercise.measurements.map(() => ''),
+        )
+      }
+
+      const updatedExercises = [
+        ...exercises.slice(0, currentExerciseIndex),
+        { ...exercises[currentExerciseIndex], approaches: updatedApproaches },
+        ...exercises.slice(currentExerciseIndex + 1),
+      ]
+
+      setExercises(updatedExercises)
+      onChange(updatedExercises)
+    },
+    [exercises, selectedCard, onChange],
+  )
+
+  const handleDeleteExercise = useCallback(
+    (index: number) => {
+      const updatedExercises = [
+        ...exercises.slice(0, index),
+        ...exercises.slice(index + 1),
+      ]
+
+      setExercises(updatedExercises)
+      onChange(updatedExercises)
+    },
+    [exercises, onChange],
+  )
 
   const showStatsAfterCardIndex = useMemo(() => {
     const selectedCardIndex = exercises.findIndex(
@@ -205,6 +211,13 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
                 img={exercise.image}
                 onClick={() => selectCard(exercise._id)}
                 checked={selectedCard === exercise._id}
+                menu={[
+                  {
+                    label: 'Убрать',
+                    danger: true,
+                    onClick: () => handleDeleteExercise(index),
+                  },
+                ]}
                 {...exercise}
               />
               {index === showStatsAfterCardIndex && stats}
@@ -226,10 +239,10 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
       <ModalGrid
         title="Выберите упражнение"
         endpoint="exercises"
+        params={{ exclude: exercises.map(({ exercise }) => exercise._id) }}
         open={modalOpen}
-        checked={exercises.map(({ exercise }) => exercise)}
+        onSuccess={handleModalSuccess}
         onCancel={toggleModal}
-        handleCardClick={handleCardClick}
       />
     </>
   )
