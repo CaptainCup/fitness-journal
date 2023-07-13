@@ -13,12 +13,12 @@ import {
   CardsGridEditor,
   MeasurementEditor,
 } from '@/app/components'
-import { ExerciseService } from '@/app/services'
+import { ExerciseService } from '@/app/services-client'
 import {
   ExerciseItem,
   ExerciseItemCreate,
   Measurement,
-} from '@/app/services/ExerciseService'
+} from '@/app/services-client/ExerciseService'
 
 const exerciseApi = new ExerciseService()
 

@@ -12,7 +12,7 @@ import axios from 'axios'
 import { KeyedMutator } from 'swr'
 import InfiniteScroll from 'react-infinite-scroller'
 import useSWRInfinite, { SWRInfiniteConfiguration } from 'swr/infinite'
-import { BaseHttpService } from '@/app/services'
+import { BaseHttpService } from '@/app/services-client'
 
 import styles from './InfiniteList.module.css'
 

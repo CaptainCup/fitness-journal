@@ -3,7 +3,7 @@
 import { FC, memo, useState, ChangeEvent, useEffect, useRef } from 'react'
 import Image from 'next/image'
 import { Popover } from '@/app/components'
-import { FilesService } from '@/app/services'
+import { FilesService } from '@/app/services-client'
 import { baseURL } from '@/app/utils'
 import classNames from 'classnames'
 

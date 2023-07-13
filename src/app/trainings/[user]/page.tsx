@@ -5,27 +5,16 @@ import {
   TrainingListView,
   Container,
 } from '@/app/components'
-import { UserService } from '@/app/services'
+import { getUserById, getCurrentUser } from '@/app/services-server'
 
-const usersApi = new UserService()
-
-const getUser = async (id: string) => {
-  try {
-    const serverData = await usersApi.getById(id).then(res => res)
-    return serverData
-  } catch {
-    return { firstName: '', lastName: '', avatar: '' }
-  }
-}
-
-type Props = {
+type PageProps = {
   params: { user: string }
 }
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params: { user },
-}: Props): Promise<Metadata> {
-  const serverData = await getUser(user)
+}: PageProps): Promise<Metadata> => {
+  const serverData = await getUserById(user)
 
   const { firstName, lastName, avatar } = serverData
 
@@ -37,30 +26,29 @@ export async function generateMetadata({
   }
 }
 
-const Trainings = async ({
-  params: { user },
-}: {
-  params: { user: string }
-}) => {
-  const serverData = await getUser(user)
+const Trainings = async ({ params: { user } }: PageProps) => {
+  const userData = await getUserById(user)
+  const currentUserData = await getCurrentUser()
 
-  const { firstName, lastName, avatar } = serverData
+  const sameUser = userData._id === currentUserData._id
+
+  const { firstName, lastName, avatar } = userData
+
+  const title = sameUser
+    ? `Тренировки`
+    : `Тренировки ${firstName ? `${firstName[0]}. ` : ''}${lastName}`
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
-    { label: 'Тренировки', href: '/trainings' },
-    {
-      label: `Тренировки ${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
-      href: `/trainings/${user}`,
-    },
+    { label: title, href: `/trainings/${user}` },
   ]
 
   return (
     <main>
       <PageTitle
-        title={`Тренировки ${firstName ? `${firstName[0]}. ` : ''}${lastName}`}
-        image={avatar}
-        withBack
+        title={title}
+        image={sameUser ? null : avatar}
+        withBack={!sameUser}
       />
       <Container>
         <div className="mb-5 sm:mb-10">

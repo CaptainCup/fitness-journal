@@ -5,8 +5,8 @@ import {
   TrainingForm,
   Breadcrumbs,
 } from '@/app/components'
-import { TrainingService } from '@/app/services'
-import { UserService } from '@/app/services'
+import { TrainingService } from '@/app/services-client'
+import { UserService } from '@/app/services-client'
 
 const usersApi = new UserService()
 const trainingsApi = new TrainingService()

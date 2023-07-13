@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
-import { UserService } from '@/app/services'
+import { UserService } from '@/app/services-client'
 
 const userApi = new UserService()
 
@@ -46,7 +46,7 @@ const UserEdit = async ({ params: { id } }: Props) => {
 
   return (
     <main>
-      <PageTitle title="Редактировать пользователя" withBack />
+      <PageTitle title="Редактировать профиль" withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />

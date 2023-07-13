@@ -5,7 +5,7 @@ import {
   Container,
   ExerciseForm,
 } from '@/app/components'
-import { ExerciseService } from '@/app/services'
+import { ExerciseService } from '@/app/services-client'
 
 const exerciseApi = new ExerciseService()
 

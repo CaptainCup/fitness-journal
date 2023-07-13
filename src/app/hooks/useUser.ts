@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { UserService } from '@/app/services'
+import { UserService } from '@/app/services-client'
 
 const userApi = new UserService()
 

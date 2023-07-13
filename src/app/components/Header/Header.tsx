@@ -5,9 +5,9 @@ import classNames from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { AuthService } from '@/app/services'
+import { AuthService } from '@/app/services-client'
 import { Container, ModalAuth } from '@/app/components'
-import { useUser } from '@/app/hooks'
+import { User } from '@/app/services-client/UserService'
 import styles from './Header.module.css'
 import HeaderMenu from './HeaderMenu'
 
@@ -28,10 +28,13 @@ const defaultMenuItems = [
   },
 ]
 
-const Header: FC = () => {
+export type Header = {
+  user: User
+}
+
+const Header: FC<Header> = ({ user }) => {
   const [isOpen, setIsOpen] = useState<'menu' | 'user' | boolean>(false)
   const [modalAuthOpen, setModalAuthOpen] = useState(false)
-  const { user, mutate } = useUser()
   const router = useRouter()
 
   const menuItems = useMemo(() => {
@@ -69,7 +72,7 @@ const Header: FC = () => {
       onClick: () => {
         handleClose()
         authApi.signOut()
-        mutate(null)
+        router.refresh()
         router.push('/')
       },
     },

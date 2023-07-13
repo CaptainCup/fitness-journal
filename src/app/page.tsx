@@ -1,10 +1,10 @@
-import { NextPage } from 'next';
-import Link from 'next/link';
-import { PageTitle, Button, Title, Container } from '@/app/components';
+import { NextPage } from 'next'
+import Link from 'next/link'
+import { PageTitle, Button, Title, Container } from '@/app/components'
 
 export const metadata = {
   title: 'Тренировки',
-};
+}
 
 const Trainings: NextPage = () => {
   return (
@@ -52,7 +52,7 @@ const Trainings: NextPage = () => {
         </div>
       </Container>
     </main>
-  );
-};
+  )
+}
 
-export default Trainings;
+export default Trainings

@@ -6,7 +6,7 @@ import {
   CardsGrid,
   Container,
 } from '@/app/components'
-import { ExerciseService } from '@/app/services'
+import { ExerciseService } from '@/app/services-client'
 
 const exerciseApi = new ExerciseService()
 

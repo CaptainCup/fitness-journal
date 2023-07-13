@@ -2,12 +2,11 @@
 
 import React, { FC, memo } from 'react'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation'
 import { Button, TextInput } from '@/app/components'
-import { AuthService, UserService } from '@/app/services'
-import { useUser } from '@/app/hooks'
+import { AuthService } from '@/app/services-client'
 
 const authApi = new AuthService()
-const userApi = new UserService()
 
 export type CodeFormProps = {
   code: string
@@ -17,7 +16,7 @@ export type CodeFormProps = {
 }
 
 const CodeForm: FC<CodeFormProps> = ({ code, phone, onBack, onSuccess }) => {
-  const { mutate } = useUser()
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
@@ -29,11 +28,9 @@ const CodeForm: FC<CodeFormProps> = ({ code, phone, onBack, onSuccess }) => {
       if (code.length === 4) {
         try {
           await authApi.signIn({ phone, code })
-          const user = await userApi.getCurrent()
-          mutate(user)
           onSuccess()
+          router.refresh()
         } catch (e: any) {
-          console.log(e)
           if (e.response.data.message === 'Пользователь не найден') {
             onSuccess(code)
           }

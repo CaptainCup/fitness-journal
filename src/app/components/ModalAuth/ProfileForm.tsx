@@ -2,12 +2,11 @@
 
 import { FC, memo } from 'react'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation'
 import { Button, ImageUpload, TextInput } from '@/app/components'
-import { AuthService, UserService } from '@/app/services'
-import { useUser } from '@/app/hooks'
+import { AuthService } from '@/app/services-client'
 
 const authApi = new AuthService()
-const userApi = new UserService()
 
 export type ProfileFormProps = {
   phone: string
@@ -22,7 +21,7 @@ const ProfileForm: FC<ProfileFormProps> = ({
   onBack,
   onSuccess,
 }) => {
-  const { mutate } = useUser()
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
@@ -34,9 +33,8 @@ const ProfileForm: FC<ProfileFormProps> = ({
     onSubmit: async values => {
       try {
         await authApi.signUp({ phone, code, ...values })
-        const user = await userApi.getCurrent()
-        mutate(user)
         onSuccess()
+        router.refresh()
       } catch (e: any) {
         console.log(e)
       }

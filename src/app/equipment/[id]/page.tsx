@@ -6,7 +6,7 @@ import {
   CardsGrid,
   Container,
 } from '@/app/components'
-import { EquipmentService } from '@/app/services'
+import { EquipmentService } from '@/app/services-client'
 
 const equipmentApi = new EquipmentService()
 

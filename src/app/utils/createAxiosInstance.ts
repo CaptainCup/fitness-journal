@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
-import { TokenStorageService } from '@/app/services'
+import { TokenStorageService } from '@/app/services-client'
 import { baseURL } from '@/app/utils'
 
 const createAxiosInstance = (): AxiosInstance => {

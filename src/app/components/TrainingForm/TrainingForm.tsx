@@ -4,8 +4,11 @@ import { FC, memo } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { Button, TrainingCardEditor } from '@/app/components'
-import { TrainingService } from '@/app/services'
-import { ExercisesRecord, TrainingItem } from '@/app/services/TrainingService'
+import { TrainingService } from '@/app/services-client'
+import {
+  ExercisesRecord,
+  TrainingItem,
+} from '@/app/services-client/TrainingService'
 
 const trainingsApi = new TrainingService()
 

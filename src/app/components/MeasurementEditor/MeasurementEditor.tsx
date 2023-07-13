@@ -4,7 +4,7 @@ import { FC, memo, useCallback, useState, useEffect } from 'react'
 import classNames from 'classnames'
 import Image from 'next/image'
 import { Title, Button, Select } from '@/app/components'
-import { MeasurementLabel } from '@/app/services/ExerciseService'
+import { MeasurementLabel } from '@/app/services-client/ExerciseService'
 
 const options = [
   ...Object.entries(MeasurementLabel).map(([value, label]) => ({

@@ -7,8 +7,8 @@ import { useFormik } from 'formik'
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation'
 import { ImageUpload, TextInput, Button } from '@/app/components'
-import { UserService } from '@/app/services'
-import { User } from '@/app/services/UserService'
+import { UserService } from '@/app/services-client'
+import { User } from '@/app/services-client/UserService'
 
 const usersApi = new UserService()
 

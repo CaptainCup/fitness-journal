@@ -12,8 +12,11 @@ import {
 import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
 import { Card, ModalGrid } from '@/app/components'
-import { ExerciseItem, MeasurementLabel } from '@/app/services/ExerciseService'
-import { ExercisesRecord } from '@/app/services/TrainingService'
+import {
+  ExerciseItem,
+  MeasurementLabel,
+} from '@/app/services-client/ExerciseService'
+import { ExercisesRecord } from '@/app/services-client/TrainingService'
 
 export type TrainingCardEditorProps = {
   value?: ExercisesRecord[]

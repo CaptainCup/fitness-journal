@@ -6,7 +6,7 @@ import { FC, memo } from 'react'
 import { useFormik } from 'formik'
 import InputMask from 'react-input-mask'
 import { Button } from '@/app/components'
-import { SmsTokenService } from '@/app/services'
+import { SmsTokenService } from '@/app/services-client'
 
 const smsTokenApi = new SmsTokenService()
 
