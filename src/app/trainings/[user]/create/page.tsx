@@ -39,7 +39,9 @@ const Trainings = async ({
     <main>
       <PageTitle
         title="Тренировка"
-        subtitle={`${firstName ? `${firstName[0]}. ` : ''}${lastName}`}
+        subtitle={
+          sameUser ? `${firstName ? `${firstName[0]}. ` : ''}${lastName}` : ''
+        }
         image={sameUser ? '' : avatar}
         withBack
       />
@@ -49,7 +51,7 @@ const Trainings = async ({
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <TrainingForm user={user} />
+          <TrainingForm user={user} autosave />
         </div>
       </Container>
     </main>

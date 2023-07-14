@@ -6,9 +6,8 @@ import {
   Breadcrumbs,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
-import { UserService } from '@/app/services-client'
+import { getUserById } from '@/app/services-server'
 
-const usersApi = new UserService()
 const trainingsApi = new TrainingService()
 
 const getData = async (id: string) => {
@@ -16,23 +15,18 @@ const getData = async (id: string) => {
   return serverData
 }
 
-const getUser = async (id: string) => {
-  const serverData = await usersApi.getById(id).then(res => res)
-  return serverData
-}
-
 type PageProps = {
   params: { training: string; user: string }
 }
 
-export async function generateMetadata({
+export const generateMetadata = async ({
   params: { training, user },
-}: PageProps): Promise<Metadata> {
+}: PageProps): Promise<Metadata> => {
   const trainingData = await getData(training)
-  const userData = await getUser(user)
+  const userData = await getUserById(user)
 
   const { date } = trainingData
-  const { avatar } = userData
+  const { avatar } = userData || {}
 
   return {
     title: `Тренировка от ${new Date(date).toLocaleDateString()}`,
@@ -44,9 +38,9 @@ export async function generateMetadata({
 
 const Trainings = async ({ params: { training, user } }: PageProps) => {
   const trainingData = await getData(training)
-  const userData = await getUser(user)
+  const userData = await getUserById(user)
 
-  const { avatar } = userData
+  const { avatar } = userData || {}
   const { date } = trainingData
 
   const breadcrumbsPath = [

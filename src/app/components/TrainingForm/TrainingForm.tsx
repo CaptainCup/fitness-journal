@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { Button, Calendar, TrainingCardEditor } from '@/app/components'
@@ -11,23 +11,28 @@ const trainingsApi = new TrainingService()
 
 export type TrainingFormProps = {
   user: string
+  autosave?: boolean
   initialData?: TrainingItem
 }
 
 const TrainingForm: FC<TrainingFormProps> = ({
   user,
+  autosave,
   initialData = { exercises: [], date: new Date(), _id: '' },
 }) => {
-  const router = useRouter()
-
   const { exercises, date, _id } = initialData
+
+  const [timer, setTimer] = useState<NodeJS.Timeout>()
+  const [trainingId, setTrainingId] = useState<string>(_id)
+
+  const router = useRouter()
 
   const formik = useFormik({
     initialValues: {
       exercises,
       date,
     },
-    onSubmit: ({ exercises, date }) => {
+    onSubmit: async ({ exercises, date }) => {
       const transformedExercises = exercises?.map(
         ({ exercise, approaches }: ExercisesRecord) => ({
           exercise: exercise._id,
@@ -43,22 +48,52 @@ const TrainingForm: FC<TrainingFormProps> = ({
         user,
       }
 
-      if (_id) {
-        trainingsApi.update(_id, res)
+      if (!trainingId) {
+        const newTrainingItem = await trainingsApi.create(res)
+        setTrainingId(newTrainingItem._id)
       } else {
-        trainingsApi.create(res)
+        trainingsApi.update(trainingId, res)
       }
-
-      router.push(`/trainings/${user}`)
     },
   })
 
+  const handleChangeField = useCallback(
+    (field: string, value: any) => {
+      formik.setFieldValue(field, value)
+
+      if (autosave) {
+        if (timer) {
+          clearTimeout(timer)
+        }
+
+        const handleAutosave = setTimeout(() => {
+          console.log('autosaved')
+          formik.handleSubmit()
+        }, 2000)
+
+        setTimer(handleAutosave)
+      }
+    },
+    [formik, timer, autosave],
+  )
+
+  const handleSubmit = useCallback(async () => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+
+    await formik.handleSubmit()
+    router.push(`/trainings/${user}`)
+  }, [timer, formik, router, user])
+
+  console.log('trainingId: ', trainingId)
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form>
       <div className="mb-5 sm:mb-10">
         <Calendar
           value={formik.values.date}
-          onChange={value => formik.setFieldValue('date', value)}
+          onChange={value => handleChangeField('date', value)}
           label="Дата тренировки:"
         />
       </div>
@@ -66,12 +101,12 @@ const TrainingForm: FC<TrainingFormProps> = ({
       <div className="mb-5 sm:mb-10">
         <TrainingCardEditor
           value={formik.values.exercises}
-          onChange={value => formik.setFieldValue('exercises', value)}
+          onChange={value => handleChangeField('exercises', value)}
         />
       </div>
 
       <div className="mb-5 sm:mb-10">
-        <Button type="submit">Закончить тренировку</Button>
+        <Button onClick={handleSubmit}>Закончить тренировку</Button>
       </div>
     </form>
   )
