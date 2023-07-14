@@ -66,10 +66,7 @@ const TrainingForm: FC<TrainingFormProps> = ({
           clearTimeout(timer)
         }
 
-        const handleAutosave = setTimeout(() => {
-          console.log('autosaved')
-          formik.handleSubmit()
-        }, 2000)
+        const handleAutosave = setTimeout(formik.handleSubmit, 2000)
 
         setTimer(handleAutosave)
       }
@@ -85,8 +82,6 @@ const TrainingForm: FC<TrainingFormProps> = ({
     await formik.handleSubmit()
     router.push(`/trainings/${user}`)
   }, [timer, formik, router, user])
-
-  console.log('trainingId: ', trainingId)
 
   return (
     <form>
@@ -105,8 +100,20 @@ const TrainingForm: FC<TrainingFormProps> = ({
         />
       </div>
 
-      <div className="mb-5 sm:mb-10">
-        <Button onClick={handleSubmit}>Закончить тренировку</Button>
+      <div className="mb-5 sm:mb-10 flex">
+        {!autosave && (
+          <Button
+            className="mr-5"
+            onClick={() => {
+              router.back()
+            }}
+          >
+            Назад
+          </Button>
+        )}
+        <Button onClick={handleSubmit}>
+          {autosave ? 'Закончить тренировку' : 'Сохранить изменения'}
+        </Button>
       </div>
     </form>
   )

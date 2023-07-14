@@ -63,8 +63,9 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
 
       setExercises(updatedExercises)
       onChange(updatedExercises)
+      selectCard(newExercises[newExercises.length - 1]._id)
     },
-    [exercises, onChange],
+    [exercises, onChange, selectCard],
   )
 
   const handleApproachesChange = useCallback(

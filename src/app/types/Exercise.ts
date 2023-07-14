@@ -63,10 +63,12 @@ export enum Measurement {
   weight = 'MEASUREMENT_WEIGHT',
   time = 'MEASUREMENT_TIME',
   repeats = 'MEASUREMENT_REPEATS',
+  distance = 'MEASUREMENT_DISTANCE',
 }
 
 export const MeasurementLabel = {
   [Measurement.weight]: 'кг.',
   [Measurement.time]: 'сек.',
   [Measurement.repeats]: 'раз.',
+  [Measurement.distance]: 'м.',
 }

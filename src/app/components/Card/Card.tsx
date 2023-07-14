@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 import { Image, Popover } from '@/app/components'
@@ -19,20 +19,42 @@ export type CardProps = {
   link?: string
   checked?: boolean
   menu?: MenuItem[]
+  disabled?: boolean
   onClick?: () => void
 }
 
-const Card: FC<CardProps> = ({ title, img, link, checked, menu, onClick }) => {
+const Card: FC<CardProps> = ({
+  title,
+  img,
+  link,
+  checked,
+  menu,
+  disabled,
+  onClick,
+}) => {
+  const handleClick = useCallback(() => {
+    if (!disabled && onClick) {
+      onClick()
+    }
+  }, [disabled, onClick])
+
   const component = (
     <div
       className={classNames(
         link && styles.card,
         checked && styles.checked,
+        onClick && !disabled && 'cursor-pointer',
         'relative aspect-square border-b-4 border-lime-400 transition-all',
       )}
-      onClick={onClick}
+      onClick={handleClick}
     >
-      <Image src={img} alt={title} fill style={{ objectFit: 'cover' }} />
+      <Image
+        className={classNames(disabled && 'grayscale')}
+        src={img}
+        alt={title}
+        fill
+        style={{ objectFit: 'cover' }}
+      />
 
       {menu && <Popover menu={menu} />}
 

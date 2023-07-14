@@ -51,8 +51,16 @@ const TrainingCard: FC<TrainingCardProps> = ({
   }, [maxExercises, exercises.length])
 
   const exercisesArray = allExercises
-    ? exercises.map(({ exercise }) => exercise)
-    : exercises.map(({ exercise }) => exercise).slice(0, maxExercises)
+    ? exercises.map(({ exercise, approaches }) => ({
+        ...exercise,
+        disabled: approaches.length === 0,
+      }))
+    : exercises
+        .map(({ exercise, approaches }) => ({
+          ...exercise,
+          disabled: approaches.length === 0,
+        }))
+        .slice(0, maxExercises)
 
   const showStatsAfterCardIndex = useMemo(() => {
     const selectedCardIndex = exercisesArray.findIndex(
@@ -118,7 +126,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
 
   const menu = [
     {
-      label: 'Продолжить',
+      label: 'Изменить',
       onClick: () => {
         router.push(`/trainings/${user}/${_id}/edit`)
       },
