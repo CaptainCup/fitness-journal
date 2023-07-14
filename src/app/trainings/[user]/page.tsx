@@ -46,7 +46,10 @@ const Trainings = async ({ params: { user } }: PageProps) => {
   return (
     <main>
       <PageTitle
-        title={title}
+        title="Тренировки"
+        subtitle={
+          sameUser ? '' : `${firstName ? `${firstName[0]}. ` : ''}${lastName}`
+        }
         image={sameUser ? '' : avatar}
         withBack={!sameUser}
       />

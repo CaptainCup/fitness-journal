@@ -61,8 +61,9 @@ const Trainings = async ({ params: { training, user } }: PageProps) => {
   return (
     <main>
       <PageTitle
+        title="Тренировка"
+        subtitle={`${new Date(date).toLocaleDateString()}`}
         image={avatar}
-        title={`Тренировка от ${new Date(date).toLocaleDateString()}`}
         withBack
       />
       <Container>

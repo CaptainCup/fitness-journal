@@ -48,7 +48,7 @@ const EquipmentEdit = async ({ params: { id } }: Props) => {
 
   return (
     <main>
-      <PageTitle title={name} withBack />
+      <PageTitle title="Редактировать" subtitle={name} withBack />
       <Container>
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />

@@ -3,7 +3,7 @@
 import { FC, memo } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import { Button, TrainingCardEditor } from '@/app/components'
+import { Button, Calendar, TrainingCardEditor } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { ExercisesRecord, TrainingItem } from '@/app/types'
 
@@ -25,8 +25,9 @@ const TrainingForm: FC<TrainingFormProps> = ({
   const formik = useFormik({
     initialValues: {
       exercises,
+      date,
     },
-    onSubmit: ({ exercises }) => {
+    onSubmit: ({ exercises, date }) => {
       const transformedExercises = exercises?.map(
         ({ exercise, approaches }: ExercisesRecord) => ({
           exercise: exercise._id,
@@ -54,6 +55,14 @@ const TrainingForm: FC<TrainingFormProps> = ({
 
   return (
     <form onSubmit={formik.handleSubmit}>
+      <div className="mb-5 sm:mb-10">
+        <Calendar
+          value={formik.values.date}
+          onChange={value => formik.setFieldValue('date', value)}
+          label="Дата тренировки:"
+        />
+      </div>
+
       <div className="mb-5 sm:mb-10">
         <TrainingCardEditor
           value={formik.values.exercises}

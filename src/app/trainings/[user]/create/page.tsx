@@ -38,7 +38,8 @@ const Trainings = async ({
   return (
     <main>
       <PageTitle
-        title="Новая тренировка"
+        title="Тренировка"
+        subtitle={`${firstName ? `${firstName[0]}. ` : ''}${lastName}`}
         image={sameUser ? '' : avatar}
         withBack
       />

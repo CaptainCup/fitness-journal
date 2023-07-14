@@ -9,11 +9,17 @@ import styles from './PageTitle.module.css'
 
 type PageTitleProps = {
   title: string
+  subtitle?: string
   image?: string
   withBack?: boolean
 }
 
-const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
+const PageTitle: FC<PageTitleProps> = ({
+  title,
+  subtitle,
+  image,
+  withBack,
+}) => {
   const router = useRouter()
 
   return (
@@ -33,6 +39,11 @@ const PageTitle: FC<PageTitleProps> = ({ title, image, withBack }) => {
               </button>
             )}
             <h1 className="text-3xl sm:text-5xl text-white">{title}</h1>
+            {subtitle && (
+              <h2 className="text-xl sm:text-2xl text-white mt-5">
+                {subtitle}
+              </h2>
+            )}
           </div>
 
           {image && (

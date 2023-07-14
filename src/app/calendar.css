@@ -1,0 +1,54 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
+@font-face {
+  font-family: 'DrukTextWide';
+  src: url('./DrukTextWide-Medium.woff');
+}
+
+.react-datepicker {
+  font-family: DrukTextWide;
+  border-radius: 0;
+  border: none;
+}
+
+.react-datepicker-popper {
+  z-index: 100;
+}
+
+.react-datepicker__header {
+  background-color: #a3e635;
+  border-radius: 0 !important;
+  border-color: #000;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__navigation-icon--next::before,
+.react-datepicker__navigation-icon--previous::before {
+  border-color: #000;
+  transition: all 0.15s;
+}
+
+.react-datepicker__navigation--next:hover
+  .react-datepicker__navigation-icon--next::before,
+.react-datepicker__navigation--previous:hover
+  .react-datepicker__navigation-icon--previous::before {
+  border-color: #fff;
+}
+
+.react-datepicker__month-container {
+  background-color: #000;
+}
+
+.react-datepicker__day {
+  color: #fff;
+}
+
+.react-datepicker__day:hover,
+.react-datepicker__day--selected,
+.react-datepicker__day--selected:hover {
+  background: none;
+  color: #a3e635;
+}
