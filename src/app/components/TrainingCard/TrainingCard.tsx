@@ -12,6 +12,7 @@ export type TrainingCardProps = {
   date: string
   exercises: ExercisesRecord[]
   user: string
+  onDelete: () => void
 }
 
 const TrainingCard: FC<TrainingCardProps> = ({
@@ -19,6 +20,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
   date,
   exercises,
   user,
+  onDelete,
 }) => {
   const [allExercises, setAllExercises] = useState(false)
   const [selectedCard, setSelectedCard] = useState<any>()
@@ -124,9 +126,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
     {
       label: 'Удалить',
       danger: true,
-      onClick: () => {
-        router.push(`/trainings/${user}/${_id}/edit`)
-      },
+      onClick: onDelete,
     },
   ]
 

@@ -7,6 +7,7 @@ import React, {
   useImperativeHandle,
   forwardRef,
   Fragment,
+  useCallback,
 } from 'react'
 import axios from 'axios'
 import { KeyedMutator } from 'swr'
@@ -163,6 +164,14 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       getItem: (id): void => getItem(data, id),
     }))
 
+    const handleDelete = useCallback(
+      async (id: string) => {
+        await httpService.delete(`${endpoint}/${id}`)
+        mutate(array => removeItem(array, id), false)
+      },
+      [endpoint, mutate],
+    )
+
     return (
       <InfiniteScroll
         initialLoad={false}
@@ -182,7 +191,14 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
         }
       >
         {data?.flat().length ? (
-          data?.flat().map(renderItem)
+          data
+            ?.flat()
+            .map((item, index) =>
+              renderItem(
+                { ...item, onDelete: () => handleDelete(item._id) },
+                index,
+              ),
+            )
         ) : (
           <p className="col-span-2 sm:col-span-3 md:col-span-4">
             Ничего не найдено
