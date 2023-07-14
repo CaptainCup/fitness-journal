@@ -1,21 +1,5 @@
 import BaseHttpService from './BaseHttpService'
-import { ExerciseItem } from './ExerciseService'
-
-export type EquipmentItem = {
-  _id: string
-  name: string
-  image?: string
-  description?: string
-  configuration?: { image: string; text: string }[]
-  exercises?: ExerciseItem[]
-}
-
-export type EquipmentItemCreate = {
-  name: string
-  image?: string
-  description?: string
-  configuration?: { image: string; text: string }[]
-}
+import { EquipmentItem } from '@/app/types/Equipment'
 
 export default class EquipmentService extends BaseHttpService {
   async getList(params = {}): Promise<EquipmentItem[]> {

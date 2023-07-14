@@ -6,12 +6,6 @@ import {
 } from '@/app/components'
 import { getUserById, getCurrentUser } from '@/app/services-server'
 
-const breadcrumbsPath = [
-  { label: 'Главная', href: '/' },
-  { label: 'Тренировки', href: '/trainings' },
-  { label: 'Новая тренировка', href: '/trainings/create' },
-]
-
 export const metadata = {
   title: 'Новая тренировка',
 }
@@ -24,9 +18,9 @@ const Trainings = async ({
   const userData = await getUserById(user)
   const currentUserData = await getCurrentUser()
 
-  const sameUser = userData._id === currentUserData._id
+  const sameUser = userData?._id === currentUserData?._id
 
-  const { firstName, lastName, avatar } = userData
+  const { firstName, lastName, avatar } = userData || {}
 
   const title = sameUser
     ? `Тренировки`
@@ -45,7 +39,7 @@ const Trainings = async ({
     <main>
       <PageTitle
         title="Новая тренировка"
-        image={sameUser ? null : avatar}
+        image={sameUser ? '' : avatar}
         withBack
       />
       <Container>

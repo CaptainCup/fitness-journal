@@ -12,10 +12,7 @@ import {
   TextInput,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
-import {
-  EquipmentItem,
-  EquipmentItemCreate,
-} from '@/app/services-client/EquipmentService'
+import { EquipmentItem, EquipmentItemCreate } from '@/app/types'
 
 const equipmentApi = new EquipmentService()
 

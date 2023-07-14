@@ -16,7 +16,7 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
   const serverData = await getUserById(user)
 
-  const { firstName, lastName, avatar } = serverData
+  const { firstName, lastName, avatar } = serverData || {}
 
   return {
     title: `Тренировки ${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
@@ -30,9 +30,9 @@ const Trainings = async ({ params: { user } }: PageProps) => {
   const userData = await getUserById(user)
   const currentUserData = await getCurrentUser()
 
-  const sameUser = userData._id === currentUserData._id
+  const sameUser = userData?._id === currentUserData?._id
 
-  const { firstName, lastName, avatar } = userData
+  const { firstName, lastName, avatar } = userData || {}
 
   const title = sameUser
     ? `Тренировки`
@@ -47,7 +47,7 @@ const Trainings = async ({ params: { user } }: PageProps) => {
     <main>
       <PageTitle
         title={title}
-        image={sameUser ? null : avatar}
+        image={sameUser ? '' : avatar}
         withBack={!sameUser}
       />
       <Container>

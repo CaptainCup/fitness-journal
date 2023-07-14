@@ -1,27 +1,5 @@
 import BaseHttpService from './BaseHttpService'
-import { ExerciseItem } from './ExerciseService'
-import { User } from './UserService'
-
-export type ExercisesRecord = {
-  exercise: ExerciseItem
-  approaches: string[][]
-}
-
-export type TrainingItem = {
-  _id: string
-  date: Date
-  user: User
-  exercises: ExercisesRecord[]
-}
-
-export type TrainingItemCreate = {
-  date: Date
-  user: string
-  exercises: {
-    exercise: string
-    approaches: string[][]
-  }[]
-}
+import { TrainingItem } from '@/app/types/Training'
 
 export default class TrainingService extends BaseHttpService {
   async getList(params = {}): Promise<TrainingItem[]> {

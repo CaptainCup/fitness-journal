@@ -5,8 +5,7 @@ import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { Card, Popover, Title } from '@/app/components'
-import { MeasurementLabel } from '@/app/services-client/ExerciseService'
-import { ExercisesRecord } from '@/app/services-client/TrainingService'
+import { MeasurementLabel, ExercisesRecord } from '@/app/types'
 
 export type TrainingCardProps = {
   _id: string

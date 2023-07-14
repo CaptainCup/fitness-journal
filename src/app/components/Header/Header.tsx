@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { AuthService } from '@/app/services-client'
 import { Container, ModalAuth } from '@/app/components'
-import { User } from '@/app/services-client/UserService'
+import { User } from '@/app/types'
 import styles from './Header.module.css'
 import HeaderMenu from './HeaderMenu'
 
@@ -29,7 +29,7 @@ const defaultMenuItems = [
 ]
 
 export type Header = {
-  user: User
+  user?: User
 }
 
 const Header: FC<Header> = ({ user }) => {

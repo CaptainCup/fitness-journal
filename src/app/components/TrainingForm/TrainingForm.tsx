@@ -5,10 +5,7 @@ import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { Button, TrainingCardEditor } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
-import {
-  ExercisesRecord,
-  TrainingItem,
-} from '@/app/services-client/TrainingService'
+import { ExercisesRecord, TrainingItem } from '@/app/types'
 
 const trainingsApi = new TrainingService()
 

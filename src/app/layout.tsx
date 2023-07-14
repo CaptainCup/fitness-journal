@@ -23,7 +23,7 @@ const RootLayout: NextPage<RootLayout> = async ({ children }) => {
   return (
     <html lang="ru" className={font.className}>
       <body className="min-h-screen flex flex-col justify-between">
-        <Header user={currentUserData} />
+        <Header {...(currentUserData ? { user: currentUserData } : {})} />
         {children}
         <Footer />
       </body>

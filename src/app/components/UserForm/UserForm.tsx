@@ -8,7 +8,7 @@ import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation'
 import { ImageUpload, TextInput, Button } from '@/app/components'
 import { UserService } from '@/app/services-client'
-import { User } from '@/app/services-client/UserService'
+import { User } from '@/app/types'
 
 const usersApi = new UserService()
 

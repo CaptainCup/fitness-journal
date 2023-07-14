@@ -14,11 +14,7 @@ import {
   MeasurementEditor,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
-import {
-  ExerciseItem,
-  ExerciseItemCreate,
-  Measurement,
-} from '@/app/services-client/ExerciseService'
+import { ExerciseItem, ExerciseItemCreate, Measurement } from '@/app/types'
 
 const exerciseApi = new ExerciseService()
 
