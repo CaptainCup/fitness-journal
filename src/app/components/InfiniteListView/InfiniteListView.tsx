@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { InfiniteList, Title } from '@/app/components'
 import { Button, TextInput } from '@/app/components'
+import classNames from 'classnames'
 
 export type InfiniteListViewProps = {
   title?: string
@@ -41,7 +42,7 @@ const InfiniteListView: FC<InfiniteListViewProps> = ({
           {withSearch && (
             <TextInput
               placeholder="Поиск"
-              className="w-full flex mr-2 lg:mr-5"
+              className="w-full flex"
               delay={1500}
               onChange={handleSearch}
               clear
@@ -49,7 +50,10 @@ const InfiniteListView: FC<InfiniteListViewProps> = ({
           )}
 
           {addLink && (
-            <Button onClick={() => router.push(addLink)}>
+            <Button
+              className={classNames(withSearch && addLink && 'ml-2 md:ml-5')}
+              onClick={() => router.push(addLink)}
+            >
               <Image
                 src="/icons/plus.svg"
                 width={40}

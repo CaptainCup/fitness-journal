@@ -1,4 +1,4 @@
-import { User, AuthToken } from './User'
+import { User, AuthToken, AdminPermissions } from './User'
 import { EquipmentItem, EquipmentItemCreate } from './Equipment'
 import {
   ExerciseItem,
@@ -24,4 +24,4 @@ export type {
   TrainingItemCreate,
 }
 
-export { MusculeImage, MeasurementLabel }
+export { MusculeImage, MeasurementLabel, AdminPermissions }

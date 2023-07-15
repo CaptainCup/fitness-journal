@@ -4,14 +4,19 @@ import { memo, FC } from 'react'
 import { useRouter } from 'next/navigation'
 import { InfiniteListView, Card } from '@/app/components'
 
-const UsersListView: FC = () => {
+export type UsersListViewProps = {
+  isTrainer?: boolean
+}
+
+const UsersListView: FC<UsersListViewProps> = ({ isTrainer }) => {
   const router = useRouter()
 
   return (
     <InfiniteListView
       withSearch
-      addLink="/users/create"
-      addCaption="Добавить пользователя"
+      {...(isTrainer
+        ? { addLink: '/users/create', addCaption: 'Добавить пользователя' }
+        : {})}
       endpoint="users"
       renderItem={item => (
         <Card
@@ -21,14 +26,18 @@ const UsersListView: FC = () => {
           }`}
           img={item?.avatar}
           link={`/trainings/${item?._id}`}
-          menu={[
-            {
-              label: 'Редактировать',
-              onClick: () => {
-                router.push(`users/${item?._id}/edit`)
-              },
-            },
-          ]}
+          {...(isTrainer
+            ? {
+                menu: [
+                  {
+                    label: 'Редактировать',
+                    onClick: () => {
+                      router.push(`users/${item?._id}/edit`)
+                    },
+                  },
+                ],
+              }
+            : {})}
           {...item}
         />
       )}

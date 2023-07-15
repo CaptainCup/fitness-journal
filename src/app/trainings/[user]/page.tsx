@@ -6,6 +6,7 @@ import {
   Container,
 } from '@/app/components'
 import { getUserById, getCurrentUser } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
 
 type PageProps = {
   params: { user: string }
@@ -29,6 +30,8 @@ export const generateMetadata = async ({
 const Trainings = async ({ params: { user } }: PageProps) => {
   const userData = await getUserById(user)
   const currentUserData = await getCurrentUser()
+
+  const isTrainer = currentUserData?.admin?.includes(AdminPermissions.trainer)
 
   const sameUser = userData?._id === currentUserData?._id
 
@@ -58,7 +61,10 @@ const Trainings = async ({ params: { user } }: PageProps) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <TrainingListView user={user} />
+        <TrainingListView
+          user={user}
+          canStartTraining={isTrainer || sameUser}
+        />
       </Container>
     </main>
   )

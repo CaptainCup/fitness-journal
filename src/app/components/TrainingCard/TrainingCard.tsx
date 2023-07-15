@@ -12,6 +12,7 @@ export type TrainingCardProps = {
   date: string
   exercises: ExercisesRecord[]
   user: string
+  canStartTraining?: boolean
   onDelete: () => void
 }
 
@@ -20,6 +21,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
   date,
   exercises,
   user,
+  canStartTraining,
   onDelete,
 }) => {
   const [allExercises, setAllExercises] = useState(false)
@@ -142,17 +144,19 @@ const TrainingCard: FC<TrainingCardProps> = ({
     <div>
       <Title
         extra={
-          <Popover
-            menu={menu}
-            buttonClassName="-top-3 -right-3 flex py-2 outline-none"
-            customButton={
-              <>
-                <div className="w-1 h-1 bg-black mr-1" />
-                <div className="w-1 h-1 bg-black mr-1" />
-                <div className="w-1 h-1 bg-black" />
-              </>
-            }
-          />
+          canStartTraining ? (
+            <Popover
+              menu={menu}
+              buttonClassName="-top-3 -right-3 flex py-2 outline-none"
+              customButton={
+                <>
+                  <div className="w-1 h-1 bg-black mr-1" />
+                  <div className="w-1 h-1 bg-black mr-1" />
+                  <div className="w-1 h-1 bg-black" />
+                </>
+              }
+            />
+          ) : null
         }
       >
         {new Date(date).toLocaleDateString()}

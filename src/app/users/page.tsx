@@ -5,6 +5,8 @@ import {
   Container,
   UsersListView,
 } from '@/app/components'
+import { getCurrentUser } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -16,6 +18,10 @@ export const metadata = {
 }
 
 const UsersPage: NextPage = async () => {
+  const currentUser = await getCurrentUser()
+
+  const isTrainer = currentUser?.admin?.includes(AdminPermissions.trainer)
+
   return (
     <main>
       <PageTitle title="Клуб X-Fit" />
@@ -25,7 +31,7 @@ const UsersPage: NextPage = async () => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <UsersListView />
+          <UsersListView isTrainer={isTrainer} />
         </div>
       </Container>
     </main>
