@@ -46,7 +46,7 @@ const Popover: FC<PopoverProps> = ({ menu, buttonClassName, customButton }) => {
                 {menu.map(({ label, danger, onClick }) => (
                   <div
                     key={label}
-                    className="mb-5"
+                    className="mb-5 cursor-pointer"
                     onClick={e => {
                       e.preventDefault()
                       onClick()

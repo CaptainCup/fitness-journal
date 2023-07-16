@@ -128,7 +128,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
 
   const menu = [
     {
-      label: 'Изменить',
+      label: 'Продолжить',
       onClick: () => {
         router.push(`/trainings/${user}/${_id}/edit`)
       },

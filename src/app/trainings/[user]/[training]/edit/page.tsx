@@ -66,7 +66,7 @@ const Trainings = async ({ params: { training, user } }: PageProps) => {
         </div>
 
         <div className="mb-5 sm:mb-10">
-          <TrainingForm initialData={trainingData} user={user} />
+          <TrainingForm initialData={trainingData} user={user} autosave />
         </div>
       </Container>
     </main>
