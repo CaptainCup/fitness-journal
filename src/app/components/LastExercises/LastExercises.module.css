@@ -1,0 +1,22 @@
+.arrow {
+  position: relative;
+}
+
+.arrow::after {
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  content: '';
+  transform: rotate(45deg) translateY(50%);
+  border-top: 2px solid;
+  border-right: 2px solid;
+  transition: all 0.15s;
+}
+
+.arrow.open::after {
+  transform: rotate(135deg) translateY(-30%);
+}

@@ -6,7 +6,7 @@ import {
   Breadcrumbs,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
-import { getUserById } from '@/app/services-server'
+import { getUserById, getCurrentUser } from '@/app/services-server'
 
 const trainingsApi = new TrainingService()
 
@@ -39,8 +39,11 @@ export const generateMetadata = async ({
 const Trainings = async ({ params: { training, user } }: PageProps) => {
   const trainingData = await getData(training)
   const userData = await getUserById(user)
+  const currentUserData = await getCurrentUser()
 
-  const { avatar } = userData || {}
+  const sameUser = userData?._id === currentUserData?._id
+
+  const { avatar, firstName, lastName } = userData || {}
   const { date } = trainingData
 
   const breadcrumbsPath = [
@@ -56,8 +59,12 @@ const Trainings = async ({ params: { training, user } }: PageProps) => {
     <main>
       <PageTitle
         title="Тренировка"
-        subtitle={`${new Date(date).toLocaleDateString()}`}
-        image={avatar}
+        subtitle={
+          sameUser
+            ? `${new Date(date).toLocaleDateString()}`
+            : `${firstName ? `${firstName[0]}. ` : ''}${lastName}`
+        }
+        image={sameUser ? '' : avatar}
         withBack
       />
       <Container>

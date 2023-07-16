@@ -21,4 +21,13 @@ export default class TrainingService extends BaseHttpService {
   async deleteTraining(id: string): Promise<void> {
     return this.delete(`/trainings/${id}`)
   }
+
+  async lastExerciseResults(
+    user: string,
+    exercise: string,
+  ): Promise<{ approaches: string[][]; date: Date } | null> {
+    return this.get('/trainings/last-exercise-results', {
+      params: { user, exercise },
+    })
+  }
 }

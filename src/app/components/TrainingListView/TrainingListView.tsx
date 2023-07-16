@@ -20,10 +20,10 @@ const TrainingListView: FC<TrainingListViewProps> = ({
 
   const createTraining = useCallback(async () => {
     try {
-      const newTrainingItem = await trainingsApi.create()
+      const newTrainingItem = await trainingsApi.create({ user })
       router.push(`/trainings/${user}/${newTrainingItem._id}/edit`)
-    } catch {
-      console.log('Произошла ошибка при создании тренировки: ')
+    } catch (error) {
+      console.log(`Произошла ошибка при создании тренировки: ${error}`)
     }
   }, [router, user])
 

@@ -95,6 +95,7 @@ const TrainingForm: FC<TrainingFormProps> = ({
 
       <div className="mb-5 sm:mb-10">
         <TrainingCardEditor
+          user={user}
           value={formik.values.exercises}
           onChange={value => handleChangeField('exercises', value)}
         />

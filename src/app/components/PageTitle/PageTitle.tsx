@@ -47,7 +47,7 @@ const PageTitle: FC<PageTitleProps> = ({
           </div>
 
           {image && (
-            <div className="relative h-full aspect-square -mx-5 sm:ml-10">
+            <div className="relative h-full aspect-square -mx-5 sm:mx-0 sm:ml-10">
               <Image unoptimized src={image} alt={title} fill />
             </div>
           )}

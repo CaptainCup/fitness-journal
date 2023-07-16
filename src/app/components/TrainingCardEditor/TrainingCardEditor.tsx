@@ -11,15 +11,17 @@ import {
 } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import classNames from 'classnames'
-import { Card, ModalGrid } from '@/app/components'
+import { Card, LastExercises, ModalGrid } from '@/app/components'
 import { ExerciseItem, MeasurementLabel, ExercisesRecord } from '@/app/types'
 
 export type TrainingCardEditorProps = {
+  user: string
   value?: ExercisesRecord[]
   onChange?: (value: ExercisesRecord[]) => void
 }
 
 const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
+  user,
   value,
   onChange = () => null,
 }) => {
@@ -141,6 +143,11 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
 
   const stats = (
     <div className="col-span-2 sm:col-span-4 lg:col-span-6 flex flex-col my-5">
+      <LastExercises
+        user={user}
+        exercise={currentStats?.exercise?._id || ''}
+        measurements={currentStats?.exercise?.measurements || []}
+      />
       {currentStats?.approaches.map((approache, approacheIndex: number) => (
         <div className="flex" key={approacheIndex}>
           {approache.map((measurement, measurementIndex) => (
