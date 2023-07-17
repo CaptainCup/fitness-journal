@@ -35,6 +35,7 @@ const valuePermissions = {
 
 export type UserFormProps = {
   initialData?: User
+  isAdmin?: boolean
 }
 
 const UserForm: FC<UserFormProps> = ({
@@ -47,6 +48,7 @@ const UserForm: FC<UserFormProps> = ({
     avatar: '',
     admin: [],
   },
+  isAdmin,
 }) => {
   const router = useRouter()
 
@@ -150,13 +152,15 @@ const UserForm: FC<UserFormProps> = ({
         </InputMask>
       </div>
 
-      <div className="mb-5 sm:mb-10">
-        <Select
-          options={userPermissions}
-          value={formik.values.admin}
-          onChange={value => formik.setFieldValue('admin', value)}
-        />
-      </div>
+      {isAdmin && (
+        <div className="mb-5 sm:mb-10">
+          <Select
+            options={userPermissions}
+            value={formik.values.admin}
+            onChange={value => formik.setFieldValue('admin', value)}
+          />
+        </div>
+      )}
 
       <div className="mb-5 sm:mb-10 flex justify-center">
         <Button type="submit">Изменить пользователя</Button>

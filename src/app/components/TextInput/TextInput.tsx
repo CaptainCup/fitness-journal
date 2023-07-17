@@ -78,7 +78,13 @@ const TextInput: FC<TextInputProps> = ({
       {showLoader && <div className={styles.loader} />}
       {clear && !showLoader && textInputValue && (
         <button onClick={handleClear} className={styles.clear}>
-          <Image width={20} height={20} src="/icons/x-mark.svg" alt="X" />
+          <Image
+            className="rotate-45 translate-y-0.5"
+            src="/icons/plus.svg"
+            width={20}
+            height={20}
+            alt="Очистить"
+          />
         </button>
       )}
     </div>

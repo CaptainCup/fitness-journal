@@ -23,7 +23,7 @@ const PageTitle: FC<PageTitleProps> = ({
   const router = useRouter()
 
   return (
-    <section className="bg-black w-full pt-28 sm:h-64 lg:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
+    <section className="bg-black w-full pt-28 sm:h-80 lg:h-96 mb-5 sm:mb-10 sm:pt-0 overflow-hidden">
       <Container className="h-full">
         <div className="flex h-full justify-between flex-col sm:flex-row">
           <div className="pb-5 sm:pb-10 flex flex-col justify-end">
@@ -38,9 +38,9 @@ const PageTitle: FC<PageTitleProps> = ({
                 Назад
               </button>
             )}
-            <h1 className="text-3xl sm:text-5xl text-white">{title}</h1>
+            <h1 className="text-3xl md:text-5xl text-white">{title}</h1>
             {subtitle && (
-              <h2 className="text-xl sm:text-2xl text-white mt-5">
+              <h2 className="text-xl md:text-2xl text-white mt-5">
                 {subtitle}
               </h2>
             )}

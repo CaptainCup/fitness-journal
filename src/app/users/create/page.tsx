@@ -1,5 +1,7 @@
 import { NextPage } from 'next'
 import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
+import { getCurrentUser } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -11,7 +13,9 @@ export const metadata = {
   title: 'Добавить нового пользователя',
 }
 
-const UserCreate: NextPage = () => {
+const UserCreate: NextPage = async () => {
+  const currentUser = await getCurrentUser()
+
   return (
     <main>
       <PageTitle title="Новый пользователь" withBack />
@@ -20,7 +24,9 @@ const UserCreate: NextPage = () => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <UserForm />
+        <UserForm
+          isAdmin={currentUser?.admin?.includes(AdminPermissions.admin)}
+        />
       </Container>
     </main>
   )

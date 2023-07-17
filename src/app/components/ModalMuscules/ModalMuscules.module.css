@@ -1,3 +1,8 @@
+.grid {
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
 .close::before,
 .close::after {
   content: '';

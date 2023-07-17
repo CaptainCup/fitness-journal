@@ -9,6 +9,7 @@ export type ExerciseItem = {
   execution?: { image: string; text: string }[]
   equipment?: EquipmentItem[]
   similar?: ExerciseItem[]
+  muscules?: Muscule[]
 }
 
 export type ExerciseItemCreate = {
@@ -19,45 +20,60 @@ export type ExerciseItemCreate = {
   execution?: { image: string; text: string }[]
   equipment?: string[]
   similar?: string[]
+  muscules?: Muscule[]
 }
 
 export enum Muscule {
-  neck = 'MUSCULE_NECK',
   shoulders = 'MUSCULE_SHOULDERS',
-  trapezius = 'MUSCULE_TRAPEZIUS',
   biceps = 'MUSCULE_BICEPS',
+  triceps = 'MUSCULE_TRICEPS',
   forearm = 'MUSCULE_FOREARM',
+  back = 'MUSCULE_BACK',
   chest = 'MUSCULE_CHEST',
   abs = 'MUSCULE_ABS',
-  quadriceps = 'MUSCULE_QUADRICEPS',
-  triceps = 'MUSCULE_TRICEPS',
-  latissimus = 'MUSCULE_LATISSIMUS',
-  rhomboid = 'MUSCULE_RHOMBOID',
-  lumbar = 'MUSCULE_LUMBAR',
-  gluteal = 'MUSCULE_GLUTERAL',
-  femoris = 'MUSCULE_FEMORIS',
-  soleus = 'MUSCULE_SOLEUS',
+  legs = 'MUSCULE_LEGS',
 }
 
 const musculeImageSrc = '/images/muscules'
 
-export const MusculeImage = {
-  [Muscule.neck]: `${musculeImageSrc}/neck.jpg`,
-  [Muscule.shoulders]: `${musculeImageSrc}/shoulders.jpg`,
-  [Muscule.trapezius]: `${musculeImageSrc}/trapezius.jpg`,
-  [Muscule.biceps]: `${musculeImageSrc}/biceps.jpg`,
-  [Muscule.forearm]: `${musculeImageSrc}/forearm.jpg`,
-  [Muscule.chest]: `${musculeImageSrc}/chest.jpg`,
-  [Muscule.abs]: `${musculeImageSrc}/abs.jpg`,
-  [Muscule.quadriceps]: `${musculeImageSrc}/quadriceps.jpg`,
-  [Muscule.triceps]: `${musculeImageSrc}/triceps.jpg`,
-  [Muscule.latissimus]: `${musculeImageSrc}/latissimus.jpg`,
-  [Muscule.rhomboid]: `${musculeImageSrc}/rhomboid.jpg`,
-  [Muscule.lumbar]: `${musculeImageSrc}/lumbar.jpg`,
-  [Muscule.gluteal]: `${musculeImageSrc}/gluteal.jpg`,
-  [Muscule.femoris]: `${musculeImageSrc}/femoris.jpg`,
-  [Muscule.soleus]: `${musculeImageSrc}/soleus.jpg`,
+export const MusculeObject = {
+  [Muscule.shoulders]: {
+    name: 'Плечи',
+    image: `${musculeImageSrc}/shoulders.jpg`,
+  },
+  [Muscule.biceps]: {
+    name: 'Бицепс',
+    image: `${musculeImageSrc}/biceps.jpg`,
+  },
+  [Muscule.triceps]: {
+    name: `Трицепс`,
+    image: `${musculeImageSrc}/triceps.jpg`,
+  },
+  [Muscule.forearm]: {
+    name: `Предплечье`,
+    image: `${musculeImageSrc}/forearms.jpg`,
+  },
+  [Muscule.back]: {
+    name: 'Спина',
+    image: `${musculeImageSrc}/back.jpg`,
+  },
+  [Muscule.chest]: {
+    name: 'Грудь',
+    image: `${musculeImageSrc}/chest.jpg`,
+  },
+  [Muscule.abs]: {
+    name: 'Пресс',
+    image: `${musculeImageSrc}/abs.jpg`,
+  },
+  [Muscule.legs]: {
+    name: `Ноги`,
+    image: `${musculeImageSrc}/legs.jpg`,
+  },
 }
+
+export const MusculeArray = Object.entries(MusculeObject).map(
+  ([muscule, data]) => ({ ...data, value: muscule }),
+)
 
 export enum Measurement {
   weight = 'MEASUREMENT_WEIGHT',

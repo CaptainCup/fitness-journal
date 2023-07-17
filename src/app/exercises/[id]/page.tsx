@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import {
   PageTitle,
   Breadcrumbs,
@@ -10,7 +11,7 @@ import {
 import { ExerciseService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
-import Link from 'next/link'
+import { MusculeObject } from '@/app/types/Exercise'
 
 const exerciseApi = new ExerciseService()
 
@@ -25,10 +26,8 @@ type PageProps = {
 }
 
 export const generateMetadata = async ({
-  params,
+  params: { id },
 }: PageProps): Promise<Metadata> => {
-  const id = params.id
-
   const serverData = await getExerciseData(id)
 
   const { name, image } = serverData
@@ -45,7 +44,8 @@ const Exercise = async ({ params: { id } }: PageProps) => {
   const serverData = await getExerciseData(id)
   const userData = await getCurrentUser()
 
-  const { name, image, description, execution, equipment, similar } = serverData
+  const { name, image, description, execution, equipment, similar, muscules } =
+    serverData
   const { admin } = userData || {}
 
   const canEditExercise = admin?.includes(AdminPermissions.trainer)
@@ -82,9 +82,16 @@ const Exercise = async ({ params: { id } }: PageProps) => {
           </div>
         )}
 
-        {/* <div className="mb-5 sm:mb-10">
-          <CardsGrid title="Задействованные мышцы" cards={exercise.muscules} />
-        </div> */}
+        {!!muscules?.length && (
+          <div className="mb-5 sm:mb-10">
+            <CardsGrid
+              title="Задействованные мышцы"
+              cards={muscules
+                ?.map(muscule => MusculeObject[muscule])
+                .map(({ name, image }) => ({ title: name, img: image }))}
+            />
+          </div>
+        )}
 
         {!!equipment?.length && (
           <div className="mb-5 sm:mb-10">

@@ -4,7 +4,7 @@ import {
   ExerciseItem,
   ExerciseItemCreate,
   Muscule,
-  MusculeImage,
+  MusculeArray,
   Measurement,
   MeasurementLabel,
 } from './Exercise'
@@ -24,4 +24,4 @@ export type {
   TrainingItemCreate,
 }
 
-export { MusculeImage, MeasurementLabel, AdminPermissions }
+export { MeasurementLabel, MusculeArray, AdminPermissions }

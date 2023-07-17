@@ -1,25 +1,20 @@
 import { Metadata } from 'next'
 import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
-import { UserService } from '@/app/services-client'
+import { getCurrentUser, getUserById } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
 
-const userApi = new UserService()
-
-const getData = async (id: string) => {
-  const serverData = await userApi.getById(id).then(res => res)
-
-  return serverData
-}
-
-type Props = {
+type PageProps = {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
   const id = params.id
 
-  const serverData = await getData(id)
+  const serverData = await getUserById(id)
 
-  const { firstName, lastName, avatar } = serverData
+  const { firstName, lastName, avatar } = serverData || {}
 
   return {
     title: `${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
@@ -29,10 +24,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const UserEdit = async ({ params: { id } }: Props) => {
-  const serverData = await getData(id)
+const UserEdit = async ({ params: { id } }: PageProps) => {
+  const userData = await getUserById(id)
+  const currentUser = await getCurrentUser()
 
-  const { firstName, lastName } = serverData
+  const { firstName, lastName } = userData || {}
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
@@ -52,7 +48,10 @@ const UserEdit = async ({ params: { id } }: Props) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <UserForm initialData={serverData} />
+        <UserForm
+          {...(userData ? { initialData: userData } : {})}
+          isAdmin={currentUser?.admin?.includes(AdminPermissions.admin)}
+        />
       </Container>
     </main>
   )

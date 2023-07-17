@@ -12,6 +12,7 @@ import {
   TextInput,
   CardsGridEditor,
   MeasurementEditor,
+  CardsGridEditorMuscules,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
 import { ExerciseItem, ExerciseItemCreate, Measurement } from '@/app/types'
@@ -32,6 +33,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
     execution: [],
     equipment: [],
     similar: [],
+    muscules: [],
   },
 }) => {
   const router = useRouter()
@@ -45,6 +47,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
     execution,
     equipment,
     similar,
+    muscules,
   } = initialData
 
   const formik = useFormik({
@@ -56,6 +59,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
       execution,
       equipment,
       similar,
+      muscules,
     },
     onSubmit: values => {
       const res = { ...values } as ExerciseItemCreate
@@ -144,6 +148,14 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
             title="Порядок выполнения"
             value={formik.values.execution}
             onChange={value => formik.setFieldValue('execution', value)}
+          />
+        </div>
+
+        <div className="mb-5 sm:mb-10">
+          <CardsGridEditorMuscules
+            title="Задействованные мышцы"
+            value={formik.values.muscules}
+            onChange={value => formik.setFieldValue('muscules', value)}
           />
         </div>
 
