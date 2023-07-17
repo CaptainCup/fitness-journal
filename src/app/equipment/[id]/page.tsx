@@ -5,25 +5,31 @@ import {
   ExerciseSteps,
   CardsGrid,
   Container,
+  Button,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
+import { getCurrentUser } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
+import Link from 'next/link'
 
 const equipmentApi = new EquipmentService()
 
-const getData = async (id: string) => {
+const getEquipmentData = async (id: string) => {
   const serverData = await equipmentApi.getById(id).then(res => res)
 
   return serverData
 }
 
-type Props = {
+type PageProps = {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
   const id = params.id
 
-  const serverData = await getData(id)
+  const serverData = await getEquipmentData(id)
 
   const { name, image } = serverData
 
@@ -35,10 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
-  const serverData = await getData(id)
+const Equipment = async ({ params: { id } }: PageProps) => {
+  const serverData = await getEquipmentData(id)
+  const userData = await getCurrentUser()
 
   const { name, image, description, configuration, exercises } = serverData
+  const { admin } = userData || {}
+
+  const canEditEquipment = admin?.includes(AdminPermissions.trainer)
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
@@ -53,6 +63,14 @@ const Equipment = async ({ params: { id } }: { params: { id: string } }) => {
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
+
+        {canEditEquipment && (
+          <div className="mb-5 sm:mb-10">
+            <Link href={`/equipment/${id}/edit`}>
+              <Button>Редактировать</Button>
+            </Link>
+          </div>
+        )}
 
         {description && (
           <p className="whitespace-pre-wrap mb-10 font-serif">{description}</p>

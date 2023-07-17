@@ -2,15 +2,36 @@
 
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useMemo } from 'react'
 import { useFormik } from 'formik'
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation'
-import { ImageUpload, TextInput, Button } from '@/app/components'
+import { ImageUpload, TextInput, Button, Select } from '@/app/components'
 import { UserService } from '@/app/services-client'
-import { User } from '@/app/types'
+import { AdminPermissions, User } from '@/app/types'
 
 const usersApi = new UserService()
+
+const userPermissions = [
+  {
+    label: 'Пользователь',
+    value: 'user',
+  },
+  {
+    label: 'Тренер',
+    value: AdminPermissions.trainer,
+  },
+  {
+    label: 'Администратор',
+    value: AdminPermissions.admin,
+  },
+]
+
+const valuePermissions = {
+  user: [],
+  [AdminPermissions.trainer]: [AdminPermissions.trainer],
+  [AdminPermissions.admin]: [AdminPermissions.trainer, AdminPermissions.admin],
+}
 
 export type UserFormProps = {
   initialData?: User
@@ -24,11 +45,27 @@ const UserForm: FC<UserFormProps> = ({
     middleName: '',
     phone: '',
     avatar: '',
+    admin: [],
   },
 }) => {
   const router = useRouter()
 
-  const { _id, firstName, lastName, middleName, avatar, phone } = initialData
+  const { _id, firstName, lastName, middleName, avatar, phone, admin } =
+    initialData
+
+  const initialPermissions = useMemo(() => {
+    switch (true) {
+      case admin?.includes(AdminPermissions.admin): {
+        return AdminPermissions.admin
+      }
+      case admin?.includes(AdminPermissions.trainer): {
+        return AdminPermissions.trainer
+      }
+      default: {
+        return 'user'
+      }
+    }
+  }, [admin])
 
   const formik = useFormik({
     initialValues: {
@@ -37,11 +74,20 @@ const UserForm: FC<UserFormProps> = ({
       middleName,
       avatar,
       phone,
+      admin: initialPermissions,
     },
     onSubmit: async values => {
-      const { phone } = values
+      const { phone, admin } = values
+
       const transformedPhone = phone?.replace(/[^0-9]/g, '')
-      const res = { ...values, phone: transformedPhone }
+
+      const transformedPermissions = valuePermissions[admin]
+
+      const res = {
+        ...values,
+        phone: transformedPhone,
+        admin: transformedPermissions,
+      }
 
       if (_id) {
         usersApi.update(_id, res)
@@ -102,6 +148,14 @@ const UserForm: FC<UserFormProps> = ({
             />
           )}
         </InputMask>
+      </div>
+
+      <div className="mb-5 sm:mb-10">
+        <Select
+          options={userPermissions}
+          value={formik.values.admin}
+          onChange={value => formik.setFieldValue('admin', value)}
+        />
       </div>
 
       <div className="mb-5 sm:mb-10 flex justify-center">

@@ -146,6 +146,8 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
         ),
       {
         shouldRetryOnError: false,
+        revalidateOnFocus: true,
+        revalidateAll: true,
         ...options,
       },
     )

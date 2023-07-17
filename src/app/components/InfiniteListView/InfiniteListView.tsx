@@ -71,7 +71,7 @@ const InfiniteListView: FC<InfiniteListViewProps> = ({
 
       <div className="mb-5 sm:mb-10">
         <InfiniteList
-          pageLimit={8}
+          pageLimit={24}
           params={{ search, ...params }}
           endpoint={endpoint}
           listClassName={listClassName}

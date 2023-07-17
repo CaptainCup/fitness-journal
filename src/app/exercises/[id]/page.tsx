@@ -5,25 +5,31 @@ import {
   ExerciseSteps,
   CardsGrid,
   Container,
+  Button,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
+import { getCurrentUser } from '@/app/services-server'
+import { AdminPermissions } from '@/app/types'
+import Link from 'next/link'
 
 const exerciseApi = new ExerciseService()
 
-const getData = async (id: string) => {
+const getExerciseData = async (id: string) => {
   const serverData = await exerciseApi.getById(id).then(res => res)
 
   return serverData
 }
 
-type Props = {
+type PageProps = {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
   const id = params.id
 
-  const serverData = await getData(id)
+  const serverData = await getExerciseData(id)
 
   const { name, image } = serverData
 
@@ -35,10 +41,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-const Exercise = async ({ params: { id } }: { params: { id: string } }) => {
-  const serverData = await getData(id)
+const Exercise = async ({ params: { id } }: PageProps) => {
+  const serverData = await getExerciseData(id)
+  const userData = await getCurrentUser()
 
   const { name, image, description, execution, equipment, similar } = serverData
+  const { admin } = userData || {}
+
+  const canEditExercise = admin?.includes(AdminPermissions.trainer)
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
@@ -53,6 +63,14 @@ const Exercise = async ({ params: { id } }: { params: { id: string } }) => {
         <div className="mb-5 sm:mb-10">
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
+
+        {canEditExercise && (
+          <div className="mb-5 sm:mb-10">
+            <Link href={`/exercises/${id}/edit`}>
+              <Button>Редактировать</Button>
+            </Link>
+          </div>
+        )}
 
         <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">
           {description}

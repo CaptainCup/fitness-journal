@@ -1,9 +1,10 @@
 'use client'
 
 import { memo, FC, useState, useCallback, useEffect } from 'react'
-import { Button, Card, InfiniteListView, Modal } from '@/app/components'
+import { Button, Card, InfiniteList, Modal, TextInput } from '@/app/components'
 
 import styles from './ModalGrid.module.css'
+import classNames from 'classnames'
 
 export type ModalGridProps = {
   open: boolean
@@ -23,6 +24,11 @@ const ModalGrid: FC<ModalGridProps> = ({
   onCancel,
 }) => {
   const [checked, setChecked] = useState<any[]>([])
+  const [search, setSearch] = useState<string>('')
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value)
+  }, [])
 
   const handleCardClick = useCallback(
     (item: any) => {
@@ -59,11 +65,22 @@ const ModalGrid: FC<ModalGridProps> = ({
       onCancel={onCancel}
       className="w-full max-w-3xl"
     >
-      <div className={styles.grid}>
-        <InfiniteListView
-          withSearch
+      <div className="mb-5 sm:mb-10">
+        <TextInput
+          placeholder="Поиск"
+          className="w-full flex"
+          delay={1500}
+          onChange={handleSearch}
+          clear
+        />
+      </div>
+
+      <div className={classNames(styles.grid, 'mb-5 sm:mb-10')}>
+        <InfiniteList
+          useWindow={false}
+          pageLimit={24}
+          params={{ search, ...params }}
           endpoint={endpoint}
-          params={params}
           renderItem={item => (
             <Card
               key={item._id}
@@ -78,6 +95,7 @@ const ModalGrid: FC<ModalGridProps> = ({
           )}
         />
       </div>
+
       <div className="w-full flex justify-center">
         <Button onClick={onOk}>Подтвердить</Button>
       </div>

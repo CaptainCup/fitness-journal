@@ -117,7 +117,7 @@ const Header: FC<Header> = ({ user }) => {
               <ul className="flex">
                 {menuItems.map(({ label, href }) => (
                   <li
-                    className={`${styles.item} text-white px-4 relative`}
+                    className={`${styles.item} text-white px-4 relative cursor-pointer`}
                     key={label}
                   >
                     <Link href={href}>{label}</Link>
@@ -156,7 +156,7 @@ const Header: FC<Header> = ({ user }) => {
             <ul>
               {menuItems.map(({ label, href }) => (
                 <li
-                  className="text-white relative text-3xl mb-5"
+                  className="text-white relative text-3xl mb-5 cursor-pointer"
                   onClick={handleClose}
                   key={label}
                 >
@@ -176,7 +176,7 @@ const Header: FC<Header> = ({ user }) => {
             <ul>
               {userMenuItems.map(({ label, onClick }) => (
                 <li
-                  className="text-white relative text-3xl mb-5 text-right"
+                  className="text-white relative text-3xl mb-5 text-right cursor-pointer"
                   onClick={onClick}
                   key={label}
                 >
