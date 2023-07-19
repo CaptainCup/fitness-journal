@@ -62,7 +62,7 @@ const Card: FC<CardProps> = ({
         <h3
           className={classNames(
             link && 'mb-3',
-            'text-white text-sm sm:text-base select-none',
+            'text-white text-sm sm:text-base select-none overflow-hidden',
           )}
         >
           {title}
