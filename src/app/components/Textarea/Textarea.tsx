@@ -12,7 +12,7 @@ export type TextareaProps = {
 const Textarea: FC<TextareaProps> = ({
   placeholder = 'Введите текст',
   name,
-  value,
+  value = '',
   onChange = () => null,
 }) => {
   const [textareaValue, setTextareaValue] = useState<string>('')
@@ -30,9 +30,7 @@ const Textarea: FC<TextareaProps> = ({
   }
 
   useEffect(() => {
-    if (value) {
-      setTextareaValue(value)
-    }
+    setTextareaValue(value)
   }, [value])
 
   return (

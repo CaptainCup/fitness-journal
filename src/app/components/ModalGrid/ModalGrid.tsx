@@ -55,6 +55,7 @@ const ModalGrid: FC<ModalGridProps> = ({
   useEffect(() => {
     if (open) {
       setChecked([])
+      setSearch('')
     }
   }, [open])
 

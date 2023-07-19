@@ -19,10 +19,10 @@ export type ImageUploadProps = {
 const ImageUpload: FC<ImageUploadProps> = ({
   id = 'image-upload',
   square,
-  value,
+  value = '',
   onChange = () => null,
 }) => {
-  const [image, setImage] = useState<string>()
+  const [image, setImage] = useState<string>('')
   const buttonRef = useRef<any>()
 
   const loadImg = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +61,8 @@ const ImageUpload: FC<ImageUploadProps> = ({
   useEffect(() => {
     if (value) {
       setImage(`${baseURL}/${value}`)
+    } else {
+      setImage('')
     }
   }, [value])
 
@@ -75,7 +77,7 @@ const ImageUpload: FC<ImageUploadProps> = ({
       />
 
       {image && (
-        <div className="w-80 h-80 relative">
+        <div className="w-80 h-80 relative max-w-full">
           <Image
             fill
             unoptimized
@@ -91,7 +93,7 @@ const ImageUpload: FC<ImageUploadProps> = ({
         <label htmlFor={id}>
           <span
             ref={buttonRef}
-            className="inline-block w-full border-lime-400 bg-lime-400 hover:bg-white hover:text-black py-3 px-4 transition-all border-2 text-center"
+            className="inline-block w-80 max-w-full border-lime-400 bg-lime-400 hover:bg-white hover:text-black py-3 px-4 transition-all border-2 text-center"
           >{`${image ? 'Изменить' : 'Добавить'} изображение`}</span>
         </label>
       </div>

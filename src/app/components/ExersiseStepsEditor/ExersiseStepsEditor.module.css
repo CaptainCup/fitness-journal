@@ -1,0 +1,31 @@
+.up::after {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  display: block;
+  width: 8px;
+  height: 8px;
+  content: '';
+  rotate: -45deg;
+  translate: 55% -15%;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.down::after {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  display: block;
+  width: 8px;
+  height: 8px;
+  content: '';
+  rotate: 135deg;
+  translate: 55% -55%;
+  border-top: 2px solid;
+  border-right: 2px solid;
+}
+
+.description {
+  max-width: calc(100% - 76px);
+}

@@ -59,7 +59,7 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
       <div>
         <Title
           extra={
-            <Button className="py-1 px-2" onClick={handleModalToggle}>
+            <Button className="py-1 px-2 min-w-max" onClick={handleModalToggle}>
               <Image
                 src="/icons/plus.svg"
                 width={20}

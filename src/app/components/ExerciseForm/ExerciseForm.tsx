@@ -178,7 +178,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
         </div>
 
         <div className="mb-5 sm:mb-10 flex justify-center">
-          <Button type="submit">{`${
+          <Button className='w-full sm:w-auto' type="submit">{`${
             _id ? 'Обновить' : 'Добавить'
           } упражнение`}</Button>
         </div>
