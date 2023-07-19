@@ -9,6 +9,7 @@ import {
   Button,
   ModalGrid,
   Image,
+  QRcode,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { ExerciseItem } from '@/app/types'
@@ -58,13 +59,14 @@ const TrainingListView: FC<TrainingListViewProps> = ({
   return (
     <>
       <div>
-        {canStartTraining && (
-          <div className="mb-5 sm:mb-10">
+        <div className="mb-5 sm:mb-10 flex">
+          {canStartTraining && (
             <Button className="w-full mr-5 sm:w-auto" onClick={createTraining}>
               Начать тренировку
             </Button>
-          </div>
-        )}
+          )}
+          <QRcode buttonClassName="w-full sm:w-auto" title="Тренировки" />
+        </div>
 
         <div className="mb-5 sm:mb-10">
           <div

@@ -7,6 +7,7 @@ import {
   CardsGrid,
   Container,
   Button,
+  QRcode,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
@@ -64,13 +65,14 @@ const Exercise = async ({ params: { id } }: PageProps) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        {canEditExercise && (
-          <div className="mb-5 sm:mb-10">
+        <div className="mb-5 sm:mb-10">
+          {canEditExercise && (
             <Link href={`/exercises/${id}/edit`}>
-              <Button>Редактировать</Button>
+              <Button className="w-full mr-5 sm:w-auto">Редактировать</Button>
             </Link>
-          </div>
-        )}
+          )}
+          <QRcode buttonClassName="w-full sm:w-auto" title={name} />
+        </div>
 
         <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">
           {description}

@@ -64,7 +64,7 @@ const Modal: FC<ModalProps> = ({
                 {title && (
                   <Dialog.Title
                     as="h3"
-                    className="text-lg text-center mb-5 px-5"
+                    className="text-lg text-center mb-5 px-10"
                   >
                     {title}
                   </Dialog.Title>

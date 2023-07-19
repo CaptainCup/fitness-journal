@@ -6,6 +6,7 @@ import {
   CardsGrid,
   Container,
   Button,
+  QRcode,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
@@ -64,13 +65,14 @@ const Equipment = async ({ params: { id } }: PageProps) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        {canEditEquipment && (
-          <div className="mb-5 sm:mb-10">
+        <div className="mb-5 sm:mb-10">
+          {canEditEquipment && (
             <Link href={`/equipment/${id}/edit`}>
-              <Button>Редактировать</Button>
+              <Button className="w-full mr-5 sm:w-auto">Редактировать</Button>
             </Link>
-          </div>
-        )}
+          )}
+          <QRcode buttonClassName="w-full sm:w-auto" title={name} />
+        </div>
 
         {description && (
           <p className="whitespace-pre-wrap mb-10 font-serif">{description}</p>
