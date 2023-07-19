@@ -68,7 +68,9 @@ const Equipment = async ({ params: { id } }: PageProps) => {
         <div className="mb-5 sm:mb-10">
           {canEditEquipment && (
             <Link href={`/equipment/${id}/edit`}>
-              <Button className="w-full mr-5 sm:w-auto">Редактировать</Button>
+              <Button className="w-full sm:w-auto mr-0 sm:mr-5 mb-5 sm:mb-0">
+                Редактировать
+              </Button>
             </Link>
           )}
           <QRcode buttonClassName="w-full sm:w-auto" title={name} />

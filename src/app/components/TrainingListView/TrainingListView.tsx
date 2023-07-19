@@ -61,7 +61,10 @@ const TrainingListView: FC<TrainingListViewProps> = ({
       <div>
         <div className="mb-5 sm:mb-10 flex">
           {canStartTraining && (
-            <Button className="w-full mr-5 sm:w-auto" onClick={createTraining}>
+            <Button
+              className="w-full sm:w-auto mr-0 sm:mr-5 mb-5 sm:mb-0"
+              onClick={createTraining}
+            >
               Начать тренировку
             </Button>
           )}
