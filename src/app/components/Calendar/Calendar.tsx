@@ -63,7 +63,9 @@ const Calendar: FC<CalendarProps> = ({
         selected={date}
         onChange={handleChange}
         locale={ru}
-        customInput={<DefaultCustomInput date={date.toLocaleDateString()} />}
+        customInput={
+          <DefaultCustomInput date={date.toLocaleDateString('ru-RU')} />
+        }
       />
     </div>
   )

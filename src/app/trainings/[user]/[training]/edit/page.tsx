@@ -29,7 +29,7 @@ export const generateMetadata = async ({
   const { avatar } = userData || {}
 
   return {
-    title: `Тренировка от ${new Date(date).toLocaleDateString()}`,
+    title: `Тренировка от ${new Date(date).toLocaleDateString('ru-RU')}`,
     openGraph: {
       images: avatar,
     },
@@ -50,7 +50,7 @@ const Trainings = async ({ params: { training, user } }: PageProps) => {
     { label: 'Главная', href: '/' },
     { label: 'Тренировки', href: '/trainings' },
     {
-      label: `Тренировка от ${new Date(date).toLocaleDateString()}`,
+      label: `Тренировка от ${new Date(date).toLocaleDateString('ru-RU')}`,
       href: `/trainings/${user}/${training}/edit`,
     },
   ]
@@ -61,7 +61,7 @@ const Trainings = async ({ params: { training, user } }: PageProps) => {
         title="Тренировка"
         subtitle={
           sameUser
-            ? `${new Date(date).toLocaleDateString()}`
+            ? `${new Date(date).toLocaleDateString('ru-RU')}`
             : `${firstName ? `${firstName[0]}. ` : ''}${lastName}`
         }
         image={sameUser ? '' : avatar}

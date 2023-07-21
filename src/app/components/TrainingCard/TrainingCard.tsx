@@ -159,7 +159,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
           ) : null
         }
       >
-        {new Date(date).toLocaleDateString()}
+        {new Date(date).toLocaleDateString('ru-RU')}
       </Title>
 
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-2 lg:gap-5">

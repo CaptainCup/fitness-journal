@@ -72,7 +72,8 @@ const LastExercises: FC<LastExercisesProps> = ({
           {data ? (
             <div>
               <p className="text-center">
-                Последняя тренировка: {new Date(data.date).toLocaleDateString()}
+                Последняя тренировка:{' '}
+                {new Date(data.date).toLocaleDateString('ru-RU')}
               </p>
               <div
                 className={classNames(
