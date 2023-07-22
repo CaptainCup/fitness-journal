@@ -1,9 +1,9 @@
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import { Button, ImageUpload, TextInput } from '@/app/components'
+import { Button, ImageUpload, TextInput, ErrorList } from '@/app/components'
 import { AuthService } from '@/app/services-client'
 
 const authApi = new AuthService()
@@ -31,6 +31,22 @@ const ProfileForm: FC<ProfileFormProps> = ({
       middleName: '',
     },
     onSubmit: async values => {
+      let hasErrors = false
+
+      if (!values.firstName) {
+        formik.setFieldError('firstName', 'Введите имя')
+        hasErrors = true
+      }
+
+      if (!values.lastName) {
+        formik.setFieldError('lastName', 'Введите фамилию')
+        hasErrors = true
+      }
+
+      if (hasErrors) {
+        return
+      }
+
       try {
         await authApi.signUp({ phone, code, ...values })
         onSuccess()
@@ -41,6 +57,14 @@ const ProfileForm: FC<ProfileFormProps> = ({
     },
   })
 
+  const handleChange = useCallback(
+    (field: string, value: any) => {
+      formik.setFieldValue(field, value)
+      formik.setFieldError(field, '')
+    },
+    [formik],
+  )
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="flex flex-col">
@@ -49,23 +73,25 @@ const ProfileForm: FC<ProfileFormProps> = ({
             square
             id="user-avatar"
             value={formik.values.avatar}
-            onChange={value => formik.setFieldValue('avatar', value)}
+            onChange={value => handleChange('avatar', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10">
           <TextInput
-            placeholder="Имя"
+            placeholder="Имя*"
+            error={!!formik.errors.firstName}
             value={formik.values.firstName}
-            onChange={value => formik.setFieldValue('firstName', value)}
+            onChange={value => handleChange('firstName', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10">
           <TextInput
-            placeholder="Фамилия"
+            placeholder="Фамилия*"
+            error={!!formik.errors.lastName}
             value={formik.values.lastName}
-            onChange={value => formik.setFieldValue('lastName', value)}
+            onChange={value => handleChange('lastName', value)}
           />
         </div>
 
@@ -73,7 +99,7 @@ const ProfileForm: FC<ProfileFormProps> = ({
           <TextInput
             placeholder="Отчество"
             value={formik.values.middleName}
-            onChange={value => formik.setFieldValue('middleName', value)}
+            onChange={value => handleChange('middleName', value)}
           />
         </div>
 
@@ -84,6 +110,10 @@ const ProfileForm: FC<ProfileFormProps> = ({
           <Button className="w-full" type="submit">
             Готово
           </Button>
+        </div>
+
+        <div className="mb-5 sm:mb-10 flex justify-center">
+          <ErrorList errors={Object.values(formik.errors)} />
         </div>
       </div>
     </form>

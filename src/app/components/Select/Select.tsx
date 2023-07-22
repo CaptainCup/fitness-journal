@@ -17,6 +17,7 @@ import styles from './Select.module.css'
 export type Option = {
   label: string
   value: any
+  danger?: boolean
 }
 
 export type SelectProps = {
@@ -72,20 +73,22 @@ const Select: FC<SelectProps> = ({
           leaveTo="opacity-0"
         >
           <Listbox.Options className="absolute w-full bg-black focus:outline-none border-b-4 border-lime-400 text-center z-10">
-            {options.map(option => (
+            {options.map(({ value, label, danger }) => (
               <Listbox.Option
-                key={option.value}
-                value={option.value}
+                key={value}
+                value={value}
                 className="cursor-default select-none p-2"
               >
                 {({ selected, active }) => (
                   <span
                     className={classNames(
-                      'transition-all',
-                      selected || active ? 'text-lime-400' : 'text-white',
+                      'transition-all cursor-pointer hover:text-lime-400',
+                      danger && 'text-red-500',
+                      (selected || active) && 'text-lime-400',
+                      !danger && !(selected || active) && 'text-white',
                     )}
                   >
-                    {option.label}
+                    {label}
                   </span>
                 )}
               </Listbox.Option>

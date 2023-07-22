@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import {
@@ -13,6 +13,7 @@ import {
   CardsGridEditor,
   MeasurementEditor,
   CardsGridEditorMuscules,
+  ErrorList,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
 import { ExerciseItem, ExerciseItemCreate, Measurement } from '@/app/types'
@@ -63,6 +64,21 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
     },
     onSubmit: values => {
       const res = { ...values } as ExerciseItemCreate
+      let hasErrors = false
+
+      if (!values.name) {
+        formik.setFieldError('name', 'Введите название упражнения')
+        hasErrors = true
+      }
+
+      if (!values.measurements.length) {
+        formik.setFieldError('measurements', 'Введите измерения')
+        hasErrors = true
+      }
+
+      if (hasErrors) {
+        return
+      }
 
       if (
         values.measurements.some((measurement: Measurement) => !measurement)
@@ -106,6 +122,14 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
     },
   })
 
+  const handleChange = useCallback(
+    (field: string, value: any) => {
+      formik.setFieldValue(field, value)
+      formik.setFieldError(field, '')
+    },
+    [formik],
+  )
+
   return (
     <div>
       <Title>Описание упражнения</Title>
@@ -115,15 +139,16 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
           <ImageUpload
             id="exercise-image"
             value={formik.values.image}
-            onChange={value => formik.setFieldValue('image', value)}
+            onChange={value => handleChange('image', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10">
           <TextInput
-            placeholder="Название упражнения"
+            placeholder="Название упражнения*"
+            error={!!formik.errors.name}
             value={formik.values.name}
-            onChange={value => formik.setFieldValue('name', value)}
+            onChange={value => handleChange('name', value)}
           />
         </div>
 
@@ -131,15 +156,16 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
           <Textarea
             placeholder="Описание упражнения"
             value={formik.values.description}
-            onChange={value => formik.setFieldValue('description', value)}
+            onChange={value => handleChange('description', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10">
           <MeasurementEditor
-            title="Измерения"
+            title="Измерения*"
+            error={!!formik.errors.measurements}
             value={formik.values.measurements}
-            onChange={value => formik.setFieldValue('measurements', value)}
+            onChange={value => handleChange('measurements', value)}
           />
         </div>
 
@@ -147,7 +173,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
           <ExersiseStepsEditor
             title="Порядок выполнения"
             value={formik.values.execution}
-            onChange={value => formik.setFieldValue('execution', value)}
+            onChange={value => handleChange('execution', value)}
           />
         </div>
 
@@ -155,7 +181,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
           <CardsGridEditorMuscules
             title="Задействованные мышцы"
             value={formik.values.muscules}
-            onChange={value => formik.setFieldValue('muscules', value)}
+            onChange={value => handleChange('muscules', value)}
           />
         </div>
 
@@ -164,7 +190,7 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
             type="equipment"
             title="Используемое оборудование"
             value={formik.values.equipment}
-            onChange={value => formik.setFieldValue('equipment', value)}
+            onChange={value => handleChange('equipment', value)}
           />
         </div>
 
@@ -173,14 +199,18 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
             type="exercises"
             title="Похожие упражнения"
             value={formik.values.similar}
-            onChange={value => formik.setFieldValue('similar', value)}
+            onChange={value => handleChange('similar', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10 flex justify-center">
-          <Button className='w-full sm:w-auto' type="submit">{`${
+          <Button className="w-full sm:w-auto" type="submit">{`${
             _id ? 'Обновить' : 'Добавить'
           } упражнение`}</Button>
+        </div>
+
+        <div className="mb-5 sm:mb-10 flex justify-center">
+          <ErrorList errors={Object.values(formik.errors).flat()} />
         </div>
       </form>
     </div>

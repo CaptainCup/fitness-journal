@@ -11,18 +11,20 @@ const options = [
     label,
     value,
   })),
-  { label: 'Удалить', value: 'delete' },
+  { label: 'Удалить', value: 'delete', danger: true },
 ]
 
 export type MeasurementEditorProps = {
   title: string
   value?: string[]
+  error?: boolean
   onChange?: (value: string[]) => void
 }
 
 const MeasurementEditor: FC<MeasurementEditorProps> = ({
   title,
   value,
+  error,
   onChange = () => null,
 }) => {
   const [measurements, setMeasurements] = useState<string[]>([])
@@ -58,6 +60,7 @@ const MeasurementEditor: FC<MeasurementEditorProps> = ({
   return (
     <div>
       <Title
+        error={error}
         extra={
           <Button className="py-1 px-2" onClick={addMeasurement}>
             <Image

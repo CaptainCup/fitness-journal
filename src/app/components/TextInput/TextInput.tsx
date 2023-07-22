@@ -13,6 +13,7 @@ export type TextInputProps = {
   clear?: boolean
   name?: string
   value?: string
+  error?: boolean
   onChange?: (value: string) => void
 }
 
@@ -23,6 +24,7 @@ const TextInput: FC<TextInputProps> = ({
   className,
   name,
   value,
+  error,
   onChange = () => null,
 }) => {
   const [textInputValue, setTextInputValue] = useState<string>('')
@@ -70,7 +72,10 @@ const TextInput: FC<TextInputProps> = ({
         type="text"
         placeholder={placeholder}
         onChange={handleChange}
-        className="w-full border-b-2 border-black pb-2 outline-none pr-6"
+        className={classNames(
+          'w-full border-b-2 pb-2 outline-none pr-6 transition-all',
+          error ? 'border-red-500 placeholder:text-red-500' : 'border-black',
+        )}
         value={textInputValue}
         name={name}
       />

@@ -165,7 +165,7 @@ const ExersiseStepsEditor: FC<ExersiseStepsEditorProps> = ({
       >
         {title}
       </Title>
-      <div>
+      <div className="flex flex-col">
         {steps.map((step, index) => (
           <ExersiseStep
             key={index}

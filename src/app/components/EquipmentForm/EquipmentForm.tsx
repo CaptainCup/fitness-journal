@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo } from 'react'
+import { FC, memo, useCallback } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
 import {
@@ -10,6 +10,7 @@ import {
   Button,
   Title,
   TextInput,
+  ErrorList,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
 import { EquipmentItem, EquipmentItemCreate } from '@/app/types'
@@ -41,6 +42,11 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
       configuration,
     },
     onSubmit: values => {
+      if (!values.name) {
+        formik.setFieldError('name', 'Введите название оборудования')
+        return
+      }
+
       const res = { ...values } as EquipmentItemCreate
 
       if (!values.description) {
@@ -65,6 +71,14 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
     },
   })
 
+  const handleChange = useCallback(
+    (field: string, value: any) => {
+      formik.setFieldValue(field, value)
+      formik.setFieldError(field, '')
+    },
+    [formik],
+  )
+
   return (
     <div>
       <Title>Описание оборудования</Title>
@@ -74,15 +88,16 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
           <ImageUpload
             id="equipment-image"
             value={formik.values.image}
-            onChange={value => formik.setFieldValue('image', value)}
+            onChange={value => handleChange('image', value)}
           />
         </div>
 
         <div className="mb-5 sm:mb-10">
           <TextInput
-            placeholder="Название оборудования"
+            placeholder="Название оборудования*"
+            error={!!formik.errors.name}
             value={formik.values.name}
-            onChange={value => formik.setFieldValue('name', value)}
+            onChange={value => handleChange('name', value)}
           />
         </div>
 
@@ -90,7 +105,7 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
           <Textarea
             placeholder="Описание оборудования"
             value={formik.values.description}
-            onChange={value => formik.setFieldValue('description', value)}
+            onChange={value => handleChange('description', value)}
           />
         </div>
 
@@ -98,7 +113,7 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
           <ExersiseStepsEditor
             title="Порядок настройки"
             value={formik.values.configuration}
-            onChange={value => formik.setFieldValue('configuration', value)}
+            onChange={value => handleChange('configuration', value)}
           />
         </div>
 
@@ -106,6 +121,10 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
           <Button type="submit">{`${
             _id ? 'Обновить' : 'Добавить'
           } оборудование`}</Button>
+        </div>
+
+        <div className="mb-5 sm:mb-10 flex justify-center">
+          <ErrorList errors={Object.values(formik.errors)} />
         </div>
       </form>
     </div>

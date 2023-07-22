@@ -2,11 +2,18 @@
 
 'use client'
 
-import { FC, memo, useMemo } from 'react'
+import { FC, memo, useMemo, useCallback } from 'react'
 import { useFormik } from 'formik'
+import classNames from 'classnames'
 import InputMask from 'react-input-mask'
 import { useRouter } from 'next/navigation'
-import { ImageUpload, TextInput, Button, Select } from '@/app/components'
+import {
+  ImageUpload,
+  TextInput,
+  Button,
+  Select,
+  ErrorList,
+} from '@/app/components'
 import { UserService } from '@/app/services-client'
 import { AdminPermissions, User } from '@/app/types'
 
@@ -91,6 +98,27 @@ const UserForm: FC<UserFormProps> = ({
         admin: transformedPermissions,
       }
 
+      let hasErrors = false
+
+      if (!values.firstName) {
+        formik.setFieldError('firstName', 'Введите имя')
+        hasErrors = true
+      }
+
+      if (!values.lastName) {
+        formik.setFieldError('lastName', 'Введите фамилию')
+        hasErrors = true
+      }
+
+      if (transformedPhone.length !== 11) {
+        formik.setFieldError('phone', 'Введите телефон')
+        hasErrors = true
+      }
+
+      if (hasErrors) {
+        return
+      }
+
       if (_id) {
         usersApi.update(_id, res)
       } else {
@@ -101,6 +129,14 @@ const UserForm: FC<UserFormProps> = ({
     },
   })
 
+  const handleChange = useCallback(
+    (field: string, value: any) => {
+      formik.setFieldValue(field, value)
+      formik.setFieldError(field, '')
+    },
+    [formik],
+  )
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mb-5 sm:mb-10">
@@ -108,23 +144,25 @@ const UserForm: FC<UserFormProps> = ({
           square
           id="user-avatar"
           value={formik.values.avatar}
-          onChange={value => formik.setFieldValue('avatar', value)}
+          onChange={value => handleChange('avatar', value)}
         />
       </div>
 
       <div className="mb-5 sm:mb-10">
         <TextInput
-          placeholder="Имя"
+          placeholder="Имя*"
+          error={!!formik.errors.firstName}
           value={formik.values.firstName}
-          onChange={value => formik.setFieldValue('firstName', value)}
+          onChange={value => handleChange('firstName', value)}
         />
       </div>
 
       <div className="mb-5 sm:mb-10">
         <TextInput
-          placeholder="Фамилия"
+          placeholder="Фамилия*"
+          error={!!formik.errors.lastName}
           value={formik.values.lastName}
-          onChange={value => formik.setFieldValue('lastName', value)}
+          onChange={value => handleChange('lastName', value)}
         />
       </div>
 
@@ -132,7 +170,7 @@ const UserForm: FC<UserFormProps> = ({
         <TextInput
           placeholder="Отчество"
           value={formik.values.middleName}
-          onChange={value => formik.setFieldValue('middleName', value)}
+          onChange={value => handleChange('middleName', value)}
         />
       </div>
 
@@ -140,12 +178,16 @@ const UserForm: FC<UserFormProps> = ({
         <InputMask
           mask="+7 (999) 999-99-99"
           value={formik.values.phone}
-          onChange={e => formik.setFieldValue('phone', e.target.value)}
+          onChange={e => handleChange('phone', e.target.value)}
         >
           {(inputProps: any) => (
             <input
               placeholder="Введите номер телефона"
-              className="w-full border-b-2 border-black pb-2 outline-none pr-6"
+              className={classNames(
+                'w-full border-b-2 border-black pb-2 outline-none pr-6',
+                formik.errors.phone &&
+                  'border-red-500 text-red-500 placeholder:text-red-500',
+              )}
               {...inputProps}
             />
           )}
@@ -163,7 +205,13 @@ const UserForm: FC<UserFormProps> = ({
       )}
 
       <div className="mb-5 sm:mb-10 flex justify-center">
-        <Button type="submit">Изменить пользователя</Button>
+        <Button type="submit">{`${
+          _id ? 'Изменить' : 'Добавить'
+        } пользователя`}</Button>
+      </div>
+
+      <div className="mb-5 sm:mb-10 flex justify-center">
+        <ErrorList errors={Object.values(formik.errors)} />
       </div>
     </form>
   )
