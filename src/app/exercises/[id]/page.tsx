@@ -32,11 +32,12 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
   const serverData = await getExerciseData(id)
 
-  const { name, description, image } = serverData
+  const { name, description, image, _id } = serverData
 
   return {
     title: name,
     openGraph: {
+      url: `${baseURL}/exercises/${_id}`,
       title: name,
       description: description,
       images: [
