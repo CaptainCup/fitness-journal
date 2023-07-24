@@ -7,6 +7,7 @@ import {
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { getUserById, getCurrentUser } from '@/app/services-server'
+import { baseURL } from '@/app/utils'
 
 const trainingsApi = new TrainingService()
 
@@ -26,12 +27,27 @@ export const generateMetadata = async ({
   const userData = await getUserById(user)
 
   const { date } = trainingData
-  const { avatar } = userData || {}
+  const { firstName, lastName, avatar } = userData || {}
+
+  const trainingDate = new Date(date).toLocaleDateString('ru-RU')
+  const userName = `${firstName ? `${firstName[0]}. ` : ''}${lastName}`
 
   return {
-    title: `Тренировка от ${new Date(date).toLocaleDateString('ru-RU')}`,
+    title: `Тренировка от ${trainingDate}`,
+    description: `Тренировка ${userName} от ${trainingDate}`,
+    keywords: 'фитнес тренировка упражнения',
     openGraph: {
-      images: avatar,
+      url: `${baseURL}/trainings/${user}`,
+      title: `Тренировка от ${trainingDate}`,
+      description: `Тренировка ${userName} от ${trainingDate}`,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: 'Тренировки',
+          url: `${baseURL}/${avatar}`,
+        },
+      ],
     },
   }
 }

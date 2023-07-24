@@ -5,6 +5,7 @@ import {
   EquipmentForm,
   Container,
 } from '@/app/components'
+import { baseURL } from '@/app/utils'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -13,7 +14,22 @@ const breadcrumbsPath = [
 ]
 
 export const metadata = {
-  title: 'Добавить новое оборудование',
+  title: 'Добавить оборудование',
+  description: 'Добавление оборудования на сайт.',
+  keywords: 'фитнес тренировка упражнения оборудование',
+  openGraph: {
+    url: `${baseURL}/equipment/create`,
+    title: 'Добавить оборудование',
+    description: 'Добавление оборудования на сайт.',
+    images: [
+      {
+        width: 600,
+        height: 600,
+        alt: 'Оборудование',
+        url: `/images/logo-in-black.png`,
+      },
+    ],
+  },
 }
 
 const EquipmentCreate: NextPage = () => {

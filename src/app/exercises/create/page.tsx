@@ -5,6 +5,7 @@ import {
   ExerciseForm,
   Container,
 } from '@/app/components'
+import { baseURL } from '@/app/utils'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -13,7 +14,22 @@ const breadcrumbsPath = [
 ]
 
 export const metadata = {
-  title: 'Добавить новое упражнение',
+  title: 'Добавить упражнение',
+  description: 'Добавление упражнения на сайт.',
+  keywords: 'фитнес тренировка упражнения',
+  openGraph: {
+    url: `${baseURL}/exercises/create`,
+    title: 'Добавить упражнение',
+    description: 'Добавление упражнения на сайт.',
+    images: [
+      {
+        width: 600,
+        height: 600,
+        alt: 'Упражнения',
+        url: `/images/logo-in-black.png`,
+      },
+    ],
+  },
 }
 
 const ExerciseCreate: NextPage = () => {

@@ -7,6 +7,7 @@ import {
 } from '@/app/components'
 import { getUserById, getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
+import { baseURL } from '@/app/utils'
 
 type PageProps = {
   params: { user: string }
@@ -19,10 +20,24 @@ export const generateMetadata = async ({
 
   const { firstName, lastName, avatar } = serverData || {}
 
+  const userName = `${firstName ? `${firstName[0]}. ` : ''}${lastName}`
+
   return {
-    title: `Тренировки ${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
+    title: `Тренировки ${userName}`,
+    description: `Список тренировок ${userName}`,
+    keywords: 'фитнес тренировка упражнения',
     openGraph: {
-      images: avatar,
+      url: `${baseURL}/trainings/${user}`,
+      title: `Тренировки ${userName}`,
+      description: `Список тренировок ${userName}`,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: 'Тренировки',
+          url: `${baseURL}/${avatar}`,
+        },
+      ],
     },
   }
 }

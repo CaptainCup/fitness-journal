@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
 import { getCurrentUser, getUserById } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
+import { baseURL } from '@/app/utils'
 
 type PageProps = {
   params: { id: string }
@@ -14,12 +15,30 @@ export const generateMetadata = async ({
 
   const serverData = await getUserById(id)
 
-  const { firstName, lastName, avatar } = serverData || {}
+  const { firstName, lastName, avatar, _id } = serverData || {}
 
   return {
-    title: `${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
+    title: `Редактировать: ${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
+    description: `Клуб X-Fit: ${
+      firstName ? `${firstName[0]}. ` : ''
+    }${lastName}`,
+    keywords: `фитнес тренировка упражнения`,
     openGraph: {
-      images: avatar,
+      url: `${baseURL}/exercises/${_id}/edit`,
+      title: `Редактировать: ${
+        firstName ? `${firstName[0]}. ` : ''
+      }${lastName}`,
+      description: `Клуб X-Fit: ${
+        firstName ? `${firstName[0]}. ` : ''
+      }${lastName}`,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: `${firstName ? `${firstName[0]}. ` : ''}${lastName}`,
+          url: `${baseURL}/${avatar}`,
+        },
+      ],
     },
   }
 }

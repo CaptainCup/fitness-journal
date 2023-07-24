@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
 import { getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
+import { baseURL } from '@/app/utils'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -10,9 +11,23 @@ const breadcrumbsPath = [
 ]
 
 export const metadata = {
-  title: 'Добавить нового пользователя',
+  title: 'Добавление клиента',
+  description: 'Добавление клиента на сайт.',
+  keywords: 'фитнес тренировка упражнения',
+  openGraph: {
+    url: `${baseURL}/users/create`,
+    title: 'Добавить клиента',
+    description: 'Добавление клиента на сайт.',
+    images: [
+      {
+        width: 600,
+        height: 600,
+        alt: 'Клуб X-Fit',
+        url: `/images/logo-in-black.png`,
+      },
+    ],
+  },
 }
-
 const UserCreate: NextPage = async () => {
   const currentUser = await getCurrentUser()
 

@@ -37,11 +37,11 @@ export const generateMetadata = async ({
   return {
     title: name,
     description,
-    keywords: `${name} фитнесс тренировка упражнения`,
+    keywords: `${name} фитнес тренировка упражнения`,
     openGraph: {
       url: `${baseURL}/exercises/${_id}`,
       title: name,
-      description: description,
+      description,
       images: [
         {
           width: 600,

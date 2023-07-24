@@ -6,38 +6,53 @@ import {
   ExerciseForm,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
+import { baseURL } from '@/app/utils'
 
 const exerciseApi = new ExerciseService()
 
-const getData = async (id: string) => {
+const getExercise = async (id: string) => {
   const serverData = await exerciseApi.getById(id).then(res => res)
 
   return serverData
 }
 
-type Props = {
+type PageProps = {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
   const id = params.id
 
-  const serverData = await getData(id)
+  const serverData = await getExercise(id)
 
-  const { name, image } = serverData
+  const { name, image, description, _id } = serverData
 
   return {
-    title: name,
+    title: `Редактировать: ${name}`,
+    description,
+    keywords: `${name} фитнес тренировка упражнения`,
     openGraph: {
-      images: image,
+      url: `${baseURL}/exercises/${_id}/edit`,
+      title: `Редактировать: ${name}`,
+      description,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: name,
+          url: `${baseURL}/${image}`,
+        },
+      ],
     },
   }
 }
 
-const ExerciseEdit = async ({ params: { id } }: Props) => {
-  const serverData = await getData(id)
+const ExerciseEdit = async ({ params: { id } }: PageProps) => {
+  const exerciseData = await getExercise(id)
 
-  const { name } = serverData
+  const { name } = exerciseData
 
   const breadcrumbsPath = [
     { label: 'Главная', href: '/' },
@@ -53,7 +68,7 @@ const ExerciseEdit = async ({ params: { id } }: Props) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <ExerciseForm initialData={serverData} />
+        <ExerciseForm initialData={exerciseData} />
       </Container>
     </main>
   )

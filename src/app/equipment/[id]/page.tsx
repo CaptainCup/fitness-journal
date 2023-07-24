@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 import {
   PageTitle,
   Breadcrumbs,
@@ -11,7 +12,7 @@ import {
 import { EquipmentService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
-import Link from 'next/link'
+import { baseURL } from '@/app/utils'
 
 const equipmentApi = new EquipmentService()
 
@@ -32,12 +33,24 @@ export const generateMetadata = async ({
 
   const serverData = await getEquipmentData(id)
 
-  const { name, image } = serverData
+  const { name, image, description, _id } = serverData
 
   return {
     title: name,
+    description,
+    keywords: `${name} фитнес тренировка упражнения оборудование`,
     openGraph: {
-      images: image,
+      url: `${baseURL}/equipment/${_id}`,
+      title: name,
+      description,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: name,
+          url: `${baseURL}/${image}`,
+        },
+      ],
     },
   }
 }

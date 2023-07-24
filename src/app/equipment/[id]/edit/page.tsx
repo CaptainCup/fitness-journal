@@ -6,6 +6,7 @@ import {
   Container,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
+import { baseURL } from '@/app/utils'
 
 const equipmentApi = new EquipmentService()
 
@@ -15,26 +16,40 @@ const getData = async (id: string) => {
   return serverData
 }
 
-type Props = {
+type PageProps = {
   params: { id: string }
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({
+  params,
+}: PageProps): Promise<Metadata> => {
   const id = params.id
 
   const serverData = await getData(id)
 
-  const { name, image } = serverData
+  const { name, image, description, _id } = serverData
 
   return {
-    title: name,
+    title: `Редактировать: ${name}`,
+    description,
+    keywords: `${name} фитнес тренировка упражнения оборудование`,
     openGraph: {
-      images: image,
+      url: `${baseURL}/equipment/${_id}/edit`,
+      title: `Редактировать: ${name}`,
+      description,
+      images: [
+        {
+          width: 600,
+          height: 600,
+          alt: name,
+          url: `${baseURL}/${image}`,
+        },
+      ],
     },
   }
 }
 
-const EquipmentEdit = async ({ params: { id } }: Props) => {
+const EquipmentEdit = async ({ params: { id } }: PageProps) => {
   const serverData = await getData(id)
 
   const { name } = serverData

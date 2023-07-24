@@ -7,6 +7,7 @@ import {
 } from '@/app/components'
 import { getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
+import { baseURL } from '@/app/utils'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },
@@ -15,6 +16,23 @@ const breadcrumbsPath = [
 
 export const metadata = {
   title: 'Клуб X-Fit',
+  description:
+    'В клубе X-Fit вы найдете единомышленников, которые поддержат вас в стремлении к здоровому образу жизни и спортивным достижениям. Отслеживайте успехи других участников, вдохновляйтесь их результатами и находите новые идеи для своих тренировок. Будьте на шаг впереди и достигайте большего вместе с нами!',
+  keywords: 'фитнес тренировка упражнения клуб',
+  openGraph: {
+    url: `${baseURL}/users`,
+    title: 'Клуб X-Fit',
+    description:
+      'В клубе X-Fit вы найдете единомышленников, которые поддержат вас в стремлении к здоровому образу жизни и спортивным достижениям. Отслеживайте успехи других участников, вдохновляйтесь их результатами и находите новые идеи для своих тренировок. Будьте на шаг впереди и достигайте большего вместе с нами!',
+    images: [
+      {
+        width: 600,
+        height: 600,
+        alt: 'Клуб X-Fit',
+        url: `/images/logo-in-black.png`,
+      },
+    ],
+  },
 }
 
 const UsersPage: NextPage = async () => {
