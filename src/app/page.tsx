@@ -1,55 +1,57 @@
 import { NextPage } from 'next'
-import Link from 'next/link'
-import { PageTitle, Button, Title, Container } from '@/app/components'
+import { PageTitle, Container, MainPageCard } from '@/app/components'
+import { getCurrentUser } from '@/app/services-server'
 
 export const metadata = {
-  title: 'Тренировки',
+  title: 'Добро пожаловать в X-Fit!',
 }
 
-const Trainings: NextPage = () => {
+const Trainings: NextPage = async () => {
+  const currentUser = await getCurrentUser()
+
+  const { _id } = currentUser || {}
+
+  const cards = [
+    {
+      title: 'Оборудование',
+      description:
+        'Посмотрите какое оборудование есть в клубе и как его можно настроить.',
+      image: '/images/main/main-equipment.jpg',
+      href: '/equipment',
+    },
+    {
+      title: 'Упражнения',
+      description:
+        'Ознакомьтесь с упражнениями и выберите те, которые подходят вам лучше всего.',
+      image: '/images/main/main-exercises.jpg',
+      href: '/exercises',
+    },
+    {
+      title: 'Клуб X-Fit',
+      description: 'Следите за успехами других участников клуба.',
+      image: '/images/main/main-club.jpg',
+      href: '/users',
+    },
+    {
+      title: 'Тренировки',
+      description:
+        'Записывайте в дневник тренировок свои занятия и следите за их результатами.',
+      image: '/images/main/main-trainings.jpg',
+      ...(_id
+        ? { href: `/trainings/${_id}` }
+        : { attentionText: 'Требуется регистрация' }),
+    },
+  ]
+
   return (
     <main>
       <PageTitle title="Добро пожаловать в X-Fit!" />
       <Container>
-        <div className="mb-5 sm:mb-10">
-          <Title>Оборудование</Title>
-          <p className="mb-5">
-            Узнайте какие тренажеры и спортивные саряды есть в клубе X-fit, как
-            их настраивать и какие упражнения можно с помощью них выполнять.
-          </p>
-          <Link href="/equipment">
-            <Button>Перейти к оборудованию</Button>
-          </Link>
-        </div>
-
-        <div className="mb-5 sm:mb-10">
-          <Title>Упражнения</Title>
-          <p className="mb-5">
-            Узнайте как правильно выполнять упражнения, ищите упражнения на
-            интересующие вас группы мышц и похожие упражнения.
-          </p>
-          <Link href="/exercises">
-            <Button>Перейти к упражнениям</Button>
-          </Link>
-        </div>
-
-        <div className="mb-5 sm:mb-10">
-          <Title>Тренировки</Title>
-          <p className="mb-5">
-            Ведите свой журнал тренировок и отслеживайте ваши результаты.
-          </p>
-          <Link href="/trainings">
-            <Button>Перейти к тренировкам</Button>
-          </Link>
-        </div>
-
-        <div className="mb-5 sm:mb-10">
-          <Title>Клиенты</Title>
-          <p className="mb-5">Отслеживайте результаты ваших клиентов.</p>
-          <Link href="/clients">
-            <Button>Перейти к клиентам</Button>
-          </Link>
-        </div>
+        {cards.map(card => (
+          <div key={card.title} className="mb-5 sm:mb-10">
+            <MainPageCard {...card} />
+          </div>
+        ))}
       </Container>
     </main>
   )
