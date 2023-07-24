@@ -60,62 +60,57 @@ const LastExercises: FC<LastExercisesProps> = ({
   }, [exercise])
 
   return (
-    <div>
-      <Button onClick={handleOpen} className="w-full flex justify-center mb-5">
-        <p className={classNames(styles.arrow, isOpen && styles.open)}>
-          Предыдущие результаты
-        </p>
-      </Button>
+    <>
+      {data ? (
+        <div>
+          <Button
+            onClick={handleOpen}
+            className="w-full flex justify-center mb-5"
+          >
+            <p className={classNames(styles.arrow, isOpen && styles.open)}>
+              {new Date(data.date).toLocaleDateString('ru-RU')}
+            </p>
+          </Button>
 
-      {isOpen && (
-        <>
-          {data ? (
-            <div>
-              <p className="text-center">
-                Последняя тренировка:{' '}
-                {new Date(data.date).toLocaleDateString('ru-RU')}
-              </p>
-              <div
-                className={classNames(
-                  'col-span-2 sm:col-span-4 lg:col-span-6 grid my-5 w-fit mx-auto gap-2',
-                  `grid-cols-${measurements.length}`,
-                )}
-              >
-                {data?.approaches.map((approache, approacheIndex: number) => (
-                  <Fragment key={approacheIndex}>
-                    {approache.map((measurement, measurementIndex) => (
-                      <div key={measurementIndex} className="flex">
-                        <p
-                          className={classNames(
-                            'mr-2',
-                            measurementIndex % 2 === 1
-                              ? 'text-lime-400 border-lime-400'
-                              : 'text-black border-black',
-                          )}
-                        >
-                          {measurement}
-                        </p>
-                        <p
-                          className={classNames(
-                            measurementIndex % 2 === 1
-                              ? 'text-lime-400'
-                              : 'text-black',
-                          )}
-                        >
-                          {MeasurementLabel[measurements[measurementIndex]]}
-                        </p>
-                      </div>
-                    ))}
-                  </Fragment>
-                ))}
-              </div>
+          {isOpen && (
+            <div
+              className={classNames(
+                'col-span-2 sm:col-span-4 lg:col-span-6 grid my-5 w-fit mx-auto gap-2',
+                `grid-cols-${measurements.length}`,
+              )}
+            >
+              {data?.approaches.map((approache, approacheIndex: number) => (
+                <Fragment key={approacheIndex}>
+                  {approache.map((measurement, measurementIndex) => (
+                    <div key={measurementIndex} className="flex">
+                      <p
+                        className={classNames(
+                          'mr-2',
+                          measurementIndex % 2 === 1
+                            ? 'text-lime-400 border-lime-400'
+                            : 'text-black border-black',
+                        )}
+                      >
+                        {measurement}
+                      </p>
+                      <p
+                        className={classNames(
+                          measurementIndex % 2 === 1
+                            ? 'text-lime-400'
+                            : 'text-black',
+                        )}
+                      >
+                        {MeasurementLabel[measurements[measurementIndex]]}
+                      </p>
+                    </div>
+                  ))}
+                </Fragment>
+              ))}
             </div>
-          ) : (
-            <p className="text-center mb-5">Результатов не найдено</p>
           )}
-        </>
-      )}
-    </div>
+        </div>
+      ) : null}
+    </>
   )
 }
 

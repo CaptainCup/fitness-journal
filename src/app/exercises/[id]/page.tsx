@@ -13,6 +13,7 @@ import { ExerciseService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
 import { MusculeObject } from '@/app/types/Exercise'
+import { baseURL } from '@/app/utils'
 
 const exerciseApi = new ExerciseService()
 
@@ -31,12 +32,14 @@ export const generateMetadata = async ({
 }: PageProps): Promise<Metadata> => {
   const serverData = await getExerciseData(id)
 
-  const { name, image } = serverData
+  const { name, description, image } = serverData
 
   return {
     title: name,
     openGraph: {
-      images: image,
+      title: name,
+      description: description,
+      images: `${baseURL}/${image}`,
     },
   }
 }
