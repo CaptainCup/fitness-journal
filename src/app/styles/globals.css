@@ -3,3 +3,4 @@
 @tailwind utilities;
 
 @import './calendar.css';
+@import './react-calendar.css';

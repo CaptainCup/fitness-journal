@@ -11,8 +11,6 @@ import {
   Header,
 } from '@/app/components'
 
-import './globals.css'
-
 const font = localFont({ src: './DrukTextWide-Medium.woff' })
 
 export const metadata = {

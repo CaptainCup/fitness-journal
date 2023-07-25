@@ -1,8 +1,6 @@
-@import 'react-datepicker/dist/react-datepicker.css';
-
 @font-face {
   font-family: 'DrukTextWide';
-  src: url('./DrukTextWide-Medium.woff');
+  src: url('../DrukTextWide-Medium.woff');
 }
 
 .react-datepicker {

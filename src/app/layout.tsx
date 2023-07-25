@@ -4,7 +4,7 @@ import localFont from 'next/font/local'
 import { Footer, Header } from '@/app/components'
 import { getCurrentUser } from './services-server'
 
-import './globals.css'
+import './styles/globals.css'
 
 const font = localFont({ src: './DrukTextWide-Medium.woff' })
 
