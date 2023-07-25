@@ -2,4 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './calendar';
+@import './calendar.css';
