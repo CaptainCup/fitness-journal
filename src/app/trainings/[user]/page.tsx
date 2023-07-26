@@ -5,9 +5,17 @@ import {
   TrainingListView,
   Container,
 } from '@/app/components'
+import { TrainingService } from '@/app/services-client'
 import { getUserById, getCurrentUser } from '@/app/services-server'
 import { AdminPermissions } from '@/app/types'
 import { baseURL } from '@/app/utils'
+
+const trainingsApi = new TrainingService()
+
+const getTrainingDates = async (user: string) => {
+  const serverData = await trainingsApi.getDates({ user }).then(res => res)
+  return serverData
+}
 
 type PageProps = {
   params: { user: string }
@@ -43,6 +51,7 @@ export const generateMetadata = async ({
 }
 
 const Trainings = async ({ params: { user } }: PageProps) => {
+  const trainingDates = await getTrainingDates(user)
   const userData = await getUserById(user)
   const currentUserData = await getCurrentUser()
 
@@ -78,6 +87,7 @@ const Trainings = async ({ params: { user } }: PageProps) => {
 
         <TrainingListView
           user={user}
+          trainingDates={trainingDates}
           canStartTraining={isTrainer || sameUser}
         />
       </Container>

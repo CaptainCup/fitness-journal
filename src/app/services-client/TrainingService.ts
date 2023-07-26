@@ -6,6 +6,16 @@ export default class TrainingService extends BaseHttpService {
     return this.get('/trainings', { params })
   }
 
+  async getDates(params = {}): Promise<Date[]> {
+    const res = await this.get('/trainings/dates', { params })
+
+    if (res.length) {
+      return res.map((date: string) => new Date(date))
+    } else {
+      return []
+    }
+  }
+
   async getById(id: string): Promise<TrainingItem> {
     return this.get(`/trainings/${id}`)
   }

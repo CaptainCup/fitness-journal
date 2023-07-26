@@ -29,12 +29,14 @@ DefaultCustomInput.displayName = 'DefaultCustomInput'
 export type CalendarProps = {
   value?: Date
   label?: string
+  includeDates?: Date[]
   onChange?: (date: Date) => void
 }
 
 const Calendar: FC<CalendarProps> = ({
   value,
   label,
+  includeDates,
   onChange = () => null,
 }) => {
   const [date, setDate] = useState(new Date())
@@ -52,6 +54,8 @@ const Calendar: FC<CalendarProps> = ({
   useEffect(() => {
     if (value) {
       setDate(new Date(value))
+    } else {
+      setDate(new Date())
     }
   }, [value])
 
@@ -62,6 +66,7 @@ const Calendar: FC<CalendarProps> = ({
       <DatePicker
         selected={date}
         onChange={handleChange}
+        includeDates={includeDates}
         locale={ru}
         customInput={
           <DefaultCustomInput date={date.toLocaleDateString('ru-RU')} />

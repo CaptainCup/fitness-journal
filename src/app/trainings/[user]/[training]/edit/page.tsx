@@ -11,7 +11,7 @@ import { baseURL } from '@/app/utils'
 
 const trainingsApi = new TrainingService()
 
-const getData = async (id: string) => {
+const getTrainingData = async (id: string) => {
   const serverData = await trainingsApi.getById(id).then(res => res)
   return serverData
 }
@@ -23,7 +23,7 @@ type PageProps = {
 export const generateMetadata = async ({
   params: { training, user },
 }: PageProps): Promise<Metadata> => {
-  const trainingData = await getData(training)
+  const trainingData = await getTrainingData(training)
   const userData = await getUserById(user)
 
   const { date } = trainingData
@@ -53,7 +53,7 @@ export const generateMetadata = async ({
 }
 
 const Trainings = async ({ params: { training, user } }: PageProps) => {
-  const trainingData = await getData(training)
+  const trainingData = await getTrainingData(training)
   const userData = await getUserById(user)
   const currentUserData = await getCurrentUser()
 

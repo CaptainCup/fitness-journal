@@ -19,7 +19,7 @@ export type TrainingCardProps = {
 const TrainingCard: FC<TrainingCardProps> = ({
   _id,
   date,
-  exercises,
+  exercises = [],
   user,
   canStartTraining,
   onDelete,

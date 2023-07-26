@@ -10,6 +10,7 @@ import {
   ModalGrid,
   Image,
   QRcode,
+  Calendar,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { ExerciseItem } from '@/app/types'
@@ -18,15 +19,18 @@ const trainingsApi = new TrainingService()
 
 export type TrainingListViewProps = {
   user: string
+  trainingDates?: Date[]
   canStartTraining: boolean
 }
 
 const TrainingListView: FC<TrainingListViewProps> = ({
   user,
+  trainingDates,
   canStartTraining,
 }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false)
   const [exercises, setExercises] = useState<ExerciseItem[]>([])
+  const [dateFilter, setDateFilter] = useState<Date>()
   const router = useRouter()
 
   const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
@@ -109,11 +113,28 @@ const TrainingListView: FC<TrainingListViewProps> = ({
         </div>
 
         <div className="mb-5 sm:mb-10">
+          <div className="flex items-center">
+            <Calendar
+              label="Выбрать день"
+              includeDates={trainingDates}
+              value={dateFilter}
+              onChange={value => setDateFilter(value)}
+            />
+            {dateFilter && (
+              <Button className="ml-5" onClick={() => setDateFilter(undefined)}>
+                Сбросить
+              </Button>
+            )}
+          </div>
+        </div>
+
+        <div className="mb-5 sm:mb-10">
           <InfiniteList
             pageLimit={8}
             params={{
               user,
               exercises: exercises?.map(({ _id }: { _id: string }) => _id),
+              date: dateFilter?.toISOString(),
             }}
             endpoint="trainings"
             listClassName="grid grid-cols-1 gap-y-10"
