@@ -12,7 +12,7 @@ export const metadata = {
   title: 'Fitness Journal',
   description: 'An application for tracking the results of your workouts',
   manifest: '/manifest.json',
-  themeColor: '#A3E635',
+  themeColor: '#000',
   viewport: {
     width: 'device-width',
     initialScale: 1,
