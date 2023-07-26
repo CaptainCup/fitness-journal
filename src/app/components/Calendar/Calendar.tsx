@@ -30,6 +30,8 @@ export type CalendarProps = {
   value?: Date
   label?: string
   includeDates?: Date[]
+  inline?: boolean
+  fixedHeight?: boolean
   onChange?: (date: Date) => void
 }
 
@@ -37,6 +39,8 @@ const Calendar: FC<CalendarProps> = ({
   value,
   label,
   includeDates,
+  inline,
+  fixedHeight,
   onChange = () => null,
 }) => {
   const [date, setDate] = useState(new Date())
@@ -67,6 +71,8 @@ const Calendar: FC<CalendarProps> = ({
         selected={date}
         onChange={handleChange}
         includeDates={includeDates}
+        inline={inline}
+        fixedHeight={fixedHeight}
         locale={ru}
         customInput={
           <DefaultCustomInput date={date.toLocaleDateString('ru-RU')} />

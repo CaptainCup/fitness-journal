@@ -2,7 +2,7 @@
   "name": "Fitness Journal",
   "short_name": "FJ",
   "lang": "ru",
-  "theme_color": "#A3E635",
+  "theme_color": "#000",
   "background_color": "#000",
   "display": "standalone",
   "orientation": "portrait",

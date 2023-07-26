@@ -8,10 +8,10 @@ import ProfileForm from './ProfileForm'
 
 export type ModalAuthProps = {
   open: boolean
-  onCancel: () => void
+  onClose: () => void
 }
 
-const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
+const ModalAuth: FC<ModalAuthProps> = ({ open, onClose }) => {
   const [step, setStep] = useState<'phone' | 'code' | 'profile'>('phone')
   const [phone, setPhone] = useState<string>('')
   const [code, setCode] = useState<string>('')
@@ -42,7 +42,7 @@ const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
             setCode(code)
             setStep('profile')
           } else {
-            onCancel()
+            onClose()
           }
         }}
       />
@@ -52,7 +52,7 @@ const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
         phone={phone}
         code={code}
         onBack={() => setStep('code')}
-        onSuccess={onCancel}
+        onSuccess={onClose}
       />
     ),
   }
@@ -68,7 +68,7 @@ const ModalAuth: FC<ModalAuthProps> = ({ open, onCancel }) => {
   return (
     <Modal
       open={open}
-      onCancel={onCancel}
+      onClose={onClose}
       title={titles[step]}
       className="w-full max-w-md"
     >

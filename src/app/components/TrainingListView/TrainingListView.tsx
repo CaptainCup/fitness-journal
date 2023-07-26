@@ -1,7 +1,6 @@
 'use client'
 
 import { memo, FC, useCallback, useState } from 'react'
-import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import {
   InfiniteList,
@@ -9,8 +8,8 @@ import {
   Button,
   ModalGrid,
   Image,
-  QRcode,
-  Calendar,
+  ModalCalendar,
+  ModalQR,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { ExerciseItem } from '@/app/types'
@@ -19,37 +18,25 @@ const trainingsApi = new TrainingService()
 
 export type TrainingListViewProps = {
   user: string
+  userName: string
   trainingDates?: Date[]
   canStartTraining: boolean
 }
 
 const TrainingListView: FC<TrainingListViewProps> = ({
   user,
+  userName,
   trainingDates,
   canStartTraining,
 }) => {
-  const [modalOpen, setModalOpen] = useState<boolean>(false)
+  const [modalOpen, setModalOpen] = useState<'QR' | 'search' | 'calendar'>()
   const [exercises, setExercises] = useState<ExerciseItem[]>([])
   const [dateFilter, setDateFilter] = useState<Date>()
   const router = useRouter()
 
-  const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
-
-  const handleModalSuccess = useCallback(
-    (searchExercises: ExerciseItem[]) => {
-      const updatedExercises = [...exercises, ...searchExercises]
-      setExercises(updatedExercises)
-    },
-    [exercises],
-  )
-
-  const handleDeleteExercise = useCallback(
-    (id: string) => {
-      const updatedExercises = exercises.filter(({ _id }) => _id !== id)
-      setExercises(updatedExercises)
-    },
-    [exercises],
-  )
+  const closeModals = useCallback(() => {
+    setModalOpen(undefined)
+  }, [])
 
   const createTraining = useCallback(async () => {
     try {
@@ -63,70 +50,66 @@ const TrainingListView: FC<TrainingListViewProps> = ({
   return (
     <>
       <div>
-        <div className="mb-5 sm:mb-10">
-          {canStartTraining && (
-            <Button
-              className="w-full sm:w-auto mr-0 sm:mr-5 mb-5 sm:mb-0"
-              onClick={createTraining}
-            >
+        {canStartTraining && (
+          <div className="mb-5 sm:mb-10">
+            <Button className="w-full sm:w-auto" onClick={createTraining}>
               Начать тренировку
             </Button>
-          )}
-          <QRcode buttonClassName="w-full sm:w-auto" title="Тренировки" />
-        </div>
+          </div>
+        )}
 
-        <div className="mb-5 sm:mb-10">
-          <div
-            className={classNames(
-              'flex flex-wrap items-center w-full sm:w-auto',
-              exercises.length
-                ? 'justify-start'
-                : ' justify-between sm:justify-start',
-            )}
+        <div className="mb-5 sm:mb-10 flex">
+          <Button
+            onClick={() => setModalOpen('QR')}
+            className="mr-5 w-full flex justify-center"
           >
-            <p className="mr-5 mb-2">Поиск по упражнению: </p>
-            {exercises.map(({ _id, name }) => (
-              <Button
-                className="mr-2 mb-2 flex items-center"
-                key={_id}
-                onClick={() => handleDeleteExercise(_id)}
-              >
-                <p className="mr-2">{name}</p>
-                <Image
-                  className="rotate-45 translate-y-0.5"
-                  src="/icons/plus.svg"
-                  width={20}
-                  height={20}
-                  alt="Удалить"
-                />
-              </Button>
-            ))}
-            <Button className="mb-2" onClick={handleModalToggle}>
-              <Image
-                src="/icons/plus.svg"
-                width={24}
-                height={24}
-                alt="Добавить"
-              />
-            </Button>
-          </div>
+            <Image
+              src="/icons/qr-code.svg"
+              width={24}
+              height={24}
+              alt="QR Code"
+            />
+            <p className="hidden lg:inline ml-2">QR-код</p>
+          </Button>
+
+          <Button
+            onClick={() => setModalOpen('search')}
+            className="mr-5 w-full flex justify-center"
+          >
+            <Image src="/icons/search.svg" width={24} height={24} alt="Поиск" />
+            <p className="hidden lg:inline ml-2">Поиск</p>
+          </Button>
+
+          <Button
+            onClick={() => setModalOpen('calendar')}
+            className="w-full flex justify-center"
+          >
+            <Image
+              src="/icons/calendar.svg"
+              width={24}
+              height={24}
+              alt="Календарь"
+            />
+            <p className="hidden lg:inline ml-2">Календарь</p>
+          </Button>
         </div>
 
-        <div className="mb-5 sm:mb-10">
-          <div className="flex items-center">
-            <Calendar
-              label="Выбрать день"
-              includeDates={trainingDates}
-              value={dateFilter}
-              onChange={value => setDateFilter(value)}
-            />
+        {(!!exercises.length || dateFilter) && (
+          <div className="mb-5 sm:mb-10">
+            {!!exercises.length && (
+              <p className="mb-2">
+                <span className="text-lime-400">Упражнения:</span>{' '}
+                {exercises.map(({ name }) => name).join(', ')}
+              </p>
+            )}
             {dateFilter && (
-              <Button className="ml-5" onClick={() => setDateFilter(undefined)}>
-                Сбросить
-              </Button>
+              <p>
+                <span className="text-lime-400">Дата:</span>{' '}
+                {dateFilter?.toLocaleDateString('ru-RU')}
+              </p>
             )}
           </div>
-        </div>
+        )}
 
         <div className="mb-5 sm:mb-10">
           <InfiniteList
@@ -154,10 +137,27 @@ const TrainingListView: FC<TrainingListViewProps> = ({
       <ModalGrid
         title="Выберите упражнения"
         endpoint="exercises"
-        params={{ exclude: exercises.map(({ _id }: { _id: string }) => _id) }}
-        open={modalOpen}
-        onCancel={handleModalToggle}
-        onSuccess={handleModalSuccess}
+        initialChecked={exercises}
+        open={modalOpen === 'search'}
+        onClose={closeModals}
+        onApply={value => setExercises(value)}
+        onCancel={() => setExercises([])}
+      />
+
+      <ModalQR
+        title={`Тренировки ${userName}`}
+        open={modalOpen === 'QR'}
+        onClose={closeModals}
+      />
+
+      <ModalCalendar
+        title="Выбрать день"
+        open={modalOpen === 'calendar'}
+        onClose={closeModals}
+        includeDates={trainingDates}
+        value={dateFilter}
+        onApply={value => setDateFilter(value)}
+        onCancel={() => setDateFilter(undefined)}
       />
     </>
   )

@@ -188,7 +188,7 @@ const Header: FC<Header> = ({ user }) => {
         </Container>
       </HeaderMenu>
 
-      <ModalAuth open={modalAuthOpen} onCancel={toggleModalAuth} />
+      <ModalAuth open={modalAuthOpen} onClose={toggleModalAuth} />
     </>
   )
 }

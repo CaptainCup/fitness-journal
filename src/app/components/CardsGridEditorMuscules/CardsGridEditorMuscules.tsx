@@ -22,7 +22,7 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
 
   const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleModalSuccess = useCallback(
+  const handleModalApply = useCallback(
     (newCards: any) => {
       const updatedCards = [...cards, ...newCards]
 
@@ -95,8 +95,8 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
         title="Выберите группу мышц"
         open={modalOpen}
         exclude={cards.map(({ value }: { value: string }) => value)}
-        onCancel={handleModalToggle}
-        onSuccess={handleModalSuccess}
+        onClose={handleModalToggle}
+        onApply={handleModalApply}
       />
     </>
   )

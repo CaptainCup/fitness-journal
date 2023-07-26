@@ -245,8 +245,8 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
         endpoint="exercises"
         params={{ exclude: exercises.map(({ exercise }) => exercise._id) }}
         open={modalOpen}
-        onSuccess={handleModalSuccess}
-        onCancel={toggleModal}
+        onApply={handleModalSuccess}
+        onClose={toggleModal}
       />
     </>
   )

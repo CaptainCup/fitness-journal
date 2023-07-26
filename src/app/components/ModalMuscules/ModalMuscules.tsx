@@ -11,16 +11,16 @@ export type ModalMusculesProps = {
   open: boolean
   title: string
   exclude?: string[]
-  onSuccess: (items: any) => void
-  onCancel: () => void
+  onApply: (items: any) => void
+  onClose: () => void
 }
 
 const ModalMuscules: FC<ModalMusculesProps> = ({
   open,
   title,
   exclude = [],
-  onSuccess,
-  onCancel,
+  onApply,
+  onClose,
 }) => {
   const [checked, setChecked] = useState<any[]>([])
 
@@ -43,10 +43,10 @@ const ModalMuscules: FC<ModalMusculesProps> = ({
     [checked],
   )
 
-  const onOk = useCallback(() => {
-    onSuccess(checked)
-    onCancel()
-  }, [checked, onSuccess, onCancel])
+  const handleApply = useCallback(() => {
+    onApply(checked)
+    onClose()
+  }, [checked, onApply, onClose])
 
   useEffect(() => {
     if (open) {
@@ -58,7 +58,7 @@ const ModalMuscules: FC<ModalMusculesProps> = ({
     <Modal
       open={open}
       title={title}
-      onCancel={onCancel}
+      onClose={onClose}
       className="w-full max-w-3xl"
     >
       <div
@@ -83,7 +83,7 @@ const ModalMuscules: FC<ModalMusculesProps> = ({
       </div>
 
       <div className="w-full flex justify-center">
-        <Button onClick={onOk}>Подтвердить</Button>
+        <Button onClick={handleApply}>Подтвердить</Button>
       </div>
     </Modal>
   )

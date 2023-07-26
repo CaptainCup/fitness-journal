@@ -87,6 +87,7 @@ const Trainings = async ({ params: { user } }: PageProps) => {
 
         <TrainingListView
           user={user}
+          userName={`${firstName ? `${firstName[0]}. ` : ''}${lastName}`}
           trainingDates={trainingDates}
           canStartTraining={isTrainer || sameUser}
         />

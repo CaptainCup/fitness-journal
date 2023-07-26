@@ -152,8 +152,8 @@ const ExercisesListView: FC<ExercisesListViewProps> = ({ isTrainer }) => {
         title="Выберите группу мышц"
         open={modalOpen}
         exclude={muscules.map(({ value }) => value)}
-        onCancel={handleModalToggle}
-        onSuccess={handleModalSuccess}
+        onClose={handleModalToggle}
+        onApply={handleModalSuccess}
       />
     </>
   )

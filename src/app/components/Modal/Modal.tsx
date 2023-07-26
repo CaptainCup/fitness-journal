@@ -11,7 +11,7 @@ type ModalProps = {
   title?: string
   children: ReactNode
   className?: string
-  onCancel: () => void
+  onClose: () => void
 }
 
 const Modal: FC<ModalProps> = ({
@@ -19,11 +19,11 @@ const Modal: FC<ModalProps> = ({
   title,
   children,
   className,
-  onCancel,
+  onClose,
 }) => {
   return (
     <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={onCancel}>
+      <Dialog as="div" className="relative z-10" onClose={onClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -58,7 +58,7 @@ const Modal: FC<ModalProps> = ({
                     styles.close,
                     'absolute top-2 right-2 w-8 h-8  bg-lime-400',
                   )}
-                  onClick={onCancel}
+                  onClick={onClose}
                 />
 
                 {title && (

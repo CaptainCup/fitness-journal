@@ -24,7 +24,7 @@ const QRcode: FC<QRcodeProps> = ({ title, buttonClassName }) => {
       <Button className={buttonClassName} onClick={handleOpen}>
         QR-код
       </Button>
-      <Modal open={isOpen} onCancel={handleOpen} title={title}>
+      <Modal open={isOpen} onClose={handleOpen} title={title}>
         <div className="w-full flex justify-center">
           <QRCodeCanvas
             value={`${baseURL}${pathname}`}

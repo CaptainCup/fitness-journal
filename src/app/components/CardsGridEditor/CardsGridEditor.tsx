@@ -41,7 +41,7 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
 
   const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleModalSuccess = useCallback(
+  const handleModalApply = useCallback(
     (newCards: any) => {
       const updatedCards = [...cards, ...newCards]
 
@@ -109,8 +109,8 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
         endpoint={type}
         open={modalOpen}
         params={{ exclude: cards.map(({ _id }: { _id: string }) => _id) }}
-        onCancel={handleModalToggle}
-        onSuccess={handleModalSuccess}
+        onClose={handleModalToggle}
+        onApply={handleModalApply}
       />
     </>
   )

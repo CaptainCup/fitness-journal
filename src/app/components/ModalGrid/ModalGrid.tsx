@@ -11,8 +11,10 @@ export type ModalGridProps = {
   title: string
   endpoint: 'muscules' | 'exercises' | 'equipment'
   params?: any
-  onSuccess: (items: any) => void
-  onCancel: () => void
+  initialChecked?: any[]
+  onApply: (items: any) => void
+  onClose: () => void
+  onCancel?: () => void
 }
 
 const ModalGrid: FC<ModalGridProps> = ({
@@ -20,7 +22,9 @@ const ModalGrid: FC<ModalGridProps> = ({
   title,
   endpoint = 'muscules',
   params,
-  onSuccess,
+  initialChecked,
+  onApply,
+  onClose,
   onCancel,
 }) => {
   const [checked, setChecked] = useState<any[]>([])
@@ -47,23 +51,30 @@ const ModalGrid: FC<ModalGridProps> = ({
     [checked],
   )
 
-  const onOk = useCallback(() => {
-    onSuccess(checked)
-    onCancel()
-  }, [checked, onSuccess, onCancel])
+  const handleApply = useCallback(() => {
+    onApply(checked)
+    onClose()
+  }, [checked, onApply, onClose])
+
+  const handleCancel = useCallback(() => {
+    if (onCancel) {
+      onCancel()
+    }
+    onClose()
+  }, [onCancel, onClose])
 
   useEffect(() => {
     if (open) {
-      setChecked([])
+      setChecked(initialChecked || [])
       setSearch('')
     }
-  }, [open])
+  }, [open, initialChecked])
 
   return (
     <Modal
       open={open}
       title={title}
-      onCancel={onCancel}
+      onClose={onClose}
       className="w-full max-w-3xl"
     >
       <div className="mb-5 sm:mb-10">
@@ -98,7 +109,12 @@ const ModalGrid: FC<ModalGridProps> = ({
       </div>
 
       <div className="w-full flex justify-center">
-        <Button onClick={onOk}>Подтвердить</Button>
+        {onCancel && (
+          <Button onClick={handleCancel} className="mr-5">
+            Сбросить
+          </Button>
+        )}
+        <Button onClick={handleApply}>Выбрать</Button>
       </div>
     </Modal>
   )

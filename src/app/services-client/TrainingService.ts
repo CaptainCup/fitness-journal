@@ -7,11 +7,15 @@ export default class TrainingService extends BaseHttpService {
   }
 
   async getDates(params = {}): Promise<Date[]> {
-    const res = await this.get('/trainings/dates', { params })
+    try {
+      const res = await this.get('/trainings/dates', { params })
 
-    if (res.length) {
-      return res.map((date: string) => new Date(date))
-    } else {
+      if (res.length) {
+        return res.map((date: string) => new Date(date))
+      } else {
+        return []
+      }
+    } catch {
       return []
     }
   }
