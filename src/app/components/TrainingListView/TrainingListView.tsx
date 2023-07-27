@@ -9,7 +9,7 @@ import {
   ModalGrid,
   Image,
   ModalCalendar,
-  ModalQR,
+  ModalShare,
 } from '@/app/components'
 import { TrainingService } from '@/app/services-client'
 import { ExerciseItem } from '@/app/types'
@@ -50,39 +50,25 @@ const TrainingListView: FC<TrainingListViewProps> = ({
   return (
     <>
       <div>
-        {canStartTraining && (
-          <div className="mb-5 sm:mb-10">
-            <Button className="w-full sm:w-auto" onClick={createTraining}>
-              Начать тренировку
-            </Button>
-          </div>
-        )}
-
         <div className="mb-5 sm:mb-10 flex">
-          <Button
-            onClick={() => setModalOpen('QR')}
-            className="mr-5 w-full flex justify-center"
-          >
-            <Image
-              src="/icons/qr-code.svg"
-              width={24}
-              height={24}
-              alt="QR Code"
-            />
-            <p className="hidden lg:inline ml-2">QR-код</p>
-          </Button>
-
-          <Button
-            onClick={() => setModalOpen('search')}
-            className="mr-5 w-full flex justify-center"
-          >
-            <Image src="/icons/search.svg" width={24} height={24} alt="Поиск" />
-            <p className="hidden lg:inline ml-2">Поиск</p>
-          </Button>
+          {canStartTraining && (
+            <Button
+              className="mr-5 w-full flex justify-center items-center"
+              onClick={createTraining}
+            >
+              <Image
+                src="/icons/play.svg"
+                width={24}
+                height={24}
+                alt="QR Code"
+              />
+              <p className="hidden lg:inline ml-2">Начать</p>
+            </Button>
+          )}
 
           <Button
             onClick={() => setModalOpen('calendar')}
-            className="w-full flex justify-center"
+            className="mr-5 w-full flex justify-center items-center"
           >
             <Image
               src="/icons/calendar.svg"
@@ -91,6 +77,27 @@ const TrainingListView: FC<TrainingListViewProps> = ({
               alt="Календарь"
             />
             <p className="hidden lg:inline ml-2">Календарь</p>
+          </Button>
+
+          <Button
+            onClick={() => setModalOpen('search')}
+            className="mr-5 w-full flex justify-center items-center"
+          >
+            <Image src="/icons/filter.svg" width={24} height={24} alt="Поиск" />
+            <p className="hidden lg:inline ml-2">Фильтр</p>
+          </Button>
+
+          <Button
+            onClick={() => setModalOpen('QR')}
+            className="w-full flex justify-center items-center"
+          >
+            <Image
+              src="/icons/share.svg"
+              width={24}
+              height={24}
+              alt="QR Code"
+            />
+            <p className="hidden lg:inline ml-2">Поделиться</p>
           </Button>
         </div>
 
@@ -144,14 +151,14 @@ const TrainingListView: FC<TrainingListViewProps> = ({
         onCancel={() => setExercises([])}
       />
 
-      <ModalQR
+      <ModalShare
         title={`Тренировки ${userName}`}
         open={modalOpen === 'QR'}
         onClose={closeModals}
       />
 
       <ModalCalendar
-        title="Выбрать день"
+        title="Выберите день"
         open={modalOpen === 'calendar'}
         onClose={closeModals}
         includeDates={trainingDates}
