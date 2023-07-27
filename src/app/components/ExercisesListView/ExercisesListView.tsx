@@ -1,7 +1,6 @@
 'use client'
 
 import { memo, FC, useState, useCallback } from 'react'
-import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import {
   InfiniteList,
@@ -29,22 +28,6 @@ const ExercisesListView: FC<ExercisesListViewProps> = ({ isTrainer }) => {
 
   const handleModalToggle = useCallback(() => setModalOpen(draft => !draft), [])
 
-  const handleModalSuccess = useCallback(
-    (searchMuscules: any[]) => {
-      const updatedMuscules = [...muscules, ...searchMuscules]
-      setMuscules(updatedMuscules)
-    },
-    [muscules],
-  )
-
-  const handleDeleteExercise = useCallback(
-    (id: string) => {
-      const updatedMuscules = muscules.filter(({ value }) => value !== id)
-      setMuscules(updatedMuscules)
-    },
-    [muscules],
-  )
-
   return (
     <>
       <div>
@@ -57,63 +40,49 @@ const ExercisesListView: FC<ExercisesListViewProps> = ({ isTrainer }) => {
               onChange={handleSearch}
               clear
             />
-
-            {isTrainer && (
-              <Button
-                className={classNames(isTrainer && 'ml-2 md:ml-5')}
-                onClick={() => router.push('exercises/create')}
-              >
-                <Image
-                  src="/icons/plus.svg"
-                  width={40}
-                  height={40}
-                  alt="Добавить"
-                  className="block md:hidden"
-                />
-                <p className="hidden md:inline whitespace-nowrap">
-                  Добавить упражнение
-                </p>
-              </Button>
-            )}
           </div>
         </div>
 
-        <div className="mb-5 sm:mb-10">
-          <div
-            className={classNames(
-              'flex flex-wrap items-center w-full sm:w-auto',
-              muscules?.length
-                ? 'justify-start'
-                : ' justify-between sm:justify-start',
-            )}
-          >
-            <p className="mr-5 mb-2">Поиск по группе мышц: </p>
-            {muscules.map(({ value, name }) => (
-              <Button
-                className="mr-2 mb-2 flex items-center"
-                key={value}
-                onClick={() => handleDeleteExercise(value)}
-              >
-                <p className="mr-2">{name}</p>
-                <Image
-                  className="rotate-45 translate-y-0.5"
-                  src="/icons/plus.svg"
-                  width={20}
-                  height={20}
-                  alt="Удалить"
-                />
-              </Button>
-            ))}
-            <Button className="mb-2" onClick={handleModalToggle}>
+        <div className="mb-5 sm:mb-10 flex">
+          {isTrainer && (
+            <Button
+              onClick={() => router.push('exercises/create')}
+              className="mr-2 lg:mr-5 w-full flex justify-center items-center"
+            >
               <Image
                 src="/icons/plus.svg"
                 width={24}
                 height={24}
                 alt="Добавить"
               />
+              <p className="hidden lg:inline ml-2">Добавить</p>
             </Button>
-          </div>
+          )}
+
+          <Button
+            onClick={handleModalToggle}
+            className="w-full flex justify-center items-center"
+          >
+            <Image src="/icons/filter.svg" width={24} height={24} alt="Поиск" />
+            <p className="hidden lg:inline ml-2">Фильтр</p>
+          </Button>
         </div>
+
+        {(!!muscules.length || search) && (
+          <div className="mb-5 sm:mb-10">
+            {!!muscules.length && (
+              <p className="mb-2">
+                <span className="text-lime-400">Мышцы:</span>{' '}
+                {muscules.map(({ name }) => name).join(', ')}
+              </p>
+            )}
+            {search && (
+              <p>
+                <span className="text-lime-400">Поиск:</span> {search}
+              </p>
+            )}
+          </div>
+        )}
 
         <div className="mb-5 sm:mb-10">
           <InfiniteList
@@ -127,7 +96,7 @@ const ExercisesListView: FC<ExercisesListViewProps> = ({ isTrainer }) => {
               <Card
                 key={item?._id}
                 title={item?.name}
-                img={item?.image}
+                image={item?.image}
                 link={`exercises/${item?._id}`}
                 {...(isTrainer
                   ? {
@@ -151,9 +120,10 @@ const ExercisesListView: FC<ExercisesListViewProps> = ({ isTrainer }) => {
       <ModalMuscules
         title="Выберите группу мышц"
         open={modalOpen}
-        exclude={muscules.map(({ value }) => value)}
+        initialChecked={muscules}
         onClose={handleModalToggle}
-        onApply={handleModalSuccess}
+        onApply={value => setMuscules(value)}
+        onCancel={() => setMuscules([])}
       />
     </>
   )

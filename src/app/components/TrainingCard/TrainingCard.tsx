@@ -167,7 +167,7 @@ const TrainingCard: FC<TrainingCardProps> = ({
           <Fragment key={exercise._id}>
             <Card
               title={exercise.name}
-              img={exercise.image}
+              image={exercise.image}
               onClick={() => selectCard(exercise._id)}
               checked={selectedCard === exercise._id}
               {...exercise}

@@ -123,9 +123,11 @@ const EquipmentForm: FC<EquipmentFormProps> = ({
           } оборудование`}</Button>
         </div>
 
-        <div className="mb-5 sm:mb-10 flex justify-center">
-          <ErrorList errors={Object.values(formik.errors)} />
-        </div>
+        {!!Object.values(formik.errors).length && (
+          <div className="mb-5 sm:mb-10 flex justify-center">
+            <ErrorList errors={Object.values(formik.errors)} />
+          </div>
+        )}
       </form>
     </div>
   )

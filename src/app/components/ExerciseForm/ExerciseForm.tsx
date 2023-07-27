@@ -209,9 +209,11 @@ const ExerciseForm: FC<ExerciseFormProps> = ({
           } упражнение`}</Button>
         </div>
 
-        <div className="mb-5 sm:mb-10 flex justify-center">
-          <ErrorList errors={Object.values(formik.errors).flat()} />
-        </div>
+        {!!Object.values(formik.errors).length && (
+          <div className="mb-5 sm:mb-10 flex justify-center">
+            <ErrorList errors={Object.values(formik.errors).flat()} />
+          </div>
+        )}
       </form>
     </div>
   )

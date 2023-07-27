@@ -90,7 +90,7 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
             <Card
               key={card?.name}
               title={card.name}
-              img={card.image}
+              image={card.image}
               menu={[
                 {
                   label: 'Убрать',

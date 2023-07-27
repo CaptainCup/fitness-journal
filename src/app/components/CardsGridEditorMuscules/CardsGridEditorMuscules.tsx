@@ -47,7 +47,7 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
       setCards(
         value?.map(muscule => ({
           title: MusculeObject[muscule].name,
-          img: MusculeObject[muscule].image,
+          image: MusculeObject[muscule].image,
           value: muscule,
         })),
       )
@@ -77,7 +77,7 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
             <Card
               key={card?.name}
               title={card.name}
-              img={card.image}
+              image={card.image}
               menu={[
                 {
                   label: 'Убрать',

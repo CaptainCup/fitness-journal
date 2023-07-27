@@ -53,7 +53,7 @@ const TrainingListView: FC<TrainingListViewProps> = ({
         <div className="mb-5 sm:mb-10 flex">
           {canStartTraining && (
             <Button
-              className="mr-5 w-full flex justify-center items-center"
+              className="mr-2 lg:mr-5 w-full flex justify-center items-center"
               onClick={createTraining}
             >
               <Image
@@ -68,7 +68,7 @@ const TrainingListView: FC<TrainingListViewProps> = ({
 
           <Button
             onClick={() => setModalOpen('calendar')}
-            className="mr-5 w-full flex justify-center items-center"
+            className="mr-2 lg:mr-5 w-full flex justify-center items-center"
           >
             <Image
               src="/icons/calendar.svg"
@@ -81,7 +81,7 @@ const TrainingListView: FC<TrainingListViewProps> = ({
 
           <Button
             onClick={() => setModalOpen('search')}
-            className="mr-5 w-full flex justify-center items-center"
+            className="mr-2 lg:mr-5 w-full flex justify-center items-center"
           >
             <Image src="/icons/filter.svg" width={24} height={24} alt="Поиск" />
             <p className="hidden lg:inline ml-2">Фильтр</p>

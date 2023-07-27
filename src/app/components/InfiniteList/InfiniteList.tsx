@@ -121,7 +121,7 @@ const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
       params,
       pageLimit = 10,
       options,
-      listClassName = 'grid gap-2 md:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
+      listClassName = 'grid gap-2 lg:gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 mb-5',
       useWindow = true,
       renderItem,
     },

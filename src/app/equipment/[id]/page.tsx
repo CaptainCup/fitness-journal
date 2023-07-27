@@ -7,7 +7,8 @@ import {
   CardsGrid,
   Container,
   Button,
-  QRcode,
+  ShareButton,
+  Image,
 } from '@/app/components'
 import { EquipmentService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
@@ -78,15 +79,24 @@ const Equipment = async ({ params: { id } }: PageProps) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <div className="mb-5 sm:mb-10">
+        <div className="mb-5 sm:mb-10 flex">
           {canEditEquipment && (
-            <Link href={`/equipment/${id}/edit`}>
-              <Button className="w-full sm:w-auto mr-0 sm:mr-5 mb-5 sm:mb-0">
-                Редактировать
+            <Link
+              className="w-full mr-2 lg:mr-5"
+              href={`/equipment/${id}/edit`}
+            >
+              <Button className="w-full flex justify-center items-center">
+                <Image
+                  src="/icons/edit.svg"
+                  width={24}
+                  height={24}
+                  alt="Редактировать"
+                />
+                <p className="hidden lg:inline ml-2">Редактировать</p>
               </Button>
             </Link>
           )}
-          <QRcode buttonClassName="w-full sm:w-auto" title={name} />
+          <ShareButton buttonClassName="w-full" title={name} />
         </div>
 
         {description && (
@@ -108,7 +118,7 @@ const Equipment = async ({ params: { id } }: PageProps) => {
               title="Используется в упражнениях"
               cards={exercises.map(({ _id, name, image }) => ({
                 title: name,
-                img: image,
+                image,
                 link: `/exercises/${_id}`,
               }))}
             />

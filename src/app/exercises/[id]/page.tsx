@@ -7,7 +7,8 @@ import {
   CardsGrid,
   Container,
   Button,
-  QRcode,
+  ShareButton,
+  Image,
 } from '@/app/components'
 import { ExerciseService } from '@/app/services-client'
 import { getCurrentUser } from '@/app/services-server'
@@ -78,15 +79,24 @@ const Exercise = async ({ params: { id } }: PageProps) => {
           <Breadcrumbs path={breadcrumbsPath} />
         </div>
 
-        <div className="mb-5 sm:mb-10">
+        <div className="mb-5 sm:mb-10 flex">
           {canEditExercise && (
-            <Link href={`/exercises/${id}/edit`}>
-              <Button className="w-full sm:w-auto mr-0 sm:mr-5 mb-5 sm:mb-0">
-                Редактировать
+            <Link
+              className="w-full mr-2 lg:mr-5"
+              href={`/exercises/${id}/edit`}
+            >
+              <Button className="w-full flex justify-center items-center">
+                <Image
+                  src="/icons/edit.svg"
+                  width={24}
+                  height={24}
+                  alt="Редактировать"
+                />
+                <p className="hidden lg:inline ml-2">Редактировать</p>
               </Button>
             </Link>
           )}
-          <QRcode buttonClassName="w-full sm:w-auto" title={name} />
+          <ShareButton buttonClassName="w-full" title={name} />
         </div>
 
         <p className="whitespace-pre-wrap font-serif mb-5 sm:mb-10 ">
@@ -105,7 +115,7 @@ const Exercise = async ({ params: { id } }: PageProps) => {
               title="Задействованные мышцы"
               cards={muscules
                 ?.map(muscule => MusculeObject[muscule])
-                .map(({ name, image }) => ({ title: name, img: image }))}
+                .map(({ name, image }) => ({ title: name, image }))}
             />
           </div>
         )}
@@ -116,7 +126,7 @@ const Exercise = async ({ params: { id } }: PageProps) => {
               title="Используемое оборудование"
               cards={equipment.map(({ _id, name, image }) => ({
                 title: name,
-                img: image,
+                image,
                 link: `/equipment/${_id}`,
               }))}
             />
@@ -129,7 +139,7 @@ const Exercise = async ({ params: { id } }: PageProps) => {
               title="Похожие упражнения"
               cards={similar.map(({ _id, name, image }) => ({
                 title: name,
-                img: image,
+                image,
                 link: `/exercises/${_id}`,
               }))}
             />

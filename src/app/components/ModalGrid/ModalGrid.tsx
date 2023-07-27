@@ -101,7 +101,7 @@ const ModalGrid: FC<ModalGridProps> = ({
                 checkedCard => checkedCard._id === item._id,
               )}
               title={item.name}
-              img={item.image}
+              image={item.image}
               {...item}
             />
           )}

@@ -212,7 +212,7 @@ const TrainingCardEditor: FC<TrainingCardEditorProps> = ({
             <Fragment key={exercise._id}>
               <Card
                 title={exercise.name}
-                img={exercise.image}
+                image={exercise.image}
                 onClick={() => selectCard(exercise._id)}
                 checked={selectedCard === exercise._id}
                 menu={[

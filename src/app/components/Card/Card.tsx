@@ -15,7 +15,7 @@ type MenuItem = {
 
 export type CardProps = {
   title: string
-  img?: string
+  image?: string
   link?: string
   checked?: boolean
   menu?: MenuItem[]
@@ -25,7 +25,7 @@ export type CardProps = {
 
 const Card: FC<CardProps> = ({
   title,
-  img,
+  image,
   link,
   checked,
   menu,
@@ -50,7 +50,7 @@ const Card: FC<CardProps> = ({
     >
       <Image
         className={classNames(disabled && 'grayscale')}
-        src={img}
+        src={image}
         alt={title}
         fill
         style={{ objectFit: 'cover' }}
