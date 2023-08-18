@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 import { NextPage } from 'next'
 import localFont from 'next/font/local'
-import { Footer, Header } from '@/app/components'
-import { getCurrentUser } from './services-server'
+import { Footer, Header } from '@/components'
+import { getCurrentUser } from '@/services-server'
 
-import './styles/globals.css'
+import '../styles/globals.css'
 
 const font = localFont({ src: './DrukTextWide-Medium.woff' })
 

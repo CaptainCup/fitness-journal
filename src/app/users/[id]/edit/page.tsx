@@ -1,8 +1,9 @@
 import { Metadata } from 'next'
-import { PageTitle, Breadcrumbs, UserForm, Container } from '@/app/components'
-import { getCurrentUser, getUserById } from '@/app/services-server'
-import { AdminPermissions } from '@/app/types'
-import { baseURL } from '@/app/utils'
+import { PageTitle, Breadcrumbs, Container } from '@/components'
+import { UserForm } from '@/views'
+import { getCurrentUser, getUserById } from '@/services-server'
+import { AdminPermissions } from '@/types'
+import { baseURL } from '@/utils'
 
 type PageProps = {
   params: { id: string }

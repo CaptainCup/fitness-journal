@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import { PageTitle } from '@/app/components'
+import { PageTitle } from '@/components'
 
 export const metadata = {
   title: 'Страница не найдена',

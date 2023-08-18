@@ -3,17 +3,17 @@ import Link from 'next/link'
 import {
   PageTitle,
   Breadcrumbs,
-  ExerciseSteps,
   CardsGrid,
   Container,
   Button,
   ShareButton,
   Image,
-} from '@/app/components'
-import { EquipmentService } from '@/app/services-client'
-import { getCurrentUser } from '@/app/services-server'
-import { AdminPermissions } from '@/app/types'
-import { baseURL } from '@/app/utils'
+  Steps,
+} from '@/components'
+import { EquipmentService } from '@/services-client'
+import { getCurrentUser } from '@/services-server'
+import { AdminPermissions } from '@/types'
+import { baseURL } from '@/utils'
 
 const equipmentApi = new EquipmentService()
 
@@ -105,10 +105,7 @@ const Equipment = async ({ params: { id } }: PageProps) => {
 
         {!!configuration?.length && (
           <div className="mb-5 sm:mb-10">
-            <ExerciseSteps
-              title="Настройка оборудования"
-              steps={configuration}
-            />
+            <Steps title="Настройка оборудования" steps={configuration} />
           </div>
         )}
 

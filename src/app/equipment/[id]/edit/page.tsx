@@ -1,12 +1,8 @@
 import { Metadata } from 'next'
-import {
-  PageTitle,
-  Breadcrumbs,
-  EquipmentForm,
-  Container,
-} from '@/app/components'
-import { EquipmentService } from '@/app/services-client'
-import { baseURL } from '@/app/utils'
+import { PageTitle, Breadcrumbs, Container } from '@/components'
+import { EquipmentForm } from '@/views'
+import { EquipmentService } from '@/services-client'
+import { baseURL } from '@/utils'
 
 const equipmentApi = new EquipmentService()
 

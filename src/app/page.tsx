@@ -1,6 +1,6 @@
 import { NextPage } from 'next'
-import { PageTitle, Container, MainPageCard } from '@/app/components'
-import { getCurrentUser } from '@/app/services-server'
+import { PageTitle, Container, MainPageCard } from '@/components'
+import { getCurrentUser } from '@/services-server'
 
 export const metadata = {
   title: 'Добро пожаловать в X-Fit!',

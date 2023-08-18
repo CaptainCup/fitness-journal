@@ -1,11 +1,7 @@
 import { NextPage } from 'next'
-import {
-  PageTitle,
-  Breadcrumbs,
-  ExerciseForm,
-  Container,
-} from '@/app/components'
-import { baseURL } from '@/app/utils'
+import { PageTitle, Breadcrumbs, Container } from '@/components'
+import { ExerciseForm } from '@/views'
+import { baseURL } from '@/utils'
 
 const breadcrumbsPath = [
   { label: 'Главная', href: '/' },

@@ -1,12 +1,8 @@
 import { Metadata } from 'next'
-import {
-  PageTitle,
-  Breadcrumbs,
-  Container,
-  ExerciseForm,
-} from '@/app/components'
-import { ExerciseService } from '@/app/services-client'
-import { baseURL } from '@/app/utils'
+import { PageTitle, Breadcrumbs, Container } from '@/components'
+import { ExerciseForm } from '@/views'
+import { ExerciseService } from '@/services-client'
+import { baseURL } from '@/utils'
 
 const exerciseApi = new ExerciseService()
 

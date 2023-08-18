@@ -3,18 +3,18 @@ import Link from 'next/link'
 import {
   PageTitle,
   Breadcrumbs,
-  ExerciseSteps,
+  Steps,
   CardsGrid,
   Container,
   Button,
   ShareButton,
   Image,
-} from '@/app/components'
-import { ExerciseService } from '@/app/services-client'
-import { getCurrentUser } from '@/app/services-server'
-import { AdminPermissions } from '@/app/types'
-import { MusculeObject } from '@/app/types/Exercise'
-import { baseURL } from '@/app/utils'
+} from '@/components'
+import { ExerciseService } from '@/services-client'
+import { getCurrentUser } from '@/services-server'
+import { AdminPermissions } from '@/types'
+import { MusculeObject } from '@/types/Exercise'
+import { baseURL } from '@/utils'
 
 const exerciseApi = new ExerciseService()
 
@@ -105,7 +105,7 @@ const Exercise = async ({ params: { id } }: PageProps) => {
 
         {!!execution?.length && (
           <div className="mb-5 sm:mb-10">
-            <ExerciseSteps title="Порядок выполнения" steps={execution} />
+            <Steps title="Порядок выполнения" steps={execution} />
           </div>
         )}
 

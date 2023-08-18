@@ -1,13 +1,9 @@
 import { Metadata } from 'next'
-import {
-  PageTitle,
-  Container,
-  TrainingForm,
-  Breadcrumbs,
-} from '@/app/components'
-import { TrainingService } from '@/app/services-client'
-import { getUserById, getCurrentUser } from '@/app/services-server'
-import { baseURL } from '@/app/utils'
+import { PageTitle, Container, Breadcrumbs } from '@/components'
+import { TrainingForm } from '@/views'
+import { TrainingService } from '@/services-client'
+import { getUserById, getCurrentUser } from '@/services-server'
+import { baseURL } from '@/utils'
 
 const trainingsApi = new TrainingService()
 

@@ -9,7 +9,7 @@ import {
   Button,
   Footer,
   Header,
-} from '@/app/components'
+} from '@/components'
 
 const font = localFont({ src: './DrukTextWide-Medium.woff' })
 
