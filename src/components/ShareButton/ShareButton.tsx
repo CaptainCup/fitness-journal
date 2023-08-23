@@ -1,15 +1,25 @@
 'use client'
 
-import { FC, memo, useCallback, useState } from 'react'
+import { FC, useCallback, useState } from 'react'
 import classNames from 'classnames'
 import { Button, Image } from '@/components'
 import { ModalShare } from '@/modals'
 
 export type ShareButtonProps = {
+  /**
+   * Modal title
+   */
   title: string
+
+  /**
+   * Custom classname for button
+   */
   buttonClassName?: string
 }
 
+/**
+ * Component to share page address
+ */
 const ShareButton: FC<ShareButtonProps> = ({ title, buttonClassName }) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -35,4 +45,4 @@ const ShareButton: FC<ShareButtonProps> = ({ title, buttonClassName }) => {
   )
 }
 
-export default memo(ShareButton)
+export default ShareButton

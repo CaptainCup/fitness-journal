@@ -1,16 +1,34 @@
 'use client'
 
-import { FC, memo, useState, useCallback, useEffect } from 'react'
+import { FC, useState, useCallback, useEffect } from 'react'
 import { Button, Card, Title, Image } from '@/components'
 import { ModalList } from '@/modals'
 
 export type CardsGridEditorProps = {
+  /**
+   * Grid title
+   */
   title: string
+
+  /**
+   * Backend endpoint data
+   */
   endpoint: string
+
+  /**
+   * Value as active cards
+   */
   value?: any[]
+
+  /**
+   * OnChange handler
+   */
   onChange?: (value: string[]) => void
 }
 
+/**
+ * Change cards in grid
+ */
 const CardsGridEditor: FC<CardsGridEditorProps> = ({
   title,
   endpoint,
@@ -98,4 +116,4 @@ const CardsGridEditor: FC<CardsGridEditorProps> = ({
   )
 }
 
-export default memo(CardsGridEditor)
+export default CardsGridEditor

@@ -1,9 +1,15 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 
 export type ErrorListProps = {
+  /**
+   * List of errors
+   */
   errors: string[]
 }
 
+/**
+ * List of errors
+ */
 const ErrorList: FC<ErrorListProps> = ({ errors }) => {
   if (!errors.length) return null
 
@@ -18,4 +24,4 @@ const ErrorList: FC<ErrorListProps> = ({ errors }) => {
   )
 }
 
-export default memo(ErrorList)
+export default ErrorList

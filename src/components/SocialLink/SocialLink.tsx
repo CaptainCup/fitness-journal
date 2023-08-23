@@ -1,4 +1,4 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import Link from 'next/link'
 import { Image } from '@/components'
 import classNames from 'classnames'
@@ -9,11 +9,25 @@ const imgPath = {
 }
 
 export type SocialLinkProps = {
+  /**
+   * Social type
+   */
   social: 'vk' | 'telegram'
+
+  /**
+   * Button link
+   */
   href: string
+
+  /**
+   * Component classname
+   */
   className?: string
 }
 
+/**
+ * Component for social share
+ */
 const SocialLink: FC<SocialLinkProps> = ({ social, href, className }) => {
   return (
     <div
@@ -29,4 +43,4 @@ const SocialLink: FC<SocialLinkProps> = ({ social, href, className }) => {
   )
 }
 
-export default memo(SocialLink)
+export default SocialLink

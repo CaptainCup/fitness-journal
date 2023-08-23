@@ -1,14 +1,32 @@
 'use client'
 
-import { FC, memo, useRef, useState, ChangeEvent, useEffect } from 'react'
+import { FC, useRef, useState, ChangeEvent, useEffect } from 'react'
 
 export type TextareaProps = {
+  /**
+   * Placeholder component
+   */
   placeholder?: string
+
+  /**
+   * HTML name
+   */
   name?: string
+
+  /**
+   * Component value
+   */
   value?: string
+
+  /**
+   * OnChange handler
+   */
   onChange?: (value: string) => void
 }
 
+/**
+ * Textarea component
+ */
 const Textarea: FC<TextareaProps> = ({
   placeholder = 'Введите текст',
   name,
@@ -46,4 +64,4 @@ const Textarea: FC<TextareaProps> = ({
   )
 }
 
-export default memo(Textarea)
+export default Textarea

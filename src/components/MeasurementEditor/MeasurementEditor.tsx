@@ -14,12 +14,30 @@ const options = [
 ]
 
 export type MeasurementEditorProps = {
+  /**
+   * Component title
+   */
   title: string
+
+  /**
+   * Component value
+   */
   value?: string[]
+
+  /**
+   * Component error state
+   */
   error?: boolean
+
+  /**
+   * OnChange component handler
+   */
   onChange?: (value: string[]) => void
 }
 
+/**
+ * Edit measurments with Select
+ */
 const MeasurementEditor: FC<MeasurementEditorProps> = ({
   title,
   value,
@@ -91,4 +109,4 @@ const MeasurementEditor: FC<MeasurementEditorProps> = ({
   )
 }
 
-export default memo(MeasurementEditor)
+export default MeasurementEditor

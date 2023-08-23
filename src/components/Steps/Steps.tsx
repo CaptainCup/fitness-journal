@@ -7,10 +7,20 @@ export type Step = {
 }
 
 export type StepsProps = {
+  /**
+   * Component title
+   */
   title: string
+
+  /**
+   * Steps
+   */
   steps: Step[]
 }
 
+/**
+ * Show information in steps
+ */
 const Steps: FC<StepsProps> = ({ title, steps }) => {
   return (
     <div>
@@ -31,4 +41,4 @@ const Steps: FC<StepsProps> = ({ title, steps }) => {
   )
 }
 
-export default memo(Steps)
+export default Steps

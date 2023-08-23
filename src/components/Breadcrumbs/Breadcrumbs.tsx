@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react'
+import React, { FC } from 'react'
 import Link from 'next/link'
 
 import styles from './Breadcrumbs.module.css'
@@ -9,9 +9,15 @@ export type BreadcrumbsItemType = {
 }
 
 export type BreadcrumbsProps = {
+  /**
+   * Page path from Main Page
+   */
   path: BreadcrumbsItemType[]
 }
 
+/**
+ * Page path component
+ */
 const Breadcrumbs: FC<BreadcrumbsProps> = ({ path }) => {
   return (
     <ul className="flex flex-wrap">
@@ -32,4 +38,4 @@ const Breadcrumbs: FC<BreadcrumbsProps> = ({ path }) => {
   )
 }
 
-export default memo(Breadcrumbs)
+export default Breadcrumbs

@@ -1,12 +1,22 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import { Card, Title } from '@/components'
 import { CardProps } from '@/components/Card/Card'
 
 export type CardsGridProps = {
+  /**
+   * Grid title
+   */
   title?: string
+
+  /**
+   * Cards in grid
+   */
   cards: CardProps[]
 }
 
+/**
+ * Show cards in grid
+ */
 const CardsGrid: FC<CardsGridProps> = ({ title, cards }) => {
   return (
     <div>
@@ -21,4 +31,4 @@ const CardsGrid: FC<CardsGridProps> = ({ title, cards }) => {
   )
 }
 
-export default memo(CardsGrid)
+export default CardsGrid

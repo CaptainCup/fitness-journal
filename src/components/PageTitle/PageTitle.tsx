@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, memo } from 'react'
+import React, { FC } from 'react'
 import classNames from 'classnames'
 import { useRouter } from 'next/navigation'
 import { Container, Image } from '@/components'
@@ -8,12 +8,30 @@ import { Container, Image } from '@/components'
 import styles from './PageTitle.module.css'
 
 export type PageTitleProps = {
+  /**
+   * Page title
+   */
   title: string
+
+  /**
+   * Page subtitle
+   */
   subtitle?: string
+
+  /**
+   * Page image
+   */
   image?: string
+
+  /**
+   * Back button
+   */
   withBack?: boolean
 }
 
+/**
+ * Page title
+ */
 const PageTitle: FC<PageTitleProps> = ({
   title,
   subtitle,
@@ -59,4 +77,4 @@ const PageTitle: FC<PageTitleProps> = ({
   )
 }
 
-export default memo(PageTitle)
+export default PageTitle

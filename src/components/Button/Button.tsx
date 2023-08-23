@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, ReactNode, memo, ButtonHTMLAttributes, HTMLProps } from 'react'
+import { FC, ReactNode, ButtonHTMLAttributes, HTMLProps } from 'react'
 import classNames from 'classnames'
 
 const componentTypes = {
@@ -17,14 +17,36 @@ const buttonTypes = {
 }
 
 export type ButtonProps = {
-  onClick?: () => void
+  /**
+   * Button content
+   */
   children?: ReactNode
+
+  /**
+   * HTML component type
+   */
   component?: 'button' | 'span'
+
+  /**
+   * Danger state
+   */
   danger?: boolean
+
+  /**
+   * Custom classname for component
+   */
   className?: string
+
+  /**
+   * onClick event handler
+   */
+  onClick?: () => void
 } & ButtonHTMLAttributes<HTMLButtonElement> &
   HTMLProps<HTMLDivElement>
 
+/**
+ * Primary UI component for user interaction
+ */
 const Button: FC<ButtonProps> = ({
   children,
   className,
@@ -50,4 +72,4 @@ const Button: FC<ButtonProps> = ({
   )
 }
 
-export default memo(Button)
+export default Button

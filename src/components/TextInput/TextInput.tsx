@@ -1,22 +1,56 @@
 'use client'
 
-import { FC, memo, useState, ChangeEvent, useEffect } from 'react'
+import { FC, useState, ChangeEvent, useEffect } from 'react'
 import classNames from 'classnames'
 import { Image } from '@/components'
 
 import styles from './TextInput.module.css'
 
 export type TextInputProps = {
+  /**
+   * Component placeholder
+   */
   placeholder?: string
+
+  /**
+   * onChange handler delay in ms
+   */
   delay?: number
+
+  /**
+   * Component custom classname
+   */
   className?: string
+
+  /**
+   * Show clear button
+   */
   clear?: boolean
+
+  /**
+   * HTML name
+   */
   name?: string
+
+  /**
+   * Component value
+   */
   value?: string
+
+  /**
+   * Component error state
+   */
   error?: boolean
+
+  /**
+   * OnChange handler
+   */
   onChange?: (value: string) => void
 }
 
+/**
+ * TextInput component
+ */
 const TextInput: FC<TextInputProps> = ({
   placeholder = 'Введите текст',
   delay,
@@ -97,4 +131,4 @@ const TextInput: FC<TextInputProps> = ({
   )
 }
 
-export default memo(TextInput)
+export default TextInput

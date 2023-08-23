@@ -105,15 +105,45 @@ export type InfiniteListCallbacks = {
 }
 
 export type InfiniteListProps = {
+  /**
+   * Backend data endpoint
+   */
   endpoint: string
+
+  /**
+   * Items in page
+   */
   pageLimit?: number
+
+  /**
+   * API params
+   */
   params?: { [key: string]: any }
+
+  /**
+   * SWR options
+   */
   options?: SWRInfiniteConfiguration
+
+  /**
+   * CSS custom classname for list container
+   */
   listClassName?: string
+
+  /**
+   * use window as container
+   */
   useWindow?: boolean
+
+  /**
+   * Callback to render components from data
+   */
   renderItem: (data: any, index: number) => ReactNode
 }
 
+/**
+ * Show components in infinite list
+ */
 const InfiniteList = forwardRef<InfiniteListCallbacks, InfiniteListProps>(
   (
     {

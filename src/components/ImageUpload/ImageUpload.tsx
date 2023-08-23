@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo, useState, ChangeEvent, useEffect, useRef } from 'react'
+import { FC, useState, ChangeEvent, useEffect, useRef } from 'react'
 import classNames from 'classnames'
 import { Popover, Image } from '@/components'
 import { FilesService } from '@/services-client'
@@ -9,12 +9,30 @@ import { baseURL } from '@/utils'
 const filesService = new FilesService()
 
 export type ImageUploadProps = {
+  /**
+   * Unique ID for component
+   */
   id?: string
+
+  /**
+   * Square image
+   */
   square?: boolean
+
+  /**
+   * Component value
+   */
   value?: string
+
+  /**
+   * onChange component handler
+   */
   onChange?: (value: string) => void
 }
 
+/**
+ * Image upload component
+ */
 const ImageUpload: FC<ImageUploadProps> = ({
   id = 'image-upload',
   square,
@@ -100,4 +118,4 @@ const ImageUpload: FC<ImageUploadProps> = ({
   )
 }
 
-export default memo(ImageUpload)
+export default ImageUpload

@@ -1,16 +1,30 @@
 'use client'
 
-import { FC, memo, useState, useCallback, useEffect } from 'react'
+import { FC, useState, useCallback, useEffect } from 'react'
 import { Button, Card, Title, Image } from '@/components'
 import { ModalMuscules } from '@/modals'
 import { Muscule, MusculeObject } from '@/types/Exercise'
 
 export type CardsGridEditorMusculesProps = {
+  /**
+   * Grid title
+   */
   title: string
+
+  /**
+   * Value as active cards
+   */
   value?: Muscule[]
+
+  /**
+   * OnChange handler
+   */
   onChange?: (value: string[]) => void
 }
 
+/**
+ * Special cards grid editor for muscules
+ */
 const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
   title,
   value,
@@ -102,4 +116,4 @@ const CardsGridEditorMuscules: FC<CardsGridEditorMusculesProps> = ({
   )
 }
 
-export default memo(CardsGridEditorMuscules)
+export default CardsGridEditorMuscules

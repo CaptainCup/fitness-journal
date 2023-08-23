@@ -1,39 +1,40 @@
 'use client'
 
-import React, { FC, forwardRef, useCallback, useEffect, useState } from 'react'
+import React, { FC, useCallback, useEffect, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import ru from 'date-fns/locale/ru'
-
-export type DefaultCustomInputProps = {
-  date: string
-  onClick?: () => void
-}
-
-const DefaultCustomInput = forwardRef<
-  HTMLParagraphElement,
-  DefaultCustomInputProps
->(({ date, onClick }, ref) => {
-  return (
-    <p
-      className="border-b-2 border-black cursor-pointer"
-      onClick={onClick}
-      ref={ref}
-    >
-      {date}
-    </p>
-  )
-})
-
-DefaultCustomInput.displayName = 'DefaultCustomInput'
+import DefaultCustomInput from './DefaultCustomInput'
 
 export type CalendarProps = {
+  /**
+   * Component value
+   */
   value?: Date
+
+  /**
+   * Avaible only this dates
+   */
   includeDates?: Date[]
+
+  /**
+   * Button content
+   */
   inline?: boolean
+
+  /**
+   * Fixed calendar height
+   */
   fixedHeight?: boolean
+
+  /**
+   * onChange event handler
+   */
   onChange?: (date: Date) => void
 }
 
+/**
+ * Calendar component
+ */
 const Calendar: FC<CalendarProps> = ({
   value,
   includeDates,

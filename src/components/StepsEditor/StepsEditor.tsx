@@ -1,15 +1,29 @@
 'use client'
 
-import { FC, memo, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useState } from 'react'
 import { Button, Title, Image } from '@/components'
 import Step, { StepType } from './Step'
 
 export type StepsEditorProps = {
+  /**
+   * Component title
+   */
   title?: string
+
+  /**
+   * Component value
+   */
   value?: StepType[]
+
+  /**
+   * OnChange handler
+   */
   onChange?: (value: StepType[]) => void
 }
 
+/**
+ * Edit information in steps
+ */
 const StepsEditor: FC<StepsEditorProps> = ({
   title,
   value,
@@ -114,4 +128,4 @@ const StepsEditor: FC<StepsEditorProps> = ({
   )
 }
 
-export default memo(StepsEditor)
+export default StepsEditor

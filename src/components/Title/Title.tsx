@@ -1,13 +1,31 @@
-import { FC, ReactNode, memo } from 'react'
+import { FC, ReactNode } from 'react'
 import classNames from 'classnames'
 
 export type TitleProps = {
+  /**
+   * Component content
+   */
   children: ReactNode
+
+  /**
+   * Custom component classname
+   */
   className?: string
+
+  /**
+   * Extra component content
+   */
   extra?: ReactNode
+
+  /**
+   * Component error state
+   */
   error?: boolean
 }
 
+/**
+ * Title component
+ */
 const Title: FC<TitleProps> = ({ className, children, extra, error }) => {
   return (
     <div
@@ -25,4 +43,4 @@ const Title: FC<TitleProps> = ({ className, children, extra, error }) => {
   )
 }
 
-export default memo(Title)
+export default Title

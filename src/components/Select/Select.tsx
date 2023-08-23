@@ -1,14 +1,6 @@
 'use client'
 
-import {
-  FC,
-  memo,
-  useState,
-  Fragment,
-  useEffect,
-  useMemo,
-  useCallback,
-} from 'react'
+import { FC, useState, Fragment, useEffect, useMemo, useCallback } from 'react'
 import classNames from 'classnames'
 import { Listbox, Transition } from '@headlessui/react'
 
@@ -21,13 +13,35 @@ export type Option = {
 }
 
 export type SelectProps = {
+  /**
+   * Component value
+   */
   value?: any
+
+  /**
+   * Component options
+   */
   options: Option[]
+
+  /**
+   * Component custom classname
+   */
   className?: string
+
+  /**
+   * Placeholder
+   */
   placeholder?: string
+
+  /**
+   * OnChange component handler
+   */
   onChange?: (value: any) => void
 }
 
+/**
+ * Select component
+ */
 const Select: FC<SelectProps> = ({
   value,
   options,
@@ -100,4 +114,4 @@ const Select: FC<SelectProps> = ({
   )
 }
 
-export default memo(Select)
+export default Select

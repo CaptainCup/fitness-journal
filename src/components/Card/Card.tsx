@@ -1,6 +1,6 @@
 'use client'
 
-import { FC, memo, useCallback } from 'react'
+import { FC, useCallback } from 'react'
 import classNames from 'classnames'
 import Link from 'next/link'
 import { Image, Popover } from '@/components'
@@ -14,15 +14,50 @@ export type MenuItem = {
 }
 
 export type CardProps = {
+  /**
+   * Card title
+   */
   title: string
+
+  /**
+   * Card background image path
+   */
   image?: string
+
+  /**
+   * Card link
+   */
   link?: string
+
+  /**
+   * Checked card state
+   */
   checked?: boolean
+
+  /**
+   * Card popup menu
+   */
   menu?: MenuItem[]
+
+  /**
+   * Disabled content
+   */
   disabled?: boolean
+
+  /**
+   * Custom classname for component
+   */
+  className?: string
+
+  /**
+   * onClick event handler
+   */
   onClick?: () => void
 }
 
+/**
+ * Card to show data
+ */
 const Card: FC<CardProps> = ({
   title,
   image,
@@ -30,6 +65,7 @@ const Card: FC<CardProps> = ({
   checked,
   menu,
   disabled,
+  className,
   onClick,
 }) => {
   const handleClick = useCallback(() => {
@@ -41,6 +77,7 @@ const Card: FC<CardProps> = ({
   const component = (
     <div
       className={classNames(
+        className,
         link && styles.card,
         checked && styles.checked,
         onClick && !disabled && 'cursor-pointer',
@@ -84,4 +121,4 @@ const Card: FC<CardProps> = ({
   return link ? <Link href={link}>{component}</Link> : component
 }
 
-export default memo(Card)
+export default Card

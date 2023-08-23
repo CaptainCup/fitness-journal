@@ -4,3 +4,12 @@
 
 @import './calendar.css';
 @import './react-calendar.css';
+
+@font-face {
+  font-family: 'DrukTextWide';
+  src: url('../app/DrukTextWide-Medium.woff');
+}
+
+html {
+  font-family: DrukTextWide;
+}

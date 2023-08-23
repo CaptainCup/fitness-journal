@@ -1,15 +1,37 @@
-import { FC, memo } from 'react'
+import { FC } from 'react'
 import Link from 'next/link'
 import { Button, Image } from '@/components'
 
 export type MainPageCardProps = {
+  /**
+   * Card title
+   */
   title: string
+
+  /**
+   * Card description
+   */
   description: string
+
+  /**
+   * Attention text
+   */
   attentionText?: string
+
+  /**
+   * Card link
+   */
   href?: string
+
+  /**
+   * Background image
+   */
   image: string
 }
 
+/**
+ * Data card on main page
+ */
 const MainPageCard: FC<MainPageCardProps> = ({
   title,
   description,
@@ -47,4 +69,4 @@ const MainPageCard: FC<MainPageCardProps> = ({
   )
 }
 
-export default memo(MainPageCard)
+export default MainPageCard
